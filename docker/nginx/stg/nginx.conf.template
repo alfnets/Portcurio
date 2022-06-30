@@ -1,0 +1,40 @@
+upstream stg.${R_PREFIX} {
+  server unix:///${R_PREFIX}/tmp/sockets/puma.sock;
+}
+
+server {
+  server_name stg.${R_PREFIX}.net;
+
+  access_log /var/log/nginx/access.log;
+  error_log  /var/log/nginx/error.log;
+
+  root /${R_PREFIX}/public;
+
+  client_max_body_size 100m;
+  error_page 404             /404.html;
+  error_page 505 502 503 504 /500.html;
+  try_files  $uri/index.html $uri @${R_PREFIX};
+  keepalive_timeout 5;
+
+  location @${R_PREFIX} {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_pass http://stg.${R_PREFIX};
+  }
+
+  listen 443 ssl; # managed by Certbot
+  ssl_certificate /etc/letsencrypt/live/stg.${R_PREFIX}.net/fullchain.pem; # managed by Certbot
+  ssl_certificate_key /etc/letsencrypt/live/stg.${R_PREFIX}.net/privkey.pem; # managed by Certbot
+  include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+  ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+  if ($host = stg.${R_PREFIX}.net) {
+    return 301 https://$host$request_uri;
+  } # managed by Certbot
+
+  listen 80;
+  server_name stg.${R_PREFIX}.net;
+    return 404; # managed by Certbot
+}

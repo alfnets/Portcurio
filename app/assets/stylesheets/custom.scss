@@ -1,0 +1,702 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+/* mixins, variables, etc. */
+
+$gray-medium-light: #eaeaea;
+
+@mixin box_sizing {
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+}
+
+
+/* universal */
+
+body {
+  padding-top: 60px;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.center {
+  text-align: center;
+  h1 {
+    margin-bottom: 10px;
+  }
+}
+
+/* typography */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.2em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: $gray-light;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+
+/* header */
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.5em;
+  color: white;
+  letter-spacing: -1px;
+  padding-top: 12px;
+  padding-left: 10px;
+  font-weight: bold;
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+.navbar-toggle {
+  margin-right: 0;
+}
+
+.icon-container {
+  display: block;
+  float: right;
+  padding-top: 14px;
+  padding-left: 10px;
+}
+
+.fa-stack {
+  position: relative;
+}
+
+.bell-icon {
+  color: silver;
+  margin: 0;
+  padding: 0;
+}
+
+.n-circle {
+  position: absolute;
+  left: 20px;
+  top: -20px;
+  padding-left: 5px;
+  color: orange;
+}
+
+
+
+/* footer */
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid $gray-medium-light;
+  color: $gray-light;
+  a {
+    color: $gray;
+    &:hover {
+      color: $gray-darker;
+    }
+  }
+  small {
+    float: left;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 15px;
+    }
+  }
+  nav {
+    ul {
+      padding-left: 0px;
+    }
+  }
+}
+
+
+
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
+}
+
+
+
+/* sidebar */
+
+aside {
+  section.user_info {
+    margin-top: 20px;
+  }
+  section {
+    padding: 10px 0;
+    margin-top: 20px;
+    &:first-child {
+      border: 0;
+      padding-top: 0;
+    }
+    span {
+      display: block;
+      margin-bottom: 3px;
+      line-height: 1;
+    }
+    h1 {
+      font-size: 1.4em;
+      text-align: left;
+      letter-spacing: -1px;
+      margin-bottom: 3px;
+      margin-top: 0px;
+    }
+  }
+}
+
+.gravatar {
+  float: left;
+  margin-right: 10px;
+}
+
+.gravatar_edit {
+  margin-top: 15px;
+}
+
+.stats {
+  overflow: auto;
+  margin-top: 0;
+  margin-bottom: 5px;
+  padding: 0;
+  a {
+    float: left;
+    padding: 0 10px;
+    border-left: 1px solid $gray-lighter;
+    color: gray;
+    &:first-child {
+      padding-left: 0;
+      border: 0;
+    }
+    &:hover {
+      text-decoration: none;
+      color: blue;
+    }
+  }
+  strong {
+    display: block;
+  }
+}
+
+.user_avatars {
+  overflow: auto;
+  margin-top: 10px;
+  .gravatar {
+    margin: 1px 1px;
+  }
+  a {
+    padding: 0;
+  }
+}
+
+.users.follow {
+  padding: 0;
+}
+
+
+
+/* forms */
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+}
+
+.error_explanation {
+  color: red;
+  ul {
+    color: red;
+    margin: 0 0 30px 0;
+  }
+}
+
+.field_with_errors {
+  @extend .has-error;
+  .form-control {
+    color: $state-danger-text;
+  }
+}
+
+.checkbox {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  span {
+    margin-left: 20px;
+    font-weight: normal;
+  }
+}
+
+#session_remember_me {
+  width: auto;
+  margin-left: 0;
+}
+
+.line-checkbox-wrap {
+  padding-top: 10px;
+  margin-bottom: 18px;
+}
+
+#user_line_connection_delete {
+  // display: inline;
+  width: auto;
+  margin: 0 10px;
+}
+
+.line-add-button {
+  margin-left: 12px;
+}
+
+.require-charm {
+  color: red;
+}
+
+
+
+/* login_top */
+.btn-login {
+  margin: 5px;
+}
+
+/* Users index */
+
+.users {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-bottom: 1px solid $gray-lighter;
+  }
+}
+
+.follow_form {
+  padding-top: 5px;
+}
+
+.btn-follow {
+  display: inline-block;
+  width: 100px;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.subscribe-btn {
+  background-color: none;
+    display: inline-block;
+}
+.subscribe-btn-subscribe {
+  color: orange;
+}
+.subscribe-btn-invalid {
+  color: gray;
+}
+
+
+
+/* microposts */
+
+.microposts {
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+  .user {
+    margin-top: 5em;
+    padding-top: 0;
+  }
+  .timestamp {
+    color: $gray-light;
+    display: block;
+    margin-left: 60px;
+  }
+  .content-container{
+    position: relative;
+    .content {
+      display: block;
+      padding: 5px 0px;
+      margin-left: 60px;
+      img {
+        display: block;
+        padding: 5px 0;
+        max-width: 400px;
+        max-height: 400px;
+        width: 100%;
+        object-fit: contain;
+        object-position: left 0% top 0%;
+      }
+      p {
+        font-size: 1em;
+        line-height: 1.3em;
+        margin: 5px;
+        word-break:break-word;
+      }
+    }
+  }
+  .gravatar {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+  .links {
+    margin: 10px 0px;
+    .links-container {
+      background-color: #eeeeee80;
+      background-size: contain;
+      display: inline-block;
+      padding: 20px 20px 15px;
+      width: auto;
+      figure {
+        padding-bottom: 10px;
+        display: table;
+        img {
+          padding: 0;
+          margin: 0;
+          max-width: 400px;
+          max-height: 400px;
+          width: 100%;
+        }
+        figcaption {
+          font-size: 0.9em;
+          color: gray;
+          caption-side: bottom;
+          display: table-caption;
+        }
+      }
+      .oembed {
+        width: 100%;
+        max-width: 400px;
+        iframe {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .response-form {
+    margin-left: 60px;
+    .form-inline {
+      display: inline;
+    }
+    .btn-link {
+      margin: 0;
+      padding: 0;
+      display: inline;
+    }
+    .timestamp {
+      color: $gray-light;
+      display: inline;
+      margin-left: 10px;
+    }
+    a {
+      display: inline;
+    }
+  }
+  .wrap {
+    margin-left: auto;
+    width: calc(100% - 20px);
+    background-color: #eeeeee80;
+    p {
+      font-size: 1em;
+      line-height: 1.3em;
+      margin: 5px;
+      word-break:break-word;
+    }
+  }
+  form {
+    padding-bottom: 15px;
+  }
+  textarea {
+    height: 50px;
+    margin-bottom: 5px;
+  }
+  .pagination {
+    display: none;
+  }
+}
+
+aside {
+  textarea {
+    height: 100px;
+    margin-bottom: 5px;
+  }
+}
+
+span.image {
+  margin-top: 10px;
+  input {
+    border: 0;
+  }
+}
+
+.like-btn {
+  color: blue;
+}
+
+.like-btn-unlike {
+  color: gray;
+}
+
+.likes-count {
+  padding-right: 5px;
+}
+
+.comment-container{
+  .field {
+    border-top: none;
+    padding: 0;
+  }
+}
+
+.comments-container {
+  padding: 20px 20px 5px;
+}
+
+.replies-container {
+  padding: 5px 20px 0px;
+  li {
+    border-top: none;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .mention {
+    padding-top: 10px;
+  }
+}
+.reply-close-btn {
+  padding-left: 10px;
+}
+.to-mention {
+  a {
+    color: $gray-light;
+  }
+}
+
+.comment-btn-wrap, .reply-btn-wrap {
+  padding-left: 10px;
+  form {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+  }
+  input {
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+}
+
+
+/* いいね！した人を表示するモーダルウィンドウ */
+.like-modal-wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  width: 100%;
+  display: block;
+  color: white;
+  h2 {
+    color: white;
+  }
+  .like-modal {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    background-color: #e6ecf0;
+    padding: 20px 0;
+    width: 350px;
+    .users {
+      padding: 0 40px;
+    }
+    height: 500px;
+    overflow-y: auto;
+    overflow-y: scroll;
+    .close-modal {
+      display: block;
+      float: right;
+      position: sticky;
+      top:  -10px;
+      right: 12px;
+    }
+  }
+}
+
+
+/* 通知画面 */
+.notification {
+  position: relative;
+  padding: 10px 20px;
+  border-top: 1px solid #e8e8e8;
+  p {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.notification-nochecked {
+  background-color: #CCFFFF70;
+}
+
+.showcontainer {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.notification-wrap {
+  padding: 10px 20px;
+  margin-top: 10px;
+  margin-left: auto;
+  width: calc(100% - 20px);
+  background-color: #eeeeee80;
+  p {
+    font-size: 1em;
+    line-height: 1.3em;
+    margin: 5px;
+    word-break:break-word;
+  }
+}
+
+.notification {
+  li {
+    border-top: none;
+    padding: 0;
+  }
+}
+
+.line-add {
+  position: relative;
+  width: 100%;
+  a {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+
+
+
+// .micropost-form {
+//   margin-left: auto;
+//   width: calc(100% - 20px);
+//   background-color: #eeeeee80;
+//   .micropost {
+//     padding: 20px 20px 10px;
+//   }
+// }
+
+
+/* micropostのshow画面 */
+.show {
+  li {
+    border-top: 0;
+  }
+}
+
+// /* navbar collapse for iPad (bootstrap) */
+// @media (max-width: 991px) {
+//     .navbar-header {
+//         float: none;
+//     }
+//     .navbar-toggle {
+//         display: block;
+//     }
+//     .navbar-collapse {
+//         border-top: 1px solid transparent;
+//         box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+//     }
+//     .navbar-collapse.collapse {
+//         display: none!important;
+//     }
+//     .navbar-nav {
+//         float: none!important;
+//         margin: 7.5px -15px;
+//     }
+//     .navbar-nav>li {
+//         float: none;
+//     }
+//     .navbar-nav>li>a {
+//         padding-top: 10px;
+//         padding-bottom: 10px;
+//     }
+//     .navbar-text {
+//         float: none;
+//         margin: 15px 0;
+//     }
+//     .navbar-collapse.collapse.in {
+//         display: block!important;
+//     }
+//     .collapsing {
+//         overflow: hidden!important;
+//     }
+// }
+
+
+
+/* ユーザー編集画面 */
+p#edit_user_page {
+  clear: both;
+  padding-top: 40px;
+} 
+
+
+
+/* ユーザー削除画面 */
+p#delete_user_page {
+padding-bottom: 24px;
+} 

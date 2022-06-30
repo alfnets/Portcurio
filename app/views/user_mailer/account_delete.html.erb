@@ -1,0 +1,12 @@
+<h1><%= site_name %></h1>
+
+<p><%= @user.name %> 様</p>
+
+<p>
+下記のURLにアクセスしてアカウントを削除してください。<br>また、アカウント削除の手続きに身に覚えがない場合は<br>お手数ですが <%= site_name %> にお問合せください。
+</p>
+
+<%= link_to "Delete", exec_account_delete_url(@user.delete_token,
+                                              email: @user.email) %>
+
+<p>---<br><%= site_name %></p>

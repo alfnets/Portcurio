@@ -1,0 +1,5 @@
+$(".follow_form_<%= @user.id %>").html("<%= escape_javascript(render(partial: 'relationships/follow', locals: {user: @user})) %>");
+$(".subscribe_<%= @user.id %>").html("<%= escape_javascript(render(partial: 'subscribes/invalid', locals: {user: @user})) %>");
+<% @userprofile ||= current_user %>
+$("#following").html('<%= @userprofile.following.count %>');
+$("#followers").html('<%= @userprofile.followers.count %>');

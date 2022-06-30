@@ -1,0 +1,221 @@
+{
+    "ipcMode": null,
+    "executionRoleArn": "arn:aws:iam::SED_TARGET_AWS_ACCOUNT_ID:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+        {
+            "dnsSearchDomains": null,
+            "environmentFiles": null,
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "secretOptions": null,
+                "options": {
+                    "awslogs-group": "/ecs/SED_TARGET_R_PREFIX",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "production"
+                }
+            },
+            "entryPoint": null,
+            "portMappings": [],
+            "command": [
+                "bash",
+                "-c",
+                "bundle exec rails db:migrate && bundle exec rails assets:precompile && bundle exec puma -C config/puma.rb"
+            ],
+            "linuxParameters": null,
+            "cpu": 0,
+            "environment": [
+                {
+                    "name": "HOST",
+                    "value": "SED_TARGET_DOMAIN_NAME"
+                },
+                {
+                    "name": "RAILS_ENV",
+                    "value": "production"
+                },
+                {
+                    "name": "RACK_ENV",
+                    "value": "production"
+                },
+                {
+                    "name": "TZ",
+                    "value": "Japan"
+                },
+                {
+                    "name": "AWS_BUCKET",
+                    "value": "SED_TARGET_R_PREFIX"
+                },
+                {
+                    "name": "AWS_REGION",
+                    "value": "ap-northeast-1"
+                },
+                {
+                    "name": "RAILS_LOG_TO_STDOUT",
+                    "value": "enabled"
+                }
+            ],
+            "resourceRequirements": null,
+            "ulimits": null,
+            "dnsServers": null,
+            "mountPoints": [],
+            "workingDirectory": "/SED_TARGET_R_PREFIX",
+            "secrets": [
+                {
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:SED_TARGET_AWS_ACCOUNT_ID:parameter/general/main_app_name",
+                    "name": "R_PREFIX"
+                },
+                {
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:SED_TARGET_AWS_ACCOUNT_ID:parameter/SED_TARGET_R_PREFIX/domain_name",
+                    "name": "DOMAIN_NAME"
+                },
+                {
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:SED_TARGET_AWS_ACCOUNT_ID:parameter/SED_TARGET_R_PREFIX/app_main_db_host",
+                    "name": "DATABASE_HOST"
+                },
+                {
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:SED_TARGET_AWS_ACCOUNT_ID:parameter/SED_TARGET_R_PREFIX/app_main_db_name",
+                    "name": "DATABASE_NAME"
+                },
+                {
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:SED_TARGET_AWS_ACCOUNT_ID:parameter/SED_TARGET_R_PREFIX/db_password",
+                    "name": "DATABASE_PASSWORD"
+                },
+                {
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:SED_TARGET_AWS_ACCOUNT_ID:parameter/SED_TARGET_R_PREFIX/db_username",
+                    "name": "DATABASE_USERNAME"
+                },
+                {
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:SED_TARGET_AWS_ACCOUNT_ID:parameter/SED_TARGET_R_PREFIX/rails_master_key",
+                    "name": "RAILS_MASTER_KEY"
+                },
+                {
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:SED_TARGET_AWS_ACCOUNT_ID:parameter/SED_TARGET_R_PREFIX/sendgrid_api_key",
+                    "name": "SENDGRID_API_KEY"
+                },
+                {
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:SED_TARGET_AWS_ACCOUNT_ID:parameter/SED_TARGET_R_PREFIX/line_add_url",
+                    "name": "LINE_ADD_URL"
+                },
+                {
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:SED_TARGET_AWS_ACCOUNT_ID:parameter/SED_TARGET_R_PREFIX/line_channel_id",
+                    "name": "LINE_CHANNEL_ID"
+                },
+                {
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:SED_TARGET_AWS_ACCOUNT_ID:parameter/SED_TARGET_R_PREFIX/line_channel_secret",
+                    "name": "LINE_CHANNEL_SECRET"
+                },
+                {
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:SED_TARGET_AWS_ACCOUNT_ID:parameter/SED_TARGET_R_PREFIX/line_channel_token",
+                    "name": "LINE_CHANNEL_TOKEN"
+                },
+                {
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:SED_TARGET_AWS_ACCOUNT_ID:parameter/SED_TARGET_R_PREFIX/line_rich_menu_id",
+                    "name": "LINE_RICH_MENU_ID"
+                }
+            ],
+            "dockerSecurityOptions": null,
+            "memory": null,
+            "memoryReservation": null,
+            "volumesFrom": [],
+            "stopTimeout": null,
+            "image": "SED_TARGET_AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/SED_TARGET_R_PREFIX-app",
+            "startTimeout": null,
+            "firelensConfiguration": null,
+            "dependsOn": null,
+            "disableNetworking": null,
+            "interactive": null,
+            "healthCheck": null,
+            "essential": true,
+            "links": null,
+            "hostname": null,
+            "extraHosts": null,
+            "pseudoTerminal": null,
+            "user": null,
+            "readonlyRootFilesystem": null,
+            "dockerLabels": null,
+            "systemControls": null,
+            "privileged": null,
+            "name": "app"
+        },
+        {
+            "dnsSearchDomains": null,
+            "environmentFiles": null,
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "secretOptions": null,
+                "options": {
+                    "awslogs-group": "/ecs/SED_TARGET_R_PREFIX",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "production"
+                }
+            },
+            "entryPoint": null,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "containerPort": 80
+                }
+            ],
+            "command": null,
+            "linuxParameters": null,
+            "cpu": 0,
+            "environment": [],
+            "resourceRequirements": null,
+            "ulimits": null,
+            "dnsServers": null,
+            "mountPoints": [],
+            "workingDirectory": "/SED_TARGET_R_PREFIX",
+            "secrets": [
+                {
+                    "valueFrom": "arn:aws:ssm:ap-northeast-1:SED_TARGET_AWS_ACCOUNT_ID:parameter/general/main_app_name",
+                    "name": "R_PREFIX"
+                }
+            ],
+            "dockerSecurityOptions": null,
+            "memory": null,
+            "memoryReservation": null,
+            "volumesFrom": [
+                {
+                    "sourceContainer": "app",
+                    "readOnly": null
+                }
+            ],
+            "stopTimeout": null,
+            "image": "SED_TARGET_AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/SED_TARGET_R_PREFIX-nginx",
+            "startTimeout": null,
+            "firelensConfiguration": null,
+            "dependsOn": null,
+            "disableNetworking": null,
+            "interactive": null,
+            "healthCheck": null,
+            "essential": true,
+            "links": null,
+            "hostname": null,
+            "extraHosts": null,
+            "pseudoTerminal": null,
+            "user": null,
+            "readonlyRootFilesystem": null,
+            "dockerLabels": null,
+            "systemControls": null,
+            "privileged": null,
+            "name": "nginx"
+        }
+    ],
+    "memory": "1024",
+    "taskRoleArn": "arn:aws:iam::SED_TARGET_AWS_ACCOUNT_ID:role/ecsTaskExecutionRole",
+    "family": "SED_TARGET_R_PREFIX-task",
+    "pidMode": null,
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "runtimePlatform": {
+        "operatingSystemFamily": "LINUX",
+        "cpuArchitecture": null
+    },
+    "cpu": "512",
+    "inferenceAccelerators": [],
+    "proxyConfiguration": null,
+    "volumes": [],
+    "tags": []
+}

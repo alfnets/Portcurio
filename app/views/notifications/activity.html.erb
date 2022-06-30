@@ -1,0 +1,9 @@
+<% provide(:title, 'Activity') %>
+<h1>Activity</h1>
+
+<ol class="microposts">
+  <% @activities.each do |activity| %>
+    <%= render partial: 'notifications/activity', locals: {activity: activity} %>
+  <% end %>
+</ol>
+<%= paginate @activities %>

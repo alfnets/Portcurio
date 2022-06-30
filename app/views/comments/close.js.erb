@@ -1,0 +1,8 @@
+<% unless defined? @comment %>
+  <% comment_count = @feedmicropost.comments.where(parent_id: nil).count %>
+  $(".comment-close-<%= @feedmicropost.id %>").html('')
+  $(".comment-<%= @feedmicropost.id %>").html("")
+<% else %>
+  $(".reply-close-<%= @comment.id %>").html("")
+  $(".reply-<%= @comment.id %>").html("")
+<% end %>

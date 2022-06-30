@@ -1,0 +1,13 @@
+<div class="like-modal-wrapper" >
+  <div class="like-modal">
+    <span class="close-modal">
+      <% likepath = send("close_#{likeable.class.name.downcase}_likes_path", likeable.id, userprofile_id: @userprofile.id) %>
+      <%= link_to likepath, remote: true do %>
+        <i class="fa fa-2x fa-times"></i>
+      <% end %>
+    </span>
+    <ul class="users">
+      <%= render @users %>
+    </ul>
+  </div>
+</div>

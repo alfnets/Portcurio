@@ -1,0 +1,77 @@
+<li class="micropost-<%= micropost.id %> micropost">
+  <div class="micropost">
+    <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
+    <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
+    
+    <div class="micropost-container">
+      <div class="content">
+        <p>
+          <%= raw Rinku.auto_link(simple_format(h(micropost.content)), :all, 'target="_blank" rel="noopener noreferrer"') %>
+        </p>
+        <div class="links">
+          <% if micropost.links.present? %>
+            <% begin %>
+              <% oembed = OEmbed::Providers.get(micropost.links, maxwidth: "400") %>
+              <div class="links-container">
+                <div class="oembed"><%= oembed.html.html_safe %></div>
+              </div>
+            <% rescue %>
+              <% begin %>
+                <% og = og_get(micropost.links) %>
+                <% if og %>
+                  <div class="links-container">
+                    <figure>
+                      <% cache(og.image.url, expires_in: 600.seconds) do %>
+                        <%= link_to image_tag(og.image.url, alt: og.title), og.url, target: :_blank, rel: "noopener noreferrer" %>
+                      <% end %>
+                      <figcaption>
+                        <%= og.title %>
+                        <%= og.description.truncate(150) %>
+                      </figcaption>
+                    </figure>
+                  </div>
+                <% end %>
+              <% rescue %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+        <% if micropost.image.attached? %>
+          <!-- link_to micropost.display_image, "data-lightbox": micropost.display_image do %>-->
+          <%= image_tag micropost.display_image %>
+          <!--end %>-->
+        <% end %>
+      </div>
+      
+      <span class="timestamp">
+        Posted <%= time_ago_in_words(micropost.created_at) %> ago.
+        <% if current_user?(micropost.user) %>
+          <%= link_to "delete", micropost, method: :delete,
+                                           data: { confirm: "You sure?" } %>
+        <% end %>
+      </span>
+    </div>
+  
+    <div class="response-form">
+      <span class="like-btn-micropost-<%= micropost.id %> likes"> 
+        <% if micropost.like_users.find_by(id: current_user.id) %>
+          <%= render partial: 'likes/unlike', locals: { likeable: micropost } %>
+        <% else %>
+          <%= render partial: 'likes/like', locals: { likeable: micropost } %>
+        <% end %>
+      </span>
+      <span class="likes-micropost-<%= micropost.id %> likes-count">
+        <%= render partial: 'likes/likes_count', locals: { likeable: micropost } %>
+      </span>
+    
+      <span class="comment-btn-<%= micropost.id %> comment-btn">
+        <% comment_count = micropost.comments.where(parent_id: nil).count %>
+        <%= link_to "コメント #{comment_count}", comment_path(micropost.id, userprofile_id: @userprofile.id), remote: true %>
+      </span>
+    </div>
+  
+    <div class="comment-<%= micropost.id %> comment-form">
+      <!-- コメントボタンをクリックするとここにrenderされる -->
+    </div>
+  </div>
+</li>

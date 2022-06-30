@@ -1,0 +1,3 @@
+$(".subscribe_<%= @user.id %>").html("<%= escape_javascript(render(partial: 'subscribes/subscribe', locals: {user: @user})) %>");
+<% @userprofile ||= current_user %>
+$("#subscribing").html('<%= @userprofile.subscribing.count %>');

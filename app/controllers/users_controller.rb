@@ -1,0 +1,179 @@
+class UsersController < ApplicationController
+  before_action :logged_in_user, only: [:index, :setting, :edit, :update, :destroy, :show,
+                                        :following, :followers]
+  before_action :correct_user,   only: [:edit, :update]
+  before_action :admin_user,     only: :destroy
+  
+  # include Kaminari::Helpers::UrlHelper
+
+  # GET /users
+  def index
+    # @users = User.page(params[:page])
+    @users = User.where(activated: true).page(params[:page])
+    @userprofile = current_user
+  end
+  
+  # GET /users/:id
+  def show
+    @userprofile = User.find(params[:id])
+
+    redirect_to root_url and return unless @userprofile.activated?
+
+    # Microposts
+    @microposts = @userprofile.microposts.page(params[:page]).per(20)
+    
+    # Comments & likes
+    @comments_and_likes = Notification.where(
+      notifier_id: @userprofile.id
+    ).where.not(
+      notified_id: @userprofile.id
+    ).where.not(
+      notificable_type: 'Relationship'
+    ).where.not(
+      notificable_type: 'Micropost'
+    ).page(params[:page]).per(10)
+    
+    @path = request.fullpath
+    # debugger
+  
+  end
+  
+  # GET /users/new
+  def new
+    @user = User.new
+  end
+  
+  # POST /users (+ params)
+  def create
+    # (user + given params).save
+    # User.create(params[:user]) マスアサイメント脆弱性になる
+      # ex.) POST + params[:user][:admin] = true
+    # => name, email, pass/confirmation のみに限定するチェック機構である(user_params)を作って使う
+    @user = User.new(user_params) 
+    if @user.save #  == true
+      # Success (valid params)
+      # GET "/users/#{@user.id}"
+      # log_in @user
+      # flash[:success] = "Welcome to the Sample App!"
+      # redirect_to @user
+      # redirect_to user_path(@user)
+      # redirect_to user_path(@user.id)
+      # redirect_to user_path(1)
+                  # => /users/1
+      
+      # メール認証の部分
+      @user.send_activation_email
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
+      
+      # メール認証をせず、アクティベート
+      # @user.update_attribute(:activated,     true)
+      # @user.update_attribute(:activated_at,  Time.zone.now)
+      # log_in @user
+      # flash[:success] = "Account activated!"
+      # redirect_to root_url
+      
+    else
+      # Failure (not valid params)
+      render 'new'
+    end
+  end
+  
+  # GET /users/setting
+  def setting
+    redirect_to edit_user_path(current_user)
+  end
+  
+  # GET /users/:id/edit
+  def edit
+    @user = User.find(params[:id])
+    # => app/views/users/edit.html.erb
+  end
+  
+  # PATCH /users/:id
+  def update
+    @user = User.find(params[:id])
+    
+    if @user.authenticate(params[:user][:current_password])
+      if params[:user][:line_connection_delete] === '1'
+        lineuid = @user.lineuid
+        user_params.merge!(params[:user][:lineuid] = nil)
+      end
+      if @user.update(user_params)
+        # 更新に成功した場合を扱う
+        flash[:success] = "Profile updated"
+        redirect_to edit_user_path(@user)
+      else
+        # @users.errors # <== ここにデータが入っている
+        render 'edit'
+      end
+      if params[:user][:line_connection_delete] === '1'
+        client.unlink_user_rich_menu(lineuid)
+        message = {
+          type: 'text',
+          text: "通知連携が解除されました。再度、通知連携をしたい場合には画面下部の「通知の認証をする」をタップしてください。"
+        }
+        client.push_message(lineuid, message)
+      end
+    else
+      flash.now[:danger] = 'Invalid password' unless @user.authenticate(params[:user][:current_password])
+      render 'edit'
+    end
+  end
+  
+  # GET /users/:id/delete
+  def delete
+    @user = User.find(params[:id])
+  end
+
+  # DELETE /users/:id
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "User deleted"
+    redirect_to users_url
+  end
+  
+  # GET /users/:id/following
+  def following
+    @title = "Following"
+    @userprofile  = User.find(params[:id])
+    @users = @userprofile.following.page(params[:page]).per(10)
+    render 'show_follow'
+  end
+
+  # GET /users/:id/followers
+  def followers
+    @title = "Followers"
+    @userprofile  = User.find(params[:id])
+    @users = @userprofile.followers.page(params[:page]).per(10)
+    render 'show_follow'
+  end
+  
+  # GET /users/:id/subscribing
+  def subscribing
+    @title = "Subscribing"
+    @userprofile = User.find(params[:id])
+    @users = @userprofile.subscribing.page(params[:page]).per(10)
+    render 'show_follow'
+  end
+  
+  
+  private
+  
+    def user_params
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :lineuid)
+    end
+    
+    # beforeアクション
+    
+    # 正しいユーザーかどうか確認
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_url) unless current_user?(@user)
+    end
+    
+    # 管理者かどうか確認
+    def admin_user
+      redirect_to(root_url) unless current_user.admin?
+    end
+end

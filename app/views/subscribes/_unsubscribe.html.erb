@@ -1,0 +1,13 @@
+<%= form_with(url: unsubscribe_relationship_path(user.id),
+           method: :patch, local: false, class: "inline-block") do |f| %>
+  <% if @userprofile.present? %>
+    <div><%= hidden_field_tag :userprofile_id, @userprofile.id, { id: SecureRandom.hex(4) } %></div>
+  <% elsif params[:id].present? %>
+    <div><%= hidden_field_tag :userprofile_id, params[:id],     { id: SecureRandom.hex(4) } %></div>
+  <% else %>
+    <div><%= hidden_field_tag :userprofile_id, current_user.id, { id: SecureRandom.hex(4) } %></div>
+  <% end %>
+  <%= button_tag :type => "submit", class: "btn btn-link subscribe-btn" do %>
+    <i class="fas fa-bell fa-lg subscribe-btn-subscribe"></i>
+  <% end %>
+<% end %>

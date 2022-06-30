@@ -1,0 +1,42 @@
+<!-- activity表示であるので色つけはなし -->
+<div id="activity-<%= activity.id %>" class="notification">
+  
+<!-- ポスト・コメント・いいね・フォロー内容を表示 -->
+  <% notified = User.find(activity.notified_id) %>
+  
+  <% if activity.notificable_type === "Micropost" %>
+    <p>投稿しました（<%= time_ago_in_words(activity.created_at) %> ago.）</p>
+    <%= render partial: 'microposts/micropost', locals: {micropost: activity.notificable} %>
+    <%= link_to '', micropost_path(activity.notificable.id), class: 'showcontainer' %>
+
+    
+  <% elsif activity.notificable_type === "Comment" %>
+    <p><%= link_to notified.name, notified %>さんにコメントしました（<%= time_ago_in_words(activity.created_at) %> ago.）</p>
+    <% comment = activity.notificable %>  
+    <%= render partial: 'comments/comment', locals: {comment: comment} %>
+    <div class="notification-wrap">
+      <%= render partial: 'microposts/micropost', locals: {micropost: comment.micropost} %>
+    </div>
+    <%= link_to '', micropost_path(activity.notificable.micropost.id), class: 'showcontainer' %>
+
+    
+  <% elsif activity.notificable_type === "Like" %>
+    <p><%= link_to notified.name, notified %>さんにいいね！しました（<%= time_ago_in_words(activity.created_at) %> ago.）</p>
+
+    <% if activity.notificable.likeable_type === "Micropost" %>
+      <% micropost = activity.notificable.likeable %>
+      <%= render partial: 'microposts/micropost', locals: {micropost: micropost} %>
+      <%= link_to '', micropost_path(micropost.id), class: 'showcontainer' %>
+
+    <% elsif activity.notificable.likeable_type === "Comment" %>
+      <% comment = activity.notificable.likeable %>
+      <%= render partial: 'comments/comment', locals: {comment: comment} %>
+      <div class="notification-wrap">
+        <%= render partial: 'microposts/micropost', locals: {micropost: comment.micropost} %>
+      </div>
+      <%= link_to '', micropost_path(comment.micropost_id), class: 'showcontainer' %>
+    <% end %>
+    
+  <% end %>
+
+</div>

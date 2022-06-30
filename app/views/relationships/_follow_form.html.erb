@@ -1,0 +1,24 @@
+<div class="follow_form">
+  
+  <% unless current_user?(user) %>
+    <span class="follow_form_<%= user.id %> inline-block">
+    <% if current_user.following?(user) %>
+      <%= render partial: 'relationships/unfollow', locals: {user: user} %>
+    <% else %>
+      <%= render partial: 'relationships/follow', locals: {user: user} %>
+    <% end %>
+    </span>
+  
+    <span class="subscribe_<%= user.id %> inline-block">
+    <% if !current_user.following?(user) %>
+      <%= render partial: 'subscribes/invalid', locals: {user: user} %>
+    <% elsif current_user.subscribing?(user) %>
+      <%= render partial: 'subscribes/unsubscribe', locals: {user: user} %>
+    <% else %>
+      <%= render partial: 'subscribes/subscribe', locals: {user: user} %>
+    <% end %>
+    </span>
+  
+  <% end %>
+  
+</div>

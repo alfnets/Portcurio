@@ -1,0 +1,15 @@
+<div class="replies-container">
+  <div class="replies">
+    <%= render @replies %>
+  </div>
+  
+  <% if @errors_comment %>
+    <%= render 'shared/error_messages', object: @errors_comment %>
+  <% end %>
+  
+  <div class="mention">
+    <!-- メンション相手が表示される -->
+  </div>
+
+  <%= render partial: 'comments/reply_form' %>
+</div>

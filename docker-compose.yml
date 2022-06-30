@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  web:
+    build:
+      context: .
+    command: bundle exec puma -C config/puma.rb
+    environment:
+      R_PREFIX: portcurio
+      DOMAIN_NAME: portcurio.net
+    volumes:
+      - .:/portcurio
+      - public-data:/portcurio/public
+      - tmp-data:/portcurio/tmp
+      - log-data:/portcurio/log
+    depends_on:
+      - db
+  db:
+    image: mariadb:10.5
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - '3306:3306'
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - db-data:/var/lib/mysql
+  nginx:
+    build:
+      context: docker/nginx
+    environment:
+      R_PREFIX: portcurio
+    volumes:
+      - public-data:/portcurio/public
+      - tmp-data:/portcurio/tmp
+    ports:
+      - 80:80
+    depends_on:
+      - web
+volumes:
+  public-data:
+  tmp-data:
+  log-data:
+  db-data:
