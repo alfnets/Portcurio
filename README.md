@@ -1,6 +1,6 @@
 # README
 # Portcurio | 教材SNS
-- https://portcurio.net/
+https://portcurio.net/
 - 世界中の教材を集約し、協力してブラッシュアップしていくことを目的としています。ご自身の教材のポートフォリオとしても活用してください。
 
 ## Dependency
