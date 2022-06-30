@@ -1,19 +1,19 @@
 # README
 # Portcurio | 教材SNS
-https://portcurio.net/
-世界中の教材を集約し、協力してブラッシュアップしていくことを目的としています。ご自身の教材のポートフォリオとしても活用してください。
+- https://portcurio.net/
+- 世界中の教材を集約し、協力してブラッシュアップしていくことを目的としています。ご自身の教材のポートフォリオとしても活用してください。
 
 ## Dependency
-主な開発言語          : Ruby 3.0.4
-主なWebフレームワーク : Ruby on Rails 6.1
-DB                    : RDS (MariaDB)
-Webサーバ             : Nginx
-本番環境              : AWS (ECS on Fargate)
-ステージング環境      : AWS (ECS on EC2)
-開発環境              : ローカル (Docker)
-コードホスティング    : GitHub, Terraform Cloud
-IaC                   : Terraform (HCL)
-CI/CD                 : GitHub Actions
+- 主な開発言語          : Ruby 3.0.4
+- 主なWebフレームワーク : Ruby on Rails 6.1
+- DB                    : RDS (MariaDB)
+- Webサーバ             : Nginx
+- 本番環境              : AWS (ECS on Fargate)
+- ステージング環境      : AWS (ECS on EC2)
+- 開発環境              : ローカル (Docker)
+- コードホスティング    : GitHub, Terraform Cloud
+- IaC                   : Terraform (HCL)
+- CI/CD                 : GitHub Actions
 
 ## License
 This software is released under the MIT License, see LICENSE.
