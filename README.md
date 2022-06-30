@@ -14,6 +14,7 @@ https://portcurio.net/
 - コードホスティング    : GitHub, Terraform Cloud
 - IaC                   : Terraform (HCL)
 - CI/CD                 : GitHub Actions
+- テストフレームワーク  : RSpec
 - メールホスティング    : SendGrid
 - 通知連携              : LINE Messaging API
 
