@@ -14,6 +14,8 @@ https://portcurio.net/
 - コードホスティング    : GitHub, Terraform Cloud
 - IaC                   : Terraform (HCL)
 - CI/CD                 : GitHub Actions
+- メールホスティング    : SendGrid
+- 通知連携              : LINE Messaging API
 
 ## License
 This software is released under the MIT License, see LICENSE.
