@@ -19,9 +19,12 @@ https://portcurio.net/
 - 通知連携              : LINE Messaging API
 
 ## License
-This software is released under the MIT License, see LICENSE.
+Copyright (c) 2022 alf
+Released under the MIT license
+https://opensource.org/licenses/mit-license.php
 
 ## Authors
+alf
 https://alfnet.info/profile/
 
 
