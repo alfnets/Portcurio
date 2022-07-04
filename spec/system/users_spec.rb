@@ -4,6 +4,7 @@ RSpec.describe "Users", type: :system do
   
   describe "sign up" do
     let(:user) { FactoryBot.build(:user) }
+    let(:activated_user) { FactoryBot.create(:user, :activated) }
 
     context "with valid params" do
       it "sign up" do
@@ -35,6 +36,15 @@ RSpec.describe "Users", type: :system do
           expect(page).to have_selector "div.error_explanation"
           expect(page).to have_selector "div.field_with_errors"
         end
+      end
+    end
+
+    context "logging existed user" do
+      before { log_in activated_user }
+      
+      it "redirects to root_path" do
+        visit signup_path
+        expect(page).to have_current_path root_path
       end
     end
   end
