@@ -40,6 +40,58 @@ RSpec.describe "Users", type: :system do
   end
 
 
+  describe "resends activate mail" do
+    let(:user) { FactoryBot.create(:user) }
+    let(:activated_user) { FactoryBot.create(:user, :activated) }
+
+    context "with valid params" do
+      it "sign up" do
+        visit signup_path
+        fill_in "Name",         with: user.name        
+        fill_in "Email",        with: user.email
+        fill_in "Password",     with: user.password
+        fill_in "Confirmation", with: user.password_confirmation
+        click_button "Create my account"
+    
+        aggregate_failures do
+          expect(page).to have_current_path root_path
+          expect(page.body).to include "Resend the email to activate your account. Please check your email."
+        end
+      end
+    end
+
+    context "with invalid params" do
+      it "that is password confirmation sign up" do
+        visit signup_path
+        fill_in "Name",         with: user.name        
+        fill_in "Email",        with: user.email
+        fill_in "Password",     with: user.password
+        fill_in "Confirmation", with: ""
+        click_button "Create my account"
+    
+        aggregate_failures do
+          expect(page.body).to include "Password confirmation doesn&#39;t match Password"
+          expect(page.body).to_not include "Email has already been taken"
+        end
+      end
+    end
+
+    context "with the activated user params" do
+      it "doesn't resends activate email after clicking Create button" do
+        visit signup_path
+        fill_in "Name",         with: activated_user.name
+        fill_in "Email",        with: activated_user.email
+        fill_in "Password",     with: activated_user.password
+        fill_in "Confirmation", with: activated_user.password
+        click_button "Create my account"
+    
+        aggregate_failures do
+          expect(page.body).to include "Email has already been taken"
+        end
+      end
+    end
+  end
+
   describe "deletes a itself account" do
     let(:user) { FactoryBot.create(:user, :activated) }
     let(:invalid_user_params) { FactoryBot.attributes_for(:invalid_user) }

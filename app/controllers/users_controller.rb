@@ -75,7 +75,25 @@ class UsersController < ApplicationController
       
     else
       # Failure (not valid params)
-      render 'new'
+      # 入力したemailを使ったユーザーが既にいるか確認
+      @org_user = User.find_by(email: user_params[:email])
+      if @org_user
+        # 既にいるユーザーがアクティベート済みでエラーが1つだけ（"Email has already been taken"）であることを確認
+        if !@org_user.activated? && @user.errors.count == 1 && @user.errors.full_messages.include?("Email has already been taken")
+          @org_user.update(user_params)
+          @org_user.create_activation_digest
+          @org_user.send_activation_email
+          flash[:info] = "Resend the email to activate your account. Please check your email."
+          redirect_to root_path
+        else
+          if !@org_user.activated? && @user.errors.full_messages.include?("Email has already been taken")
+            @user.errors.messages.delete(:email)
+          end
+          render 'new'
+        end
+      else
+        render 'new'
+      end
     end
   end
   
