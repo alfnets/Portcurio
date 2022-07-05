@@ -82,7 +82,7 @@ class UsersController < ApplicationController
         # 既にいるユーザーがアクティベート済みでエラーが1つだけ（"Email has already been taken"）であることを確認
         if !@org_user.activated? && @user.errors.count == 1 && @user.errors.full_messages.include?("Email has already been taken")
           @org_user.update(user_params)
-          @org_user.create_activation_digest
+          @org_user.reset_activation_digest
           @org_user.send_activation_email
           flash[:info] = "Resend the email to activate your account. Please check your email."
           redirect_to root_path

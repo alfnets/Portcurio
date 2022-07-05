@@ -219,5 +219,18 @@ RSpec.describe User, type: :model do
       user.save
       expect(user.authenticated?("remember","hoge")).to be_falsy
     end
+
+    it "has reset_activation_digest method" do
+      user.activation_token  = User.new_token
+      user.activation_digest = User.digest(user.activation_token)
+      user.save
+      activation_token1  = user.activation_token
+      activation_digest1 = user.activation_digest
+      user.reset_activation_digest
+      aggregate_failures do
+        expect(user.activation_token).to_not eq activation_token1
+        expect(user.activation_digest).to_not eq activation_digest1
+      end
+    end
   end
 end

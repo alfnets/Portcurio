@@ -141,10 +141,10 @@ class User < ApplicationRecord
     self.update_attribute(:activated_at,  Time.zone.now)
   end
 
-  # 有効化トークンとダイジェストを作成および代入する
-  def create_activation_digest
+  # 有効化トークンとダイジェストを再作成および更新する
+  def reset_activation_digest
     self.activation_token  = User.new_token
-    self.activation_digest = User.digest(activation_token)
+    update_attribute(:activation_digest, User.digest(activation_token))
   end
 
   # 有効化用のメールを送信する
@@ -244,4 +244,9 @@ class User < ApplicationRecord
       self.email = email.downcase
     end
 
+    # 有効化トークンとダイジェストを作成および代入する
+    def create_activation_digest
+      self.activation_token  = User.new_token
+      self.activation_digest = User.digest(activation_token)
+    end
 end

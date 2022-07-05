@@ -102,6 +102,7 @@ RSpec.describe "Users", type: :system do
     end
   end
 
+
   describe "deletes a itself account" do
     let(:user) { FactoryBot.create(:user, :activated) }
     let(:invalid_user_params) { FactoryBot.attributes_for(:invalid_user) }
