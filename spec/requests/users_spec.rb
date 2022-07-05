@@ -80,7 +80,6 @@ RSpec.describe "Users", type: :request do
         post users_path, params: { user: user_params }
         # expect(flash[:success]).to eq "Account activated!"  # 自動認証なら必要
         expect(flash[:info]).to eq "Please check your email to activate your account."  # 自動認証なら不要
-        
       end
 
       it "doesn't has login status" do
