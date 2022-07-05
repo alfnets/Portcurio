@@ -69,6 +69,7 @@ jobs:
       run: |
         sed -i -e s/SED_TARGET_AWS_ACCOUNT_ID/${{ secrets.AWS_ACCOUNT_ID }}/g ${{ env.ECS_TASK_DEFINITION }}
         sed -i -e s/SED_TARGET_R_PREFIX/${{ secrets.R_PREFIX }}/g ${{ env.ECS_TASK_DEFINITION }}
+        sed -i -e s/SED_TARGET_DOMAIN_NAME/${{ secrets.DOMAIN_NAME }}/g ${{ env.ECS_TASK_DEFINITION }}
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
