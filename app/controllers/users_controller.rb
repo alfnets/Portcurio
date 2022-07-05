@@ -46,6 +46,7 @@ class UsersController < ApplicationController
   
   # POST /users (+ params)
   def create
+    redirect_to root_path if logged_in?
     # (user + given params).save
     # User.create(params[:user]) マスアサイメント脆弱性になる
       # ex.) POST + params[:user][:admin] = true
