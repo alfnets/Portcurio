@@ -34,7 +34,7 @@ class Micropost < ApplicationRecord
                                       message: "must be a valid image format" },
                       size:         { less_than: 5.megabytes,
                                       message: "should be less than 5MB" }
-  validate  :valide_file_type, :valid_file_link
+  validate  :valid_file_type, :valid_file_link
                                       
   # 表示用のリサイズ済み画像を返す
   def display_image
