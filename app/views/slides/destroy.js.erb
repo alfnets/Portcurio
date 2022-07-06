@@ -1,2 +1,1 @@
-<% description = "選択されていません" %>
-$(".slide_post > .file_type").html("<%= description %>")
+$(".micropost_form").html("<%= escape_javascript(render partial: 'microposts/micropost_form') %>")
