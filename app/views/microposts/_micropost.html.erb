@@ -45,14 +45,18 @@
               </div>
             <% end %>
           <% end %>
+          <% if micropost.file_link %>
+            <div class="links-container">
+              <div class="slide-container">
+                <%= micropost.file_link.html_safe %>
+              </div>
+            </div>
+          <% end %>
         </div>
         <% if micropost.image.attached? %>
           <!-- link_to micropost.display_image, "data-lightbox": micropost.display_image do %>-->
           <%= image_tag micropost.display_image %>
           <!--end %>-->
-        <% end %>
-        <% if micropost.file_link %>
-          <%= micropost.file_link.html_safe %>
         <% end %>
       </div>
     </div>
