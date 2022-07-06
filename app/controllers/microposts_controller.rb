@@ -59,12 +59,14 @@ class MicropostsController < ApplicationController
     redirect_to request.referer || root_url
   end
   
+
   # GET /microposts
   def index
     @feedall = Kaminari.paginate_array(Micropost.all).page(params[:page])
     @userprofile = current_user
   end
   
+
   # GET /microposts/:id
   def show
     @feedmicropost = Micropost.find(params[:id])
@@ -72,13 +74,14 @@ class MicropostsController < ApplicationController
     @comments = @feedmicropost.comments.where(parent_id: nil).unscope(:order).order(updated_at: :desc)
   end
   
+
   private
     
     # Strong parameter
     def micropost_params
-      params.require(:micropost).permit(:content, :image)
+      params.require(:micropost).permit(:content, :image, :file_type, :file_link)
     end
-    
+
     def correct_user
       @micropost = current_user.microposts.find_by(id: params[:id])
       redirect_to root_url if @micropost.nil?
