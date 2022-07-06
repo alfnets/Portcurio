@@ -51,6 +51,9 @@
           <%= image_tag micropost.display_image %>
           <!--end %>-->
         <% end %>
+        <% if micropost.file_link %>
+          <%= micropost.file_link.html_safe %>
+        <% end %>
       </div>
     </div>
     <span class="timestamp">

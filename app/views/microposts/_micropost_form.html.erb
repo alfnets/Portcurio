@@ -3,11 +3,22 @@
   <div class="field">
     <%= f.text_area :content, placeholder: "Compose new micropost..." %>
   </div>
+  <% @micropost.file_type ? file_type = @micropost.file_type : file_type = "" %>
+  <% @micropost.file_link ? file_link = @micropost.file_link : file_link = "" %>
+  <div class="file_type_tag"><%= f.hidden_field :file_type, value: file_type %></div>
+  <div class="file_link_tag"><%= f.hidden_field :file_link, value: file_link %></div>
   <%= f.submit "Post", class: "btn btn-primary" %>
   <span class="image">
     <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
   </span>
 <% end %>
+<div class="slide_post">
+  <span class="slide_form">
+    <%= button_to "スライドを投稿する", new_microposts_slides_path, method: :get, class: "btn-default btn-slide", remote: true %>
+  </span>
+  <span class="file_type">選択されていません</span>
+  <span class="slide_post_modal"></span>
+</div>
 
 <script type="text/javascript">
   $("#micropost_image").bind("change", function() {

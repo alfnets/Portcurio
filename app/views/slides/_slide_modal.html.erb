@@ -1,0 +1,20 @@
+<div class="slide-modal-wrapper" >
+  <div class="slide-modal">
+    <span class="close-modal">
+      <%= link_to close_microposts_slides_path, remote: true do %>
+        <i class="fa fa-2x fa-times"></i>
+      <% end %>
+    </span>
+    <%= form_with(model: @micropost, url: microposts_slides_path, method: :post, local: false) do |f| %>
+      <%= render 'shared/error_messages_easy', object: f.object %>
+      <%= f.radio_button :file_type, :GoogleSlides %>
+      <%= f.label :file_type, "Google Slides", {value: :GoogleSlides, style: "display: inline-block;"} %>
+      <%= f.radio_button :file_type, :PowerPoint %>
+      <%= f.label :file_type, "PowerPoint", {value: :PowerPoint, style: "display: inline-block;"} %>
+      <div class="field">
+        <%= f.text_area :file_link, placeholder: "Please input a link of file" %>
+      </div> 
+      <%= f.submit "OK", class: "btn btn-primary btn-ok" %>
+    <% end %>
+  </div>
+</div>
