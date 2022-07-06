@@ -1,13 +1,9 @@
 $(".slide_post_modal").html("")
 
+$micropost_content = $(".micropost_form > form > .field > #micropost_content").val()
+
 $(".micropost_form").html("<%= escape_javascript(render partial: 'microposts/micropost_form') %>")
 
-<% @micropost.file_type ? description = @micropost.file_type : description = "選択されていません" %>
+$(".micropost_form > form > .field > #micropost_content").val($micropost_content)
 
-<% if @micropost.file_type %>
-  <% description = @micropost.file_type %>
-  $(".slide_post > .file_type").html('<%= description %> <%= link_to microposts_slides_path, remote: true, class: "btn-link", method: :delete do %><i class="far fa-times-circle"></i><% end %>')
-<% else %>
-  <% description = "選択されていません" %>
-  $(".slide_post > .file_type").html("<%= description %>)
-<% end %>
+$(".slide_post > .file_type").html('<%= @micropost.file_type %> <%= link_to microposts_slides_path, remote: true, class: "btn-link", method: :delete do %><i class="far fa-times-circle"></i><% end %>')
