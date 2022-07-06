@@ -1,2 +1,14 @@
 $(".slide_post_modal").html("<%= escape_javascript(render partial: 'slide_modal') %>").hide().fadeIn(300)
 
+var $file_type = $(".file_type_tag > #micropost_file_type").val();
+var $file_link = $(".file_link_tag > #micropost_file_link").val();
+
+if ($file_type == "GoogleSlides") {
+  $("#micropost_file_type_googleslides").prop('checked', true);
+} else if ($file_type == "PowerPoint") {
+  $("#micropost_file_type_powerpoint").prop('checked', true);
+}
+
+$(".field > #micropost_file_link").val($file_link)
+
+
