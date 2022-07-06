@@ -48,13 +48,18 @@ Rails.application.routes.draw do
     patch :subscribe, on: :member
     patch :unsubscribe, on: :member
   end
-  resources :microposts,          only: [:create, :destroy, :show, :index], concerns: :likeable do
-    resources :comments,  only: [:create, :destroy, :show, :close, :mention_delete] do
+  resource  :microposts do
+    resource :slides, only: [:new, :create, :close, :destroy] do
+      get :close, on: :member
+    end
+  end
+  resources :microposts, only: [:create, :destroy, :show, :index], concerns: :likeable do
+    resources :comments, only: [:create, :destroy, :show, :close, :mention_delete] do
       get :close, on: :member
       get :mention_delete, on: :member
     end
   end
-  resources :comments,            only: [:show, :close], concerns: :likeable do
+  resources :comments, only: [:show, :close], concerns: :likeable do
     get :close, on: :member
   end
   
