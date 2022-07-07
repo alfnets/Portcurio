@@ -90,7 +90,7 @@ RSpec.describe "Microposts", type: :system do
 
             expect(page).to have_selector '.error_explanation'
             save_page
-            expect(page).to have_link '2', href: '/?micropost%5Bcontent%5D=&page=2'
+            expect(page).to have_link '2'
           end
         end
       end
