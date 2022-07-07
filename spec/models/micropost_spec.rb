@@ -26,13 +26,13 @@ RSpec.describe Micropost, type: :model do
     it "is invalid without a content" do
       micropost.content = ""
       micropost.valid?
-      expect(micropost.errors[:content_or_image]).to include "can't be blank"
+      expect(micropost.errors[:content_or_image_or_file_link]).to include "can't be blank"
     end
 
     it "is invalid with a blank content" do
       micropost.content = "   "
       micropost.valid?
-      expect(micropost.errors[:content_or_image]).to include "can't be blank"
+      expect(micropost.errors[:content_or_image_or_file_link]).to include "can't be blank"
     end
 
     it "is invalid with a content at most 140 characters" do
