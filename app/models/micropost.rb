@@ -48,21 +48,23 @@ class Micropost < ApplicationRecord
     end
 
     def valid_file_type
-      valid_file_types = [ "GoogleSlides", "PowerPoint" ]
-      unless valid_file_types.include?(file_type)
-        errors.add(:file_type, "Invalid file type")
+      if file_type.present?
+        valid_file_types = [ "GoogleSlides", "PowerPoint" ]
+        unless valid_file_types.include?(file_type)
+          errors.add(:file_type, "Invalid file type")
+        end
       end
     end
   
     def valid_file_link
-      if file_type == "GoogleSlides"
-        check = file_link.present? && \
-                file_link.start_with?('<iframe src="https://docs.google.com/presentation/d/')
-      elsif file_type == "PowerPoint"
-        check = file_link.present? && \
-                file_link.start_with?('<iframe src="https://onedrive.live.com/embed?resid=') && \
-                file_link.end_with?('これは、<a target="_blank" href="https://office.com/webapps">Office</a> の機能を利用した、<a target="_blank" href="https://office.com">Microsoft Office</a> の埋め込み型のプレゼンテーションです。</iframe>')
+      if file_link.present?
+        if file_type == "GoogleSlides"
+          check = file_link.start_with?('<iframe src="https://docs.google.com/presentation/d/')
+        elsif file_type == "PowerPoint"
+          check = file_link.start_with?('<iframe src="https://onedrive.live.com/embed?resid=') && \
+                  file_link.end_with?('これは、<a target="_blank" href="https://office.com/webapps">Office</a> の機能を利用した、<a target="_blank" href="https://office.com">Microsoft Office</a> の埋め込み型のプレゼンテーションです。</iframe>')
+        end
+        errors.add(:file_link, "Invalid file link") unless check
       end
-      errors.add(:file_link, "Invalid file link") unless check
     end
 end

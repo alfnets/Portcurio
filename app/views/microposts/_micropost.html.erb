@@ -21,8 +21,8 @@
                 <% if og %>
                   <div class="links-container">
                     <figure>
-                      <% cache(og.image.url, expires_in: 600.seconds) do %>
-                        <%= link_to image_tag(og.image.url, alt: og.title), og.url, target: :_blank, rel: "noopener noreferrer" %>
+                      <% cache(og.images.first, expires_in: 600.seconds) do %>
+                        <%= link_to image_tag(og.images.first, alt: og.title), og.url, target: :_blank, rel: "noopener noreferrer" %>
                       <% end %>
                       <figcaption>
                         <%= og.title %>
@@ -45,7 +45,7 @@
               </div>
             <% end %>
           <% end %>
-          <% if micropost.file_link %>
+          <% if micropost.file_link.present? %>
             <div class="links-container">
               <div class="slide-container">
                 <%= micropost.file_link.html_safe %>
