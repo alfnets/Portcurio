@@ -10,30 +10,40 @@
         </p>
         <div class="links">
           <% if micropost.links.present? %>
-            <div class="links-container">
-              <% begin %>   <!-- OEMの表示（YouTube, Twitter 等） -->
-                <% oembed = OEmbed::Providers.get(micropost.links, maxwidth: "400") %>
+            <% oembed = oembed_get(micropost.links) %>
+            <% if oembed %>   <!-- OEmbedの表示（YouTube, Twitter 等） -->
+              <div class="links-container">
                 <div class="oembed"><%= oembed.html.html_safe %></div>
-              <% rescue %>
-                <% if micropost.links.end_with?(".pdf") %> <!-- pdfリンクのプレビュー -->
-                  <% pdf_link = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{micropost.links}" %>
-                  <div class="pdf-container">
-                    <iframe class="pdf" data-src=<%= pdf_link %>></iframe>
-                  </div>
-                <% else %>  <!-- OGPの表示（Webサイト） -->
-                  <% og = og_get(micropost.links) %>
+              </div>
+            <% elsif micropost.links.end_with?(".pdf") %> <!-- pdfリンクのプレビュー -->
+              <div class="links-container">
+                <% pdf_link = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{micropost.links}" %>
+                <div class="pdf-container">
+                  <iframe class="pdf" data-src=<%= pdf_link %>></iframe>
+                </div>
+              </div>
+            <% else %>  <!-- OGPの表示（Webサイト） -->
+              <% og = og_get(micropost.links) %>
+              <% if og %>
+                <div class="links-container">
                   <figure>
                     <% cache(og.images.first, expires_in: 600.seconds) do %>
-                      <%= link_to image_tag(og.images.first, alt: og.title), og.url, target: :_blank, rel: "noopener noreferrer" %>
+                      <% if og.title.present? %>
+                        <%= link_to image_tag(og.images.first, alt: og.title), og.url, target: :_blank, rel: "noopener noreferrer" %>
+                      <% elsif og.description.present? %>
+                        <%= link_to image_tag(og.images.first, alt: og.description), og.url, target: :_blank, rel: "noopener noreferrer" %>
+                      <% else %>
+                        <%= link_to image_tag(og.images.first), og.url, target: :_blank, rel: "noopener noreferrer" %>
+                      <% end %>
                     <% end %>
                     <figcaption>
-                      <span class=ogp_title>[<%= og.title %>]</span>
-                      <%= og.description.truncate(150) if og.description.present? %>
+                      <span class=ogp_title><%= "[#{og.title}]" if og.title.present? %></span>
+                      <span class=ogp_description><%= og.description.truncate(150) if og.description.present? %>
                     </figcaption>
                   </figure>
-                <% end %>
+                </div>
               <% end %>
-            </div>
+            <% end %>
           <% end %>
           <% if micropost.file_link.present? %>
             <div class="links-container">

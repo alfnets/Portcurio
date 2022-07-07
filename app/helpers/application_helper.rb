@@ -21,20 +21,33 @@ module ApplicationHelper
     return ENV.fetch('DOMAIN_NAME', nil)
   end
   
+  # OEmbedの取得
+  def oembed_get(url)
+    begin
+      # Rails.cache.fetch(url, expires_in: 1.day) do
+        OEmbed::Providers.get(url, maxwidth: "400")
+      # end
+    rescue
+      false
+    end
+  end
+
   # OGPの情報を取得
   def og_get(url)
     begin
       Rails.cache.fetch(url, expires_in: 1.day) do
         redirect_url = Net::HTTP.get_response(URI.parse(url))['location'] # リダイレクト先検出
         if redirect_url.nil?
-          source = URI.open(url, 'User-Agent' => 'bot', &:read) # リダイレクト先がなかったら通常のURL
+          resource = URI.open(url, 'User-Agent' => 'ruby', &:read) # リダイレクト先がなかったら通常のURL
         else
-          source = URI.open(redirect_url, 'User-Agent' => 'bot', &:read) # リダイレクト先があったらリダイレクト先のURL
+          resource = URI.open(redirect_url, 'User-Agent' => 'ruby', &:read) # リダイレクト先があったらリダイレクト先のURL
         end
-        OpenGraph.new(source)
+        og = OpenGraph.new(resource, { :headers => {'User-Agent' => 'ruby'} }).dup
+        og.metadata.present? ? og : false
       end
     rescue
-      OpenGraph.new(url)
+      og = OpenGraph.new(url, { :headers => {'User-Agent' => 'ruby'} }).dup
+      og.metadata.present? ? og : false
     end
   end
   
