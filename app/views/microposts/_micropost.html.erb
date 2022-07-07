@@ -10,40 +10,33 @@
         </p>
         <div class="links">
           <% if micropost.links.present? %>
-            <% begin %>   <!-- OEMの表示（YouTube, Twitter 等） -->
-              <% oembed = OEmbed::Providers.get(micropost.links, maxwidth: "400") %>
-              <div class="links-container">
+            <div class="links-container">
+              <% begin %>   <!-- OEMの表示（YouTube, Twitter 等） -->
+                <% oembed = OEmbed::Providers.get(micropost.links, maxwidth: "400") %>
                 <div class="oembed"><%= oembed.html.html_safe %></div>
-              </div>
-            <% rescue %>
-              <% begin %>   <!-- OGPの表示（Webサイト） -->
-                <% og = og_get(micropost.links) %>
-                <% if og %>
-                  <div class="links-container">
-                    <figure>
-                      <% cache(og.images.first, expires_in: 600.seconds) do %>
-                        <%= link_to image_tag(og.images.first, alt: og.title), og.url, target: :_blank, rel: "noopener noreferrer" %>
-                      <% end %>
-                      <figcaption>
-                        <%= og.title %>
-                        <%= og.description.truncate(150) %>
-                      </figcaption>
-                    </figure>
-                  </div>
-                <% end %>
               <% rescue %>
+                <% if micropost.links.present? %> <!-- pdfリンクのプレビュー -->
+                  <% link = micropost.links %>
+                  <% if link.end_with?(".pdf") %>
+                    <% pdf_link = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{link}" %>
+                    <div class="pdf-container">
+                      <iframe class="pdf" data-src=<%= pdf_link %>></iframe>
+                    </div>
+                  <% end %>
+                <% else %>  <!-- OGPの表示（Webサイト） -->
+                  <% og = og_get(micropost.links) %>
+                  <figure>
+                    <% cache(og.images.first, expires_in: 600.seconds) do %>
+                      <%= link_to image_tag(og.images.first, alt: og.title), og.url, target: :_blank, rel: "noopener noreferrer" %>
+                    <% end %>
+                    <figcaption>
+                      <%= og.title %>
+                      <%= og.description.truncate(150) %>
+                    </figcaption>
+                  </figure>
+                <% end %>
               <% end %>
-            <% end %>
-            <!-- pdfリンクのプレビュー -->
-            <% link = micropost.links %>
-            <% if link.end_with?(".pdf") %>
-              <% pdf_link = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{link}" %>
-              <div class="links-container">
-                <div class="pdf-container">
-                  <iframe class="pdf" data-src=<%= pdf_link %>></iframe>
-                </div>
-              </div>
-            <% end %>
+            </div>
           <% end %>
           <% if micropost.file_link.present? %>
             <div class="links-container">
