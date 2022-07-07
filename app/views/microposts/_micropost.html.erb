@@ -27,8 +27,8 @@
                       <%= link_to image_tag(og.images.first, alt: og.title), og.url, target: :_blank, rel: "noopener noreferrer" %>
                     <% end %>
                     <figcaption>
-                      <%= og.title %>
-                      <%= og.description.truncate(150) %>
+                      <span class=ogp_title>[<%= og.title %>]</span>
+                      <%= og.description.truncate(150) if og.description.present? %>
                     </figcaption>
                   </figure>
                 <% end %>
