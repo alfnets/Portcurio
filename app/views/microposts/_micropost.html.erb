@@ -15,14 +15,11 @@
                 <% oembed = OEmbed::Providers.get(micropost.links, maxwidth: "400") %>
                 <div class="oembed"><%= oembed.html.html_safe %></div>
               <% rescue %>
-                <% if micropost.links.present? %> <!-- pdfリンクのプレビュー -->
-                  <% link = micropost.links %>
-                  <% if link.end_with?(".pdf") %>
-                    <% pdf_link = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{link}" %>
-                    <div class="pdf-container">
-                      <iframe class="pdf" data-src=<%= pdf_link %>></iframe>
-                    </div>
-                  <% end %>
+                <% if micropost.links.end_with?(".pdf") %> <!-- pdfリンクのプレビュー -->
+                  <% pdf_link = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{micropost.links}" %>
+                  <div class="pdf-container">
+                    <iframe class="pdf" data-src=<%= pdf_link %>></iframe>
+                  </div>
                 <% else %>  <!-- OGPの表示（Webサイト） -->
                   <% og = og_get(micropost.links) %>
                   <figure>
