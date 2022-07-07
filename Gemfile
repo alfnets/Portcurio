@@ -35,6 +35,7 @@ gem 'kaminari-bootstrap'
 gem 'bootstrap-sass'
 gem 'rinku'
 gem 'ogp'
+gem "opengraph_parser"
 gem 'nokogiri'
 gem 'ruby-oembed'
 gem 'hirb'

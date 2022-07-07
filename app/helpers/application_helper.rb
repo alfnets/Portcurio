@@ -30,7 +30,7 @@ module ApplicationHelper
       else
         source = URI.open(redirect_url, 'User-Agent' => 'bot', &:read) # リダイレクト先があったらリダイレクト先のURL
       end
-      OGP::OpenGraph.new(source)
+      OpenGraph.new(source)
     end
   end
   
