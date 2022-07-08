@@ -53,7 +53,7 @@ Rails.application.routes.draw do
       get :close, on: :member
     end
   end
-  resources :microposts, only: [:create, :destroy, :show], concerns: :likeable do
+  resources :microposts, only: [:create, :destroy, :show, :index], concerns: :likeable do
     resources :comments, only: [:create, :destroy, :show, :close, :mention_delete] do
       get :close, on: :member
       get :mention_delete, on: :member
