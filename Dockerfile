@@ -9,7 +9,9 @@ apt-get update && apt-get install -y curl apt-transport-https wget && \
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
 apt-get update && apt-get install -y yarn && \
-apt-get update && apt-get install -y mariadb-client
+apt-get update && apt-get install -y mariadb-client && \
+# cronインストール
+apt-get update && apt-get install -y cron   
 
 # ENV
 ENV APP_PATH /portcurio
@@ -27,3 +29,10 @@ RUN yarn add @fortawesome/fontawesome-free
 ADD . $APP_PATH
 
 RUN mkdir -p tmp/sockets
+
+# cronの起動
+RUN service cron start
+# # wheneverでcrontab書き込み
+RUN bundle exec whenever --update-crontab
+# # cronをフォアグラウンド実行
+CMD ["cron", "-f"]
