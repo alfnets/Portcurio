@@ -13,7 +13,7 @@
             <% oembed = oembed_get(micropost.links) %>
             <% if oembed %>   <!-- OEmbedの表示（YouTube, Twitter 等） -->
               <div class="links-container">
-                <div class="oembed"><%= oembed.html.html_safe %></div>
+                <div class="oembed"><%= oembed.html_safe %></div>
               </div>
             <% elsif micropost.links.end_with?(".pdf") %> <!-- pdfリンクのプレビュー -->
               <div class="links-container">

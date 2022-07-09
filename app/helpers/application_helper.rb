@@ -24,9 +24,9 @@ module ApplicationHelper
   # OEmbedの取得
   def oembed_get(url)
     begin
-      # Rails.cache.fetch(url, expires_in: 1.day) do
-        OEmbed::Providers.get(url, maxwidth: "400")
-      # end
+      Rails.cache.fetch("#{url}_oembed", expires_in: 1.day) do
+        OEmbed::Providers.get(url, maxwidth: "400").html
+      end
     rescue
       false
     end
@@ -35,18 +35,18 @@ module ApplicationHelper
   # OGPの情報を取得
   def og_get(url)
     begin
-      Rails.cache.fetch(url, expires_in: 1.day) do
+      Rails.cache.fetch("#{url}_og", expires_in: 1.day) do
         redirect_url = Net::HTTP.get_response(URI.parse(url))['location'] # リダイレクト先検出
         if redirect_url.nil?
           resource = URI.open(url, 'User-Agent' => 'ruby', &:read) # リダイレクト先がなかったら通常のURL
         else
           resource = URI.open(redirect_url, 'User-Agent' => 'ruby', &:read) # リダイレクト先があったらリダイレクト先のURL
         end
-        og = OpenGraph.new(resource, { :headers => {'User-Agent' => 'ruby'} }).dup
+        og = OpenGraph.new(resource, { :headers => {'User-Agent' => 'ruby'} })
         og.metadata.present? ? og : false
       end
     rescue
-      og = OpenGraph.new(url, { :headers => {'User-Agent' => 'ruby'} }).dup
+      og = OpenGraph.new(url, { :headers => {'User-Agent' => 'ruby'} })
       og.metadata.present? ? og : false
     end
   end
