@@ -44,6 +44,7 @@ gem 'line-bot-api'
 gem "attr_encrypted"
 gem 'mail-iso-2022-jp'
 gem 'pry-rails'
+gem 'whenever', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
