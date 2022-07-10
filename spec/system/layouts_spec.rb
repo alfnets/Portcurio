@@ -91,7 +91,7 @@ RSpec.describe "Layouts", type: :system do
 
       it "clicks the logo to move to root" do
         click_link "Profile"
-        click_link "#{site_name}"
+        click_link "service_logo"
         expect(page).to have_current_path root_path
       end
 
@@ -117,7 +117,7 @@ RSpec.describe "Layouts", type: :system do
 
       it "clicks the logo to move to root" do
         click_link "Log in"
-        click_link "#{site_name}"
+        click_link "service_logo"
         expect(page).to have_current_path root_path
       end
 
