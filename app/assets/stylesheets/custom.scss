@@ -94,9 +94,12 @@ p {
 }
 
 .bell-icon {
-  color: silver;
+  color: #888;
   margin: 0;
   padding: 0;
+}
+.bell-icon:hover {
+	color: #444;
 }
 
 .n-circle {
