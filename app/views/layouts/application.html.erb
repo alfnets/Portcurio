@@ -45,7 +45,7 @@
       <%= debug(params) if Rails.env.development? %>
     </div>
     <!-- pdfの遅延読み込み -->
-    <script>
+    <%# <script>
       function pdf_defer() {
         var iframes = document.querySelectorAll('.pdf');
         iframes.forEach(function(iframe){
@@ -55,6 +55,6 @@
         });
       }
       window.addEventListener('load', pdf_defer);
-    </script>
+    </script> %>
   </body>
 </html>

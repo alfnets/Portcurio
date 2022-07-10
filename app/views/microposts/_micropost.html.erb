@@ -19,7 +19,8 @@
               <div class="links-container">
                 <% pdf_link = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{micropost.links}" %>
                 <div class="pdf-container">
-                  <iframe class="pdf" data-src=<%= pdf_link %>></iframe>
+                  <!-- <iframe class="pdf" data-src=<%= pdf_link %>></iframe> -->
+                  <iframe class="pdf" src=<%= pdf_link %>></iframe>
                 </div>
               </div>
             <% else %>  <!-- OGPの表示（Webサイト） -->
