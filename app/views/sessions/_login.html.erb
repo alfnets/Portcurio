@@ -1,0 +1,22 @@
+<div class="login_containter">
+  <%= form_with(url: login_path, scope: :session, local: true) do |f| %>
+    <%= f.email_field :email, class: 'form-control', placeholder: "Email address" %>
+    <%= f.password_field :password, class: 'form-control password-form', placeholder: "Password" %>
+    <div class=login_checkbox>
+      <%= f.label :remember_me do %>
+        <%= f.check_box :remember_me, class: 'inline-block' %>
+        <span>Remember me on this computer</span>
+      <% end %>
+    </div>
+    <%= f.submit "Log in", class: "btn btn-lg btn-primary" %>
+    <div class=forgot_link><%= link_to "forgot password", new_password_reset_path %></div>
+    <div class=easy_login>
+      <ul>
+        <li><%= link_to "簡単ログイン（サンプルユーザ１）", '/easylogin/5', method: :post %></li>
+        <li><%= link_to "簡単ログイン（サンプルユーザ２）", '/easylogin/3', method: :post %></li>
+      </ul>
+    </div>
+  <% end %>
+  <hr>
+  <p><span>New user?</span><%= link_to "Sign up now", signup_path, class: "btn btn-lg btn-primary btn-login" %></p>
+</div>

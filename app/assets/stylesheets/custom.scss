@@ -62,9 +62,13 @@ p {
   line-height: 1.7em;
 }
 
+.btn-primary {
+  font-size: 24px;
+}
+
+
 
 /* header */
-
 #logo {
   float: left;
   margin-right: 10px;
@@ -367,6 +371,7 @@ input {
       padding: 0;
       margin: 20px 0 0;
       list-style: none;
+      font-size: 16px;
       li { margin: 8px; }
      }
   }
@@ -382,10 +387,13 @@ input {
   }
   p {
     margin-bottom: 5px; 
-    span { padding-right: 10px; }
+    span { 
+      padding-right: 10px;
+      font-size: 20px;
+      line-height: 52px;
+    }
   }
 }
-
 
 
 
