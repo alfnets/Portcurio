@@ -93,7 +93,7 @@ p {
 .icon-container {
   display: block;
   float: right;
-  padding-top: 16px;
+  padding-top: 15px;
 }
 
 .fa-stack {
@@ -109,11 +109,14 @@ p {
 .bell-icon:hover {
 	color: #444;
 }
+.notification-icon {
+  font-size: 0.8em;
+}
 
 .n-circle {
   position: absolute;
   left: 20px;
-  top: -20px;
+  top: -30px;
   padding-left: 5px;
   color: orange;
 }
@@ -311,40 +314,80 @@ input {
 
 
 /* login_top */
-.logo_containter {
-  position: relative;
-  max-width: 430px;
-  padding: 5px;
-  background-color: white;
-  margin-left: auto;
-  margin-right: auto;
-}
-.logo_containter::after {
-	position: absolute;
-	content: '';
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	box-shadow: inset 0 0 10px 5px #EEEEEE;
-}
-.btn-login {
-  margin: 5px;
-}
-.top_description {
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: none;
-  h2 { 
-    text-align: left;
-    margin: 20px 0px 10px;
-    line-height: 1.2em;
+.welcome_container {
+  margin: -40px 0;
+  .logo_containter {
+    position: relative;
+    max-width: 320px;
+    padding: 5px;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .logo_containter::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: inset 0 0 10px 5px #EEEEEE;
+  }
+  .btn-login {
+    margin: 5px;
+  }
+  .top_description {
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: none;
+    h2 { 
+      text-align: left;
+      margin: 20px 0px;
+      line-height: 1.2em;
+    }
+  }
+  .login_containter {
+    padding: 0 20px;
+    .password-form { margin-bottom: 4px; }
+    .login_checkbox { 
+      text-align: left;
+      margin-left: 8px;
+      margin-bottom: 16px;
+      input[type='checkbox'] {
+        transform: scale(1.5);
+        margin-right: 8px;
+      }
+    }
+    .forgot_link {
+      text-align: right;
+      font-size: 1.2em;
+    }
+    .easy_login {
+      ul { 
+        padding: 0;
+        margin: 20px 0 0;
+        list-style: none;
+        li { margin: 8px; }
+       }
+    }
+    hr {
+      border: 0;
+      height: 2px;
+      background: gray;
+      background-image: -webkit-linear-gradient(left, #ccc, gray, #ccc);
+      background-image:    -moz-linear-gradient(left, #ccc, gray, #ccc);
+      background-image:     -ms-linear-gradient(left, #ccc, gray, #ccc);
+      background-image:      -o-linear-gradient(left, #ccc, gray, #ccc);
+      margin-bottom: 10px;
+    }
+    p {
+      margin-bottom: 5px; 
+      span { padding-right: 10px; }
+    }
   }
 }
-.easy_login {
-  padding: 4px 0px;
-}
+
 
 
 

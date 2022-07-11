@@ -1,4 +1,4 @@
-<% provide(:title, "Log in") %>
+<% provide(:title, "Log in") unless current_page?(root_path) %>
 <h1>Log in</h1>
 
 <div class="row">

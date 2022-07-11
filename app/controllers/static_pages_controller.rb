@@ -5,6 +5,8 @@ class StaticPagesController < ApplicationController
       @feed_items = current_user.feed.page(params[:page])
       @feedall     = Kaminari.paginate_array(Micropost.all).page(params[:page])
       @userprofile = current_user
+    else
+      render 'welcome'
     end
   end
   
