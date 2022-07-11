@@ -62,8 +62,30 @@ p {
   line-height: 1.7em;
 }
 
+a {
+  text-decoration: none;
+  color: #3498DB;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #2980B9
+}
+
+.btn { background: none; }
+.btn:hover { background: none; }
+
+.btn[disabled] { background: none; }
+
 .btn-primary {
   font-size: 24px;
+}
+
+.btn-default {
+  background-color: #95A5A6;
+}
+.btn-default:hover {
+  background-color: #7F8C8D;
 }
 
 
@@ -84,9 +106,29 @@ p {
   }
 }
 
-.navbar {
+#navbar {
+  margin: 0 4px;
   a { text-decoration: none; }
-  ul { margin: 0; }
+  li.dropdown.open {
+    ul.dropdown-menu {
+      width: 80px;
+      padding: 5px 0;
+      background-color: #F8F8F8;
+      color: #777777;
+      li {
+        background-color: #F8F8F8;
+        color: #777777;
+        a { color: #777777; }
+        a:hover { 
+          color: white;
+          background-color: #1ABC9C;
+        }
+      }
+    }
+    ul.dropdown-menu::before {
+      display: none;
+    }
+  }
 }
 
 .navbar-toggle {
@@ -104,13 +146,13 @@ p {
     text-align: right;
   }
   .bell-icon {
-    color: #888;
+    color: #7F8C8D;
     margin: 0;
     padding: 0;
     font-size: 1.3em;
   }
   .bell-icon:hover {
-    color: #444;
+    color: #1ABC9C;
   }
   .notification-icon {
     font-size: 0.8em;
@@ -422,11 +464,17 @@ input {
   display: inline-block;
 }
 
-.subscribe-btn {
-  background-color: none;
-    display: inline-block;
+.unsubscribe-btn {
+  display: inline-block;
+  color: #777777;
 }
-.subscribe-btn-subscribe {
+.unsubscribe-btn:hover {
+  color: #777777;
+}
+.subscribe-btn {
+  color: orange;
+}
+.subscribe-btn:hover {
   color: orange;
 }
 .subscribe-btn-invalid {
@@ -534,6 +582,7 @@ input {
     }
   }
   .response-form {
+    margin-top: 4px;
     margin-left: 60px;
     .form-inline {
       display: inline;
@@ -760,8 +809,13 @@ span.image {
     }
     .btn-slide {
       width: 134px;
-      padding: 4px 0px;
+      padding: 3px 0px;
       margin-right: 4px;
+      font-size: 14px;
+      background-color: #EEEEEE;
+      color: black;
+      border: 1px solid #777777;
+      border-radius: 3px;
     }
     span {
       display: inline-block;

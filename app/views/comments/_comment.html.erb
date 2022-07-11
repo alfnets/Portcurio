@@ -41,10 +41,10 @@
             <% unless comment.parent %>
             <!-- 親コメントがない場合 -->
               <% reply_count = comment.replies.count %>
-              <%= button_to "Reply #{ reply_count }", micropost_comment_path(comment.micropost.id, comment.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "comment-btn btn btn-link", remote: true } %>
+              <%= button_to "Reply #{ reply_count }", micropost_comment_path(comment.micropost.id, comment.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "comment-btn btn-link", remote: true } %>
             <% else %>
             <!-- 親コメントがある場合 -->
-              <%= button_to "Reply", micropost_comment_path(comment.micropost.id, comment.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "comment-btn btn btn-link", remote: true } %>
+              <%= button_to "Reply", micropost_comment_path(comment.micropost.id, comment.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "comment-btn btn-link", remote: true } %>
             <% end %>
         </span>
         <span class="reply-close-<%= comment.id %> reply-btn-wrap reply-close-btn">

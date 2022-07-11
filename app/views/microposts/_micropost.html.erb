@@ -83,7 +83,7 @@
     
       <span class="comment-btn-<%= micropost.id %> comment-btn-wrap">
         <% comment_count = micropost.comments.where(parent_id: nil).count %>
-        <%= button_to "コメント #{comment_count}", comment_path(micropost.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "comment-btn btn btn-link", remote: true } %>
+        <%= button_to "コメント #{comment_count}", comment_path(micropost.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "comment-btn btn-link", remote: true } %>
       </span>
       <span class="comment-close-<%= micropost.id %> comment-btn-wrap comment-close-btn">
         <!-- 親コメントでReplyボタンをクリックするとここに「閉じる」リンクがrenderされる -->
