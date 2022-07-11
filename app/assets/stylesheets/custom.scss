@@ -1,5 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "flat-ui";
 
 /* mixins, variables, etc. */
 
@@ -48,6 +49,7 @@ h1 {
 
 h2 {
   font-size: 1.2em;
+  font-weight: bold;
   letter-spacing: -1px;
   margin-bottom: 30px;
   text-align: center;
@@ -76,6 +78,11 @@ p {
     color: white;
     text-decoration: none;
   }
+}
+
+.navbar {
+  a { text-decoration: none; }
+  ul { margin: 0; }
 }
 
 .navbar-toggle {
@@ -116,11 +123,13 @@ p {
 
 footer {
   margin-top: 45px;
-  padding-top: 5px;
+  padding-top: 10px;
   border-top: 1px solid $gray-medium-light;
   color: $gray-light;
+  background-color: white;
   a {
     color: $gray;
+    text-decoration: none;
     &:hover {
       color: $gray-darker;
     }
@@ -139,6 +148,8 @@ footer {
   nav {
     ul {
       padding-left: 0px;
+      line-height: 28px;
+      a { font-weight: normal; }
     }
   }
 }
@@ -301,7 +312,7 @@ input {
 /* login_top */
 .logo_containter {
   position: relative;
-  width: 430px;
+  max-width: 430px;
   padding: 5px;
   background-color: white;
   margin-left: auto;

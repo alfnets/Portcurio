@@ -1,19 +1,14 @@
 <footer class="footer">
   <small>
-    <!--The <a href="https://railstutorial.jp/">Ruby on Rails Tutorial</a>-->
-    <!--by <a href="https://www.michaelhartl.com/">Michael Hartl</a>-->
-    <%= link_to image_tag("logo_alfnet.webp", alt: "alfnet logo", width: "100px"),
+    <%= link_to image_tag("logo_alfnet.webp", alt: "alfnet logo", height: "28px"),
                       "https://alfnet.info", target: :_blank, rel: "noopener noreferrer" %>
   </small>
   <nav>
     <ul>
-      <!--<li><%= link_to "About",   about_path   %></li>-->
-      <!--<li><%= link_to "Contact", contact_path %></li>-->
-      <!--<li><a href="https://news.railstutorial.org/">News</a></li>-->
       <li><%= link_to "About",  "https://alfnet.info/profile", target: :_blank, rel: "noopener noreferrer" %></li>
       <li><%= link_to "Contact", "https://alfnet.info/contact", target: :_blank, rel: "noopener noreferrer" %></li>
-      <li><%= link_to "News", "https://alfnet.info", target: :_blank, rel: "noopener noreferrer" %></li>
-      <li><a href="<%= ENV["LINE_ADD_URL"] %>"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="24" border="0"></a></li>
+      <!--<li><%= link_to "News", "https://alfnet.info", target: :_blank, rel: "noopener noreferrer" %></li>-->
+      <li><a href="<%= ENV["LINE_ADD_URL"] %>"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="28" border="0"></a></li>
     </ul>
   </nav>
 </footer>

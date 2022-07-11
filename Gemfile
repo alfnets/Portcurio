@@ -27,14 +27,14 @@ gem 'image_processing'
 gem 'bootsnap', require: false
 
 # add gems
-gem 'aws-sdk-s3',                  require: false             
+gem 'aws-sdk-s3', require: false             
 gem 'active_storage_validations'
-gem 'faker'                
+gem 'faker' # いらないかも？
 gem 'kaminari'
 gem 'kaminari-bootstrap'
 gem 'bootstrap-sass'
 gem 'rinku'
-gem 'ogp'
+gem 'ogp'   # いらないかも？
 gem "opengraph_parser"
 gem 'nokogiri'
 gem 'ruby-oembed'
@@ -42,9 +42,11 @@ gem 'hirb'
 gem 'hirb-unicode-steakknife'
 gem 'line-bot-api'
 gem "attr_encrypted"
-gem 'mail-iso-2022-jp'
+gem 'mail-iso-2022-jp'  # いらないかも？
 gem 'pry-rails'
 gem 'whenever', require: false
+gem 'rails-i18n'
+gem "flat-ui-rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
