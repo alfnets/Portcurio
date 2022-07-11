@@ -108,17 +108,25 @@ a:hover {
 
 #navbar {
   margin: 0 4px;
-  a { text-decoration: none; }
+  a { 
+    text-decoration: none;
+    padding: 12px;
+  }
   li.dropdown.open {
     ul.dropdown-menu {
       width: 80px;
-      padding: 5px 0;
+      padding: 0;
+      margin-left: 12px;
       background-color: #F8F8F8;
       color: #777777;
       li {
+        padding: 0px;
         background-color: #F8F8F8;
         color: #777777;
-        a { color: #777777; }
+        a {
+          font-size: 18px;
+          color: #777777; 
+        }
         a:hover { 
           color: white;
           background-color: #1ABC9C;
