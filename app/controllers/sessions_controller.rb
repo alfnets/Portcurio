@@ -21,8 +21,12 @@ class SessionsController < ApplicationController
         redirect_to root_url
       end
     else
-      flash.now[:danger] = 'Invalid email/password combination' # 本当はクラッカーにヒントを与えてしまうので正しくない
-      render 'new'
+      flash.now[:danger] = 'Invalid email or password'
+      if request.referer == root_url
+        render 'static_pages/welcome'
+      else
+        render 'new'
+      end
     end
   end
   
@@ -45,8 +49,8 @@ class SessionsController < ApplicationController
       user.update(linenonce: nonce)
       redirect_to "https://access.line.me/dialog/bot/accountLink?linkToken=#{params[:linkToken]}&nonce=#{nonce}"
     else
-      flash.now[:danger] = 'Invalid email/password combination' # 本当はクラッカーにヒントを与えてしまうので正しくない
-      render 'line' # params[:linkToken]も必要?
+      flash.now[:danger] = 'Invalid email or password'
+      render 'line'
     end
   end
   

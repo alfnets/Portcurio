@@ -86,41 +86,39 @@ p {
 }
 
 .navbar-toggle {
-  margin-right: 10px;
   border: none;
+  margin-right: 4px;
+  padding: 10px;
 }
 
 .icon-container {
   display: block;
   float: right;
   padding-top: 15px;
+  span {
+    width: 1.5em;
+    text-align: right;
+  }
+  .bell-icon {
+    color: #888;
+    margin: 0;
+    padding: 0;
+    font-size: 1.3em;
+  }
+  .bell-icon:hover {
+    color: #444;
+  }
+  .notification-icon {
+    font-size: 0.8em;
+  }
+  .n-circle {
+    position: absolute;
+    left: 20px;
+    top: -30px;
+    padding-left: 5px;
+    color: orange;
+  }
 }
-
-.fa-stack {
-  position: relative;
-}
-
-.bell-icon {
-  color: #888;
-  margin: 0;
-  padding: 0;
-  font-size: 1.3em;
-}
-.bell-icon:hover {
-	color: #444;
-}
-.notification-icon {
-  font-size: 0.8em;
-}
-
-.n-circle {
-  position: absolute;
-  left: 20px;
-  top: -30px;
-  padding-left: 5px;
-  color: orange;
-}
-
 
 
 /* footer */
@@ -315,7 +313,7 @@ input {
 
 /* login_top */
 .welcome_container {
-  margin: -40px 0;
+  margin: 0 0 -40px;
   .logo_containter {
     position: relative;
     max-width: 320px;
