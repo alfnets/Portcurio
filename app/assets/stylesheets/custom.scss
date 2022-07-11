@@ -299,9 +299,42 @@ input {
 
 
 /* login_top */
+.logo_containter {
+  position: relative;
+  width: 430px;
+  padding: 5px;
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+}
+.logo_containter::after {
+	position: absolute;
+	content: '';
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	box-shadow: inset 0 0 10px 5px #EEEEEE;
+}
 .btn-login {
   margin: 5px;
 }
+.top_description {
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: none;
+  h2 { 
+    text-align: left;
+    margin: 20px 0px 10px;
+    line-height: 1.2em;
+  }
+}
+.easy_login {
+  padding: 4px 0px;
+}
+
+
 
 /* Users index */
 

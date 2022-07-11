@@ -18,18 +18,24 @@
 <% else %>
   <div class="center jumbotron">
     <!--<h1>Welcome to the Sample App</h1>-->
-    <h1><%= site_name %></h1>
+    <h1>
+      <div class=logo_containter>
+        <%= image_tag("logo_portcurio.png", alt: site_name, width: "400px") %>
+      </div>
+    </h1>
     <!--<h2>-->
     <!--  This is the home page for the-->
     <!--  <a href="https://railstutorial.jp/">Ruby on Rails Tutorial</a>-->
     <!--  sample application.-->
     <!--</h2>-->
-    <h2>
-      このSNSは世界中の教材を集約し、協力してブラッシュアップしていくことを目的としています。ご自身の教材のポートフォリオとしても活用してください。
-    </h2>
+    <div class=top_description>
+      <h2>
+        このSNSは世界中の教材を集約し、協力してブラッシュアップしていくことを目的としています。ご自身の教材のポートフォリオとしても活用してください。
+      </h2>
+    </div>
   
     <%= link_to "登録はコチラ", signup_path, class: "btn btn-lg btn-primary btn-login" %>
-    <%= link_to "簡単ログイン（サンプルユーザ１）", '/easylogin/5', class: "btn btn-lg btn-primary btn-login", method: :post %>
-    <%= link_to "簡単ログイン（サンプルユーザ２）", '/easylogin/3', class: "btn btn-lg btn-primary btn-login", method: :post %>
+    <div class=easy_login><%= link_to "簡単ログイン（サンプルユーザ１）", '/easylogin/5', method: :post %></div>
+    <div class=easy_login><%= link_to "簡単ログイン（サンプルユーザ２）", '/easylogin/3', method: :post %></div>
   </div>
 <% end %>
