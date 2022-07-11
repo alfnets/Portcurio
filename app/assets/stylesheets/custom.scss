@@ -345,44 +345,44 @@ input {
       line-height: 1.2em;
     }
   }
-  .login_containter {
-    padding: 0 20px;
-    .password-form { margin-bottom: 4px; }
-    .login_checkbox { 
-      text-align: left;
-      margin-left: 8px;
-      margin-bottom: 16px;
-      input[type='checkbox'] {
-        transform: scale(1.5);
-        margin-right: 8px;
-      }
+}
+.login_containter {
+  padding: 0 20px;
+  .password-form { margin-bottom: 4px; }
+  .login_checkbox { 
+    text-align: left;
+    margin-left: 8px;
+    margin-bottom: 16px;
+    input[type='checkbox'] {
+      transform: scale(1.5);
+      margin-right: 8px;
     }
-    .forgot_link {
-      text-align: right;
-      font-size: 1.2em;
-    }
-    .easy_login {
-      ul { 
-        padding: 0;
-        margin: 20px 0 0;
-        list-style: none;
-        li { margin: 8px; }
-       }
-    }
-    hr {
-      border: 0;
-      height: 2px;
-      background: gray;
-      background-image: -webkit-linear-gradient(left, #ccc, gray, #ccc);
-      background-image:    -moz-linear-gradient(left, #ccc, gray, #ccc);
-      background-image:     -ms-linear-gradient(left, #ccc, gray, #ccc);
-      background-image:      -o-linear-gradient(left, #ccc, gray, #ccc);
-      margin-bottom: 10px;
-    }
-    p {
-      margin-bottom: 5px; 
-      span { padding-right: 10px; }
-    }
+  }
+  .forgot_link {
+    text-align: right;
+    font-size: 1.2em;
+  }
+  .easy_login {
+    ul { 
+      padding: 0;
+      margin: 20px 0 0;
+      list-style: none;
+      li { margin: 8px; }
+     }
+  }
+  hr {
+    border: 0;
+    height: 2px;
+    background: gray;
+    background-image: -webkit-linear-gradient(left, #ccc, gray, #ccc);
+    background-image:    -moz-linear-gradient(left, #ccc, gray, #ccc);
+    background-image:     -ms-linear-gradient(left, #ccc, gray, #ccc);
+    background-image:      -o-linear-gradient(left, #ccc, gray, #ccc);
+    margin-bottom: 10px;
+  }
+  p {
+    margin-bottom: 5px; 
+    span { padding-right: 10px; }
   }
 }
 
