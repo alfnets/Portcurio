@@ -93,8 +93,8 @@ a:hover {
   border: 1px solid #1ABC9C;
 }
 .pagination>.active>a:hover {     
-  background: #16A085;
-  border: 1px solid #16A085;
+  background: #47C8B0;
+  border: 1px solid #47C8B0;
 }
 
 .fa-xmark {
@@ -264,11 +264,24 @@ aside {
   }
 }
 
-.gravatar {
+.gravator_frame {
+  position: relative;
+  display: block;
   float: left;
-  margin-right: 10px;
-  border-radius: 50%;
+  width: 60px;
+  height: 55px;
+  .gravatar {
+    float: left;
+    margin-right: 10px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
 }
+
+
 
 .gravatar_edit {
   margin-top: 15px;
@@ -519,6 +532,12 @@ input {
   li {
     padding: 10px 0;
     border-top: 1px solid #e8e8e8;
+  }
+  li:first-child {
+    border-top: none;
+  }
+  .notification:first-child {
+    border-top: none;
   }
   .user {
     margin-top: 5em;
