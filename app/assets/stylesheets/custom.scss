@@ -88,6 +88,15 @@ a:hover {
   background-color: #7F8C8D;
 }
 
+.pagination>.active>a {     
+  background: #1ABC9C;
+  border: 1px solid #1ABC9C;
+}
+.pagination>.active>a:hover {     
+  background: #16A085;
+  border: 1px solid #16A085;
+}
+
 
 
 /* header */
@@ -739,6 +748,7 @@ span.image {
       padding: 0 40px;
     }
     height: 500px;
+    border-radius: 4px;
     overflow-y: auto;
     overflow-y: scroll;
     .close-modal {
@@ -856,7 +866,8 @@ span.image {
         background-color: #e6ecf0;
         padding: 10px;
         width: 350px;
-        height: 190px;
+        height: 192px;
+        border-radius: 4px;
         .close-modal {
           display: block;
           float: right;
@@ -872,9 +883,11 @@ span.image {
         .btn-ok {
           display: block;
           margin-left: auto;
+          font-size: 16px;
         }
         .error_messages_easy {
           color: red;
+          list-style: none;
         }
       }
     }
