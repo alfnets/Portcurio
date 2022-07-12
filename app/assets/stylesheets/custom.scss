@@ -328,11 +328,15 @@ aside {
 }
 
 .user_avatars {
+  .gravator_frame {
+    width: 32px;
+    height: 32px;
+    .gravatar {
+      margin: 1px 1px;
+    }
+  }
   overflow: auto;
   margin-top: 10px;
-  .gravatar {
-    margin: 1px 1px;
-  }
   a {
     padding: 0;
   }
