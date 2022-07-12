@@ -30,7 +30,7 @@
           <ol class="microposts">
             <%= render @microposts %>
           </ol>
-          <%= paginate @microposts %>
+          <div class='center'><%= paginate @microposts %></div>
         <% end %>
       </div>
       
@@ -41,7 +41,7 @@
             <% @comments_and_likes.each do |activity| %>
               <%= render partial: 'notifications/comment_and_like', locals: {activity: activity} %>
             <% end %>
-            <%= paginate @comments_and_likes %>
+            <div class='center'><%= paginate @comments_and_likes %></div>
           </ol>
         <% end %>
       </div>

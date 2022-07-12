@@ -3,13 +3,18 @@
   <ol class="microposts">
     <%= render @feed_items %>
   </ol>
-  <%= paginate @feed_items,
+  <div class='center'>
+    <%= paginate @feed_items,
                params: { controller: 'static_pages', action: 'home' } %>
+  </div>
+
 <% else %>
   <h3>All Users Feed</h3>
   <ol class="microposts">
     <%= render @feedall %>
   </ol>
-  <%= paginate @feedall,
-               params: { controller: 'static_pages', action: 'home' } %>
+  <div class='center'>
+    <%= paginate @feedall,
+                params: { controller: 'static_pages', action: 'home' } %>
+  </div>
 <% end %>
