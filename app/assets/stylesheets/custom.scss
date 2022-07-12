@@ -88,6 +88,15 @@ a:hover {
   background-color: #7F8C8D;
 }
 
+.pagination>.active>a {     
+  background: #1ABC9C;
+  border: 1px solid #1ABC9C;
+}
+.pagination>.active>a:hover {     
+  background: #16A085;
+  border: 1px solid #16A085;
+}
+
 
 
 /* header */
