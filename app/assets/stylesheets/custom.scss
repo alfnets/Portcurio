@@ -59,7 +59,7 @@ h2 {
 
 p {
   font-size: 1.1em;
-  line-height: 1.7em;
+  line-height: 1.3em;
 }
 
 a {
@@ -99,6 +99,12 @@ a:hover {
 
 .fa-xmark {
   color:#7F8C8D ;
+}
+
+span.user a {
+  color: #34495E;
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 
@@ -281,10 +287,20 @@ aside {
   }
 }
 
-
-
 .gravatar_edit {
   margin-top: 15px;
+  .gravator_frame {
+    width: 90px;
+    height: 80px;
+  }
+  a { line-height: 80px; }
+}
+
+.user_info {
+  .gravator_frame {
+    width: 90px;
+    height: 80px;
+  }
 }
 
 .stats {
@@ -564,10 +580,8 @@ input {
         object-position: left 0% top 0%;
       }
       p {
-        font-size: 1em;
-        line-height: 1.3em;
         margin: 5px;
-        word-break:break-word;
+        word-break: break-word;
       }
     }
   }
@@ -791,7 +805,7 @@ span.image {
   padding: 10px 20px;
   border-top: 1px solid #e8e8e8;
   p {
-    padding: 0;
+    padding: 0 0 10px;
     margin: 0;
   }
 }

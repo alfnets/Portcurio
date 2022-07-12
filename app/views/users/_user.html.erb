@@ -1,9 +1,9 @@
 <li>
   <span class='gravator_frame'>
-    <%= gravatar_for user, size: 50 %>
+    <%= link_to gravatar_for(user, size: 50), user %>
   </span>
   <div class='inline-block'>
-    <%= link_to user.name, user %>
+    <span class='user'><%= link_to user.name, user %></span>
     <% if current_user.admin? && !current_user?(user) %>
       | <%= link_to "delete", user, method: :delete,
                                     data: { confirm: "You sure?" } %>
