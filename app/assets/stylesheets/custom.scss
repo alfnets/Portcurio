@@ -59,7 +59,7 @@ h2 {
 
 p {
   font-size: 1.1em;
-  line-height: 1.7em;
+  line-height: 1.3em;
 }
 
 a {
@@ -93,10 +93,19 @@ a:hover {
   border: 1px solid #1ABC9C;
 }
 .pagination>.active>a:hover {     
-  background: #16A085;
-  border: 1px solid #16A085;
+  background: #47C8B0;
+  border: 1px solid #47C8B0;
 }
 
+.fa-xmark {
+  color:#7F8C8D ;
+}
+
+span.user a {
+  color: #34495E;
+  font-size: 1.2em;
+  font-weight: bold;
+}
 
 
 /* header */
@@ -261,13 +270,37 @@ aside {
   }
 }
 
-.gravatar {
+.gravator_frame {
+  position: relative;
+  display: block;
   float: left;
-  margin-right: 10px;
+  width: 60px;
+  height: 55px;
+  .gravatar {
+    float: left;
+    margin-right: 10px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
 }
 
 .gravatar_edit {
   margin-top: 15px;
+  .gravator_frame {
+    width: 90px;
+    height: 80px;
+  }
+  a { line-height: 80px; }
+}
+
+.user_info {
+  .gravator_frame {
+    width: 90px;
+    height: 80px;
+  }
 }
 
 .stats {
@@ -516,6 +549,12 @@ input {
     padding: 10px 0;
     border-top: 1px solid #e8e8e8;
   }
+  li:first-child {
+    border-top: none;
+  }
+  .notification:first-child {
+    border-top: none;
+  }
   .user {
     margin-top: 5em;
     padding-top: 0;
@@ -541,10 +580,8 @@ input {
         object-position: left 0% top 0%;
       }
       p {
-        font-size: 1em;
-        line-height: 1.3em;
         margin: 5px;
-        word-break:break-word;
+        word-break: break-word;
       }
     }
   }
@@ -768,7 +805,7 @@ span.image {
   padding: 10px 20px;
   border-top: 1px solid #e8e8e8;
   p {
-    padding: 0;
+    padding: 0 0 10px;
     margin: 0;
   }
 }
@@ -866,7 +903,7 @@ span.image {
         background-color: #e6ecf0;
         padding: 10px;
         width: 350px;
-        height: 192px;
+        height: 200px;
         border-radius: 4px;
         .close-modal {
           display: block;

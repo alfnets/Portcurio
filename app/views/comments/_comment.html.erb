@@ -1,6 +1,8 @@
 <li class="comment-<%= comment.id %>">
   <div class="comment-container">
-    <%= link_to gravatar_for(comment.user, size: 50), comment.user %>
+    <span class='gravator_frame'>
+      <%= link_to gravatar_for(comment.user, size: 50), comment.user %>
+    </span>
     <span class="user"><%= link_to comment.user.name, comment.user %></span>
     
     <div class="content-container">

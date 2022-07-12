@@ -7,7 +7,7 @@
   <% else %>
     <div><%= hidden_field_tag :userprofile_id, current_user.id, { id: SecureRandom.hex(4) } %></div>
   <% end %>
-  <%= button_tag :type => "submit", class: "btn btn-link subscribe-btn inline-block" do %>
+  <%= button_tag :type => "submit", class: "btn subscribe-btn inline-block" do %>
     <i class="fas fa-bell fa-lg subscribe-btn-subscribe inline-block"></i>
   <% end %>
 <% end %>
