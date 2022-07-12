@@ -296,7 +296,7 @@ aside {
   a { line-height: 80px; }
 }
 
-.user_info {
+.user_info.user_show {
   .gravator_frame {
     width: 90px;
     height: 80px;
@@ -438,7 +438,7 @@ input {
     h2 { 
       text-align: left;
       margin: 20px 0px;
-      line-height: 1.2em;
+      line-height: 1.5em;
     }
   }
 }
@@ -463,7 +463,7 @@ input {
       padding: 0;
       margin: 20px 0 0;
       list-style: none;
-      font-size: 14px;
+      font-size: 16px;
       li { margin: 8px; }
      }
   }
