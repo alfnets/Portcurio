@@ -488,6 +488,12 @@ input {
 .subscribe-btn-invalid {
   color: gray;
 }
+.users_container {
+  display: flex;
+	justify-content: center;
+	align-items: center;
+  ul { padding: 0; }
+}
 
 
 

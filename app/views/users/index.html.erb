@@ -1,13 +1,14 @@
 <% provide(:title, 'All users') %>
-<h1>All users</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1>All users</h1>
 
-<%= paginate @users %>
-
-<ul class="users">
-  <%= render @users %>
-  <!--<% @users.each do |user| %>-->
-  <!--  <%= render user %>-->
-  <!--<% end %>-->
-</ul>
-
-<%= paginate @users %>
+    <div class='center'><%= paginate @users %></div>
+    <div class='users_container'>
+      <ul class="users">
+        <%= render @users %>
+      </ul>
+    </div>
+    <div class='center'><%= paginate @users %></div>
+  </div>
+</div>

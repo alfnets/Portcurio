@@ -8,5 +8,5 @@
   <% else %>
     <div><%= hidden_field_tag :userprofile_id, current_user.id, { id: SecureRandom.hex(4) } %></div>
   <% end %>
-  <%= f.submit "Follow", class: "btn btn-info btn-follow" %>
+  <%= f.submit "Follow", class: "btn btn-info btn-follow inline-block" %>
 <% end %>
