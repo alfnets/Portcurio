@@ -17,3 +17,7 @@
     </div>
   </div>
 </div>
+
+<% if flash.any? %>
+  <%= javascript_pack_tag 'render/root' %>
+<%end%>
