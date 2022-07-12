@@ -674,7 +674,7 @@ input {
       font-size: 1em;
       line-height: 1.3em;
       margin: 5px;
-      word-break:break-word;
+      word-break: break-word;
     }
   }
   form {
@@ -808,7 +808,7 @@ span.image {
   position: relative;
   padding: 10px 20px;
   border-top: 1px solid #e8e8e8;
-  p {
+  p.notification_info {
     padding: 0 0 10px;
     margin: 0;
   }
