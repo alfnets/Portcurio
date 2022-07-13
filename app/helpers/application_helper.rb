@@ -51,4 +51,36 @@ module ApplicationHelper
     end
   end
   
+  # metaタグの設定
+  def default_meta_tags(title)
+    {
+      title: title,
+      reverse: true,
+      description: 'このSNSは世界中の教材を集約し、協力してブラッシュアップしていくことを目的としています。ご自身の教材のポートフォリオとしても活用してください。',
+      keywords: 'Portcurio, ポートキュリオ, 教材共有, SNS, ポートフォリオ, キュレーション',
+      canonical: request.original_url,
+      noindex: ! Rails.env.production?,
+      icon: [
+        { href: image_url('favicon.ico') },
+        { href: image_url('apple-touch-icon.png'), rel: 'apple-touch-icon', sizes: '180x180', type: 'image/png' },
+        { href: image_url('android-touch-icon.png'), rel: 'android-touch-icon', sizes: '192x192', type: 'image/png' },
+      ],
+      og: {
+        site_name: site_name,
+        title: :full_title,
+        description: :description, 
+        type: 'website',
+        url: request.original_url,
+        image: image_url('ogp.png'),
+        locale: 'ja_JP',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        site: '@alfnet_info',
+      },
+      # fb: {
+      #   app_id: '自身のfacebookのapplication ID'
+      # }
+    }
+  end
 end
