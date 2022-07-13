@@ -10,10 +10,6 @@ class StaticPagesController < ApplicationController
     end
   end
   
-  def help
-    redirect_to 'https://alfnet.info/contact/'
-  end
-  
   def about
     redirect_to 'https://alfnet.info/profile/'
   end

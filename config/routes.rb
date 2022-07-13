@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   root 'static_pages#home'
   get   '/home'       =>  'static_pages#home'
-  get   '/help'       =>  'static_pages#help'
   get   '/about'      =>  'static_pages#about'
   get   '/contact'    =>  'static_pages#contact'
   get   '/signup'     =>  'users#new'
@@ -13,8 +12,10 @@ Rails.application.routes.draw do
   delete '/logout',   to: 'sessions#destroy'
   post  '/callback'   =>  'linebots#callback'
 
-  get   '/index'      =>  'static_pages#index'
-  post  '/index'      =>  'static_pages#index'
+  resource :help, only: [:show, :googleslides, :powerpoint] do
+    get :googleslides, on: :member
+    get :powerpoint, on: :member
+  end
 
   resource :users, only: [:setting] do
     get :setting, on: :member

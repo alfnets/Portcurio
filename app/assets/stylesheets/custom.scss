@@ -921,9 +921,16 @@ span.image {
         label {
           padding-right: 10px;
         }
+        .method_link_container {
+          width: 280px;
+          a {
+            display: block; 
+            padding-bottom: 4px;
+          }
+        }
         .btn-ok {
           display: block;
-          margin-left: auto;
+          float: right;
           font-size: 16px;
         }
         .error_messages_easy {
