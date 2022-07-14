@@ -1,23 +1,20 @@
 <% provide(:title, "Delete user") %>
+
 <h1>Delete your account</h1>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_with(model: @user, url: account_delete_path(params[:id]), local: true ) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
+<%= form_with(model: @user, url: account_delete_path(params[:id]), local: true ) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
 
-      <label>Name</label>
-      <p id="delete_user_page"><%= @user.name %></p>
-      <%= f.label :current_password, "Current Password" %><span class="require-charm"> *</span>
-      <%= f.password_field :current_password, class: 'form-control' %>
+  <label>Name</label>
+  <p id="delete_user_page"><%= @user.name %></p>
+  <%= f.label :current_password, "Current Password" %><span class="require-charm"> *</span>
+  <%= f.password_field :current_password, class: 'form-control' %>
 
-      <%= f.submit "Send email to delete the account", class: "btn btn-primary", data: { confirm: "You sure?" }, remote: true %>
-    <% end %>
+  <%= f.submit "Send email to delete the account", class: "btn btn-primary", data: { confirm: "You sure?" }, remote: true %>
+<% end %>
 
-    <div class="gravatar_edit">
-      <span class='gravator_frame'>
-        <%= gravatar_for @user %>
-      </span>
-    </div>
-  </div>
+<div class="gravatar_edit">
+  <span class='gravator_frame'>
+    <%= gravatar_for @user %>
+  </span>
 </div>

@@ -1,13 +1,10 @@
 <% provide(:title, 'Activity') %>
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <h1>Activity</h1>
 
-    <ol class="microposts">
-      <% @activities.each do |activity| %>
-        <%= render partial: 'notifications/activity', locals: {activity: activity} %>
-      <% end %>
-    </ol>
-    <div class='center'><%= paginate @activities %></div>
-  </div>
-</div>
+<h1>Activity</h1>
+
+<ol class="microposts">
+  <% @activities.each do |activity| %>
+    <%= render partial: 'notifications/activity', locals: {activity: activity} %>
+  <% end %>
+</ol>
+<div class='center'><%= paginate @activities %></div>

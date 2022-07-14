@@ -1,15 +1,13 @@
 <div class="line-add">
   <a href="<%= ENV["LINE_ADD_URL"] %>"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="24" border="0"></a>
 </div>
+
 <% provide(:title, 'Notification') %>
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <h1>Notification</h1>
 
-    <ol class="microposts">
-      <%= render @notifications %>
-    </ol>
+<h1>Notification</h1>
 
-    <div class='center'><%= paginate @notifications %></div>
-  </div>
-</div>
+<ol class="microposts">
+  <%= render @notifications %>
+</ol>
+
+<div class='center'><%= paginate @notifications %></div>
