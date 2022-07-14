@@ -1,13 +1,15 @@
 <div class="row">
-  <aside class="col-md-4">
-    <section class="user_info">
-      <%= render 'shared/user_info' %>
-    </section>
-    <section class="micropost_form">
-      <%= render 'microposts/micropost_form' %>
-    </section>
-  </aside>
-  <div class="col-md-8">
+  <%= render 'shared/sidebar' %>
+  <div class="col-md-7">
+    <div class='micropost_form_container'>
+      <span class='gravator_frame'>
+        <%= link_to gravatar_for(current_user, size: 50), current_user %>
+      </span>
+
+      <section class="micropost_form">
+        <%= render 'microposts/micropost_form' %>
+      </section>
+    </div>
     <%= render 'microposts/feed' %>
   </div>
 </div>

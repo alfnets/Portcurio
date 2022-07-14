@@ -41,7 +41,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: clamp(24px, 6vw, 3em);
+  font-size: clamp(24px, 6vw, 2.7em);
   letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;
@@ -273,6 +273,15 @@ aside {
       margin-bottom: 3px;
       margin-top: 0px;
     }
+  }
+  .side_menu {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    a {
+      color: #16A085;
+    }
+    border-right: 2px double gray;
   }
 }
 
@@ -867,81 +876,118 @@ span.image {
 
 
 /* micropost_form */
-.micropost_form {
-  .image {
-    input {
-      margin-bottom: 8px;
-    }
-  }
-
-  /* slide_post */
-  .slide_post {
-    .button_to {
-      display: inline-block;
-    }
-    .btn-slide {
-      width: 134px;
-      padding: 3px 0px;
-      margin-right: 4px;
-      font-size: 14px;
-      background-color: #EEEEEE;
-      color: black;
-      border: 1px solid #777777;
-      border-radius: 3px;
-    }
-    span {
-      display: inline-block;
-    }
-    .slide-modal-wrapper {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 100;
-      width: 100%;
-      display: block;
-      color: rgba(0, 0, 0, 0.7);
-      .slide-modal {
+.micropost_form_container {
+  position: relative;
+  background-color: #ECF0F1;
+  box-shadow: 8px 8px 0px 0 rgba(26, 188, 156, 0.4);
+  padding: 16px;
+  margin-top: 16px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  .micropost_form {
+    form:first-child {
+      padding-bottom: 18px;
+      #micropost_content {
+        margin-bottom: 5px;
+      }
+      .btn-post {
+        width: 80px;
         position: absolute;
-        top: 20%;
-        left: 50%;
-        transform: translateX(-50%);
-        -webkit-transform: translateX(-50%);
-        -ms-transform: translateX(-50%);
-        background-color: #e6ecf0;
-        padding: 10px;
-        width: 350px;
-        height: 200px;
-        border-radius: 4px;
-        .close-modal {
-          display: block;
-          float: right;
-          padding-right: 4px;
-        }
+        right: 14px;
+        bottom: 8px;
+      }
+      .image {
         input {
-          display: inline-block;
-          width: auto;
+          margin-bottom: 8px;
         }
-        label {
-          padding-right: 10px;
+        .btn-image {
+          position: absolute;
+          bottom: 24px;
+          left: 80px;
+          width: 80px;
+          width: 56px;
+          padding: 3px 0px;
+          margin-right: 4px;
         }
-        .method_link_container {
-          width: 280px;
-          a {
-            display: block; 
-            padding-bottom: 4px;
+        .image_form {
+          display: none;
+        }
+      }
+    }
+  
+    /* slide_post */
+    .slide_post {
+      position: absolute;
+      bottom: 24px;
+      left: 140px;
+      .button_to {
+        display: inline-block;
+        padding: 0;
+      }
+      .btn-slide {
+        width: 80px;
+        margin-right: 4px;
+        padding: 3px 0px;
+        // font-size: 14px;
+        // background-color: #EEEEEE;
+        // color: black;
+        // border: 1px solid #777777;
+        // border-radius: 3px;
+      }
+      span {
+        display: inline-block;
+      }
+      .slide-modal-wrapper {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 100;
+        width: 100%;
+        display: block;
+        color: rgba(0, 0, 0, 0.7);
+        .slide-modal {
+          position: absolute;
+          top: 20%;
+          left: 50%;
+          transform: translateX(-50%);
+          -webkit-transform: translateX(-50%);
+          -ms-transform: translateX(-50%);
+          background-color: #e6ecf0;
+          padding: 10px;
+          width: 350px;
+          // height: 200px;
+          border-radius: 4px;
+          .close-modal {
+            display: block;
+            float: right;
+            padding-right: 4px;
           }
-        }
-        .btn-ok {
-          display: block;
-          float: right;
-          font-size: 16px;
-        }
-        .error_messages_easy {
-          color: red;
-          list-style: none;
+          input {
+            display: inline-block;
+            width: auto;
+          }
+          label {
+            padding-right: 10px;
+          }
+          .method_link_container {
+            width: 280px;
+            a {
+              display: block; 
+              padding-bottom: 4px;
+            }
+          }
+          .btn-ok {
+            display: block;
+            float: right;
+            font-size: 16px;
+          }
+          .error_messages_easy {
+            color: red;
+            list-style: none;
+          }
         }
       }
     }

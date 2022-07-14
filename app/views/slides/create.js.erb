@@ -6,4 +6,5 @@ $(".micropost_form").html("<%= escape_javascript(render partial: 'microposts/mic
 
 $(".micropost_form > form > .field > #micropost_content").val($micropost_content)
 
-$(".slide_post > .file_type").html('<%= @micropost.file_type %> <%= link_to microposts_slides_path, remote: true, class: "btn-link", method: :delete do %><i class="far fa-times-circle"></i><% end %>')
+<%# $(".slide_post > .file_type").html('<%= @micropost.file_type % <%= link_to microposts_slides_path, remote: true, class: "btn-link", method: :delete do %<i class="far fa-times-circle"></i><% end %') %>
+$(".slide_post > .file_type").html('<%= link_to microposts_slides_path, remote: true, class: "btn-link", method: :delete do %><i class="far fa-times-circle"></i><% end %>')
