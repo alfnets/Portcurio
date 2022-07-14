@@ -1,1 +1,36 @@
-<p>Google Slides</p>
+<% provide(:title, "Google Slides 埋め込みコード取得") %>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class='method_container'>
+      <h1>Google Slides 埋め込みコード取得</h1>
+      <p class='help_description inline-block'>学校アカウントや企業アカウントを使用している場合、埋め込みコードの取得（公開等）を禁止している場合があります。必要に応じて組織内の管理者に問い合わせてください。</p>
+      <ol>
+        <li>
+          <p>投稿したい Google Slides を開く</p>
+        </li>
+        <li>
+          <p>’ファイル’ → ’ウェブに公開’ の順にクリック</p>
+          <%= image_tag("methods/GoogleSlides/1", alt: "Googleスライドの埋め込みコードの取得方法1") %>
+        </li>
+        <li>
+          <p>’埋め込む’タブ → ’公開’ の順にクリック</p>
+          <%= image_tag("methods/GoogleSlides/2", alt: "Googleスライドの埋め込みコードの取得方法2") %>
+        </li>
+        <li>
+          <p>’OK’ をクリック</p>
+          <%= image_tag("methods/GoogleSlides/3", alt: "Googleスライドの埋め込みコードの取得方法3") %>
+        </li>
+        <li>
+          <p>コードを<strong>いじらずにそのまま</strong>コピーする</p>
+          <%= image_tag("methods/GoogleSlides/4", alt: "Googleスライドの埋め込みコードの取得方法4") %>
+        </li>
+        <li>
+          <p>コピーしたコードを<strong>いじらずにそのまま</strong>ペーストする（貼り付ける）</p>
+          <%= image_tag("methods/GoogleSlides/5", alt: "Googleスライドの埋め込みコードの貼り付け") %>
+        </li>
+      </ol>
+      <%= link_to "戻る", :back, class: "back_link" %>
+    </div>
+  </div>
+</div>

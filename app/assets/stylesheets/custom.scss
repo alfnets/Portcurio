@@ -88,6 +88,12 @@ a:hover {
   background-color: #7F8C8D;
 }
 
+.back_link {
+  float: right;
+  font-size: 16px;
+  margin-right: 20px;
+}
+
 .pagination>.active>a {     
   background: #1ABC9C;
   border: 1px solid #1ABC9C;
@@ -950,44 +956,6 @@ span.image {
   }
 }
 
-// /* navbar collapse for iPad (bootstrap) */
-// @media (max-width: 991px) {
-//     .navbar-header {
-//         float: none;
-//     }
-//     .navbar-toggle {
-//         display: block;
-//     }
-//     .navbar-collapse {
-//         border-top: 1px solid transparent;
-//         box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
-//     }
-//     .navbar-collapse.collapse {
-//         display: none!important;
-//     }
-//     .navbar-nav {
-//         float: none!important;
-//         margin: 7.5px -15px;
-//     }
-//     .navbar-nav>li {
-//         float: none;
-//     }
-//     .navbar-nav>li>a {
-//         padding-top: 10px;
-//         padding-bottom: 10px;
-//     }
-//     .navbar-text {
-//         float: none;
-//         margin: 15px 0;
-//     }
-//     .navbar-collapse.collapse.in {
-//         display: block!important;
-//     }
-//     .collapsing {
-//         overflow: hidden!important;
-//     }
-// }
-
 
 
 /* ユーザー編集画面 */
@@ -1002,3 +970,31 @@ p#edit_user_page {
 p#delete_user_page {
 padding-bottom: 24px;
 } 
+
+
+
+/* help ページ */
+.helptop_concainer {
+  display: flex;
+	justify-content: center;
+	align-items: center;
+  li {
+    padding: 8px 0;
+    font-size: 20px;
+  }
+}
+.method_container {
+  .help_description {
+    margin: 0 20px;
+    padding: 10px;
+    border: 1px solid #F39C12;
+    border-radius: 8px;
+  }
+  li {
+    padding-top: 40px;
+    img {
+      max-width: 600px;
+      width: 100%;
+    }
+  }
+}

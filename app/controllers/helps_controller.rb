@@ -1,6 +1,6 @@
 class HelpsController < ApplicationController
   def show
-    redirect_to 'https://alfnet.info/contact/'
+    
   end
 
   def googleslides
