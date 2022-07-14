@@ -1,55 +1,46 @@
 <% provide(:title, @userprofile.name) %>
-<div class="row">
-  <aside class="col-md-4">
-    <section class="user_info user_show">
-      <span class='gravator_frame'>
-        <%= gravatar_for @userprofile %>
-      </span>
-      <h1>
-        <%= @userprofile.name %>
-      </h1>
-        <%= render partial: 'relationships/follow_form', locals: {user: @userprofile} if logged_in? %>
-    </section>
-    <section class="stats">
-      <%= render 'shared/stats' %>
-    </section>
-  </aside>
-  
-  <div class="col-md-8">
-    <ul id="activityTab" class="nav nav-tabs nav-fill">
-      <li class="nav-item active">
-        <a href="#contents1" data-toggle="tab">Microposts (<%= @userprofile.microposts.count %>)</a>
-      </li>
-      <li class="nav-item">
-        <a href="#contents2" data-toggle="tab" id="comments-and-likes-tab">Comments & Likes</a>
-      </li>
-    </ul>
-    
-    <div class="tab-content">
-      <div id="contents1" class="tab-pane active fade in">
-        <% if @userprofile.microposts.any? %>
-          <ol class="microposts">
-            <%= render @microposts %>
-          </ol>
-          <div class='center'><%= paginate @microposts %></div>
-        <% else %>
-          <p>No microposts</p>
-        <% end %>
-      </div>
-      
-      <div id="contents2" class="tab-pane fade">
-        <% if @comments_and_likes.any? %>
-          <ol class="microposts jscroll">
-            <% @comments_and_likes.each do |activity| %>
-              <%= render partial: 'notifications/comment_and_like', locals: {activity: activity} %>
-            <% end %>
-            <div class='center'><%= paginate @comments_and_likes %></div>
-          </ol>
-        <% else %>
-          <p>No comments, likes</p>
-        <% end %>
-      </div>
-    </div>
 
+<section class="user_info user_show">
+  <span class='gravator_frame'>
+    <%= gravatar_for @userprofile %>
+  </span>
+  <h1><%= @userprofile.name %></h1>
+  <%= render partial: 'relationships/follow_form', locals: {user: @userprofile} if logged_in? %>
+</section>
+<section class="stats">
+  <%= render 'shared/stats' %>
+</section>
+<ul id="activityTab" class="nav nav-tabs nav-fill">
+  <li class="nav-item active">
+    <a href="#contents1" data-toggle="tab">Microposts (<%= @userprofile.microposts.count %>)</a>
+  </li>
+  <li class="nav-item">
+    <a href="#contents2" data-toggle="tab" id="comments-and-likes-tab">Comments & Likes</a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div id="contents1" class="tab-pane active fade in">
+    <% if @userprofile.microposts.any? %>
+      <ol class="microposts">
+        <%= render @microposts %>
+      </ol>
+      <div class='center'><%= paginate @microposts %></div>
+    <% else %>
+      <p>No microposts</p>
+    <% end %>
+  </div>
+  
+  <div id="contents2" class="tab-pane fade">
+    <% if @comments_and_likes.any? %>
+      <ol class="microposts jscroll">
+        <% @comments_and_likes.each do |activity| %>
+          <%= render partial: 'notifications/comment_and_like', locals: {activity: activity} %>
+        <% end %>
+        <div class='center'><%= paginate @comments_and_likes %></div>
+      </ol>
+    <% else %>
+      <p>No comments, likes</p>
+    <% end %>
   </div>
 </div>
