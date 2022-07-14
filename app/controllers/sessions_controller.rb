@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
     else
       flash.now[:danger] = 'Invalid email or password'
       if request.referer == root_url
-        render 'static_pages/welcome'
+        render 'static_pages/welcome', layout: 'welcome'
       else
         render 'new'
       end
