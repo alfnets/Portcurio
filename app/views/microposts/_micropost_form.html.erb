@@ -7,16 +7,22 @@
   <% @micropost.file_link ? file_link = @micropost.file_link : file_link = "" %>
   <div class="file_type_tag"><%= f.hidden_field :file_type, value: file_type %></div>
   <div class="file_link_tag"><%= f.hidden_field :file_link, value: file_link %></div>
-  <%= f.submit "Post", class: "btn btn-primary" %>
-  <span class="image">
-    <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
-  </span>
+  <%= f.submit "Post", class: "btn btn-primary inline-block btn-post" %>
+
+  <div class="attach_form inline-block">
+    <span class="image">
+      <%= f.label :image, "画像", class: "btn btn-image btn-info" %>
+      <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: 'image_form' %>
+    </span>
+  </div>
 <% end %>
-<div class="slide_post">
+
+<div class="slide_post inline-block">
   <span class="slide_form">
-    <%= button_to "スライドを投稿する", new_microposts_slides_path, method: :get, class: "btn btn-default btn-slide", remote: true %>
+    <%= button_to "スライド", new_microposts_slides_path, method: :get, class: "btn btn-slide btn-info", remote: true %>
   </span>
-  <span class="file_type">選択されていません</span>
+  <%# <span class="file_type">選択されていません</span> %>
+  <span class="file_type"></span>
   <span class="slide_post_modal"></span>
 </div>
 
