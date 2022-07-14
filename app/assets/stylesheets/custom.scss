@@ -274,6 +274,12 @@ aside {
       margin-top: 0px;
     }
   }
+}
+.sidebar {
+  margin-top: 16px;
+  margin-right: 16px;
+  background-color: #f8f8f8;
+  border-radius: 16px;
   .side_menu {
     margin: 0;
     font-size: 16px;
@@ -281,7 +287,16 @@ aside {
     a {
       color: #16A085;
     }
-    border-right: 2px double gray;
+  }
+  hr {
+    border: 0;
+    height: 2px;
+    background: gray;
+    background-image: -webkit-linear-gradient(left, #ccc, gray, #ccc);
+    background-image:    -moz-linear-gradient(left, #ccc, gray, #ccc);
+    background-image:     -ms-linear-gradient(left, #ccc, gray, #ccc);
+    background-image:      -o-linear-gradient(left, #ccc, gray, #ccc);
+    margin: 10px 0 0;
   }
 }
 
