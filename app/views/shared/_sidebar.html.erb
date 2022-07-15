@@ -11,59 +11,48 @@
           ホーム
         <% end %>
       </li>
-      <% if logged_in? %>
-        <li>
-          <%= link_to microposts_path do %>
-            <span data-feather="layers"></span>
-            すべてのユーザの投稿
-          <% end %>
-        </li>
-        <li>
-          <%= link_to users_path do %>
-            <span data-feather="users"></span>
-            ユーザ一覧
-          <% end %>
-        </li>
-      <% end %>
+      <li>
+        <%= link_to microposts_path do %>
+          <span data-feather="layers"></span>
+          すべてのユーザの投稿
+        <% end %>
+      </li>
+      <li>
+        <%= link_to users_path do %>
+          <span data-feather="users"></span>
+          ユーザ一覧
+        <% end %>
+      </li>
       <li>
         <%= link_to help_path do %>
           <%# <span data-feather="users"></span> %>
           ヘルプ
         <% end %>
       </li>
-      <% if logged_in? %>
-        <li>
-          <%= link_to activity_notifications_path do %>
-            <%# <span data-feather="users"></span> %>
-            マイアクティビティ
-          <% end %>
-        </li>
-        <li>
-          <%= link_to user_path(current_user) do %>
-            <%# <span data-feather="users"></span> %>
-            プロフィール
-          <% end %>
-        </li>
-        <li>
-          <%= link_to edit_user_path(current_user) do %>
-            <%# <span data-feather="users"></span> %>
-            設定
-          <% end %>
-        </li>
-        <li>
-          <%= link_to logout_path do %>
-            <%# <span data-feather="users"></span> %>
-            ログアウト
-          <% end %>
-        </li>
-      <% else %>
-        <li>
-          <%= link_to login_path do %>
-            <%# <span data-feather="users"></span> %>
-            ログイン
-          <% end %>
-        </li>
-      <% end %>
+      <li>
+        <%= link_to activity_notifications_path do %>
+          <%# <span data-feather="users"></span> %>
+          マイアクティビティ
+        <% end %>
+      </li>
+      <li>
+        <%= link_to user_path(current_user) do %>
+          <%# <span data-feather="users"></span> %>
+          プロフィール
+        <% end %>
+      </li>
+      <li>
+        <%= link_to edit_user_path(current_user) do %>
+          <%# <span data-feather="users"></span> %>
+          設定
+        <% end %>
+      </li>
+      <li>
+        <%= link_to logout_path do %>
+          <%# <span data-feather="users"></span> %>
+          ログアウト
+        <% end %>
+      </li>
     </ul>
   </section>
 </aside>
