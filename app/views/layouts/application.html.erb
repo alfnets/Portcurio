@@ -4,9 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= display_meta_tags(default_meta_tags(full_title(yield(:title)))) %>
-    <meta name="msapplication-TileColor" content="#00b564">
-    <meta name="theme-color" content="#ffffff">
-
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <% if Rails.env.staging? %>

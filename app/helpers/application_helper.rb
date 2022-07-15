@@ -60,11 +60,9 @@ module ApplicationHelper
       canonical: request.original_url,
       noindex: ! Rails.env.production?,
       icon: [
-        { href: image_url('favicons/favicon.ico') },
-        { href: image_url('favicons/apple-touch-icon.png'), rel: 'apple-touch-icon', sizes: '180x180', type: 'image/png' },
-        { href: image_url('favicons/android-chrome-192x192.png'), rel: 'icon', sizes: '192x192', type: 'image/png' },
-        { href: image_url('favicons/site.webmanifest'), rel: 'manifest', type: nil },
-        { href: image_url('favicons/safari-pinned-tab.svg'), rel: 'mask-icon', color: "#00b564", type: nil },
+        { href: image_url('favicon.ico') },
+        { href: image_url('apple-touch-icon.png'), rel: 'apple-touch-icon', sizes: '180x180', type: 'image/png' },
+        { href: image_url('android-chrome.png'), rel: 'icon', sizes: '192x192', type: 'image/png' },
       ],
       og: {
         site_name: site_name,
