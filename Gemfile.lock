@@ -259,6 +259,10 @@ GEM
     rails-i18n (7.0.5)
       i18n (>= 0.7, < 2)
       railties (>= 6.0.0, < 8)
+    rails_real_favicon (0.1.1)
+      json (>= 1.7, < 3)
+      rails
+      rubyzip (~> 2)
     railties (6.1.4.4)
       actionpack (= 6.1.4.4)
       activesupport (= 6.1.4.4)
@@ -432,6 +436,7 @@ DEPENDENCIES
   rails (= 6.1.4.4)
   rails-controller-testing
   rails-i18n
+  rails_real_favicon
   rinku
   rspec-rails
   rubocop
