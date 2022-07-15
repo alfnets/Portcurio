@@ -23,11 +23,10 @@
 </section>
 <% if @users.any? %>
   <div class='center'><%= paginate @users %></div>
-  <ul class="users follow">
-    <%= render @users %>
-    <!--<% @users.each do |user| %>-->
-    <!--  <%= render user %>-->
-    <!--<% end %>-->
-  </ul>
+  <div class="users_container">
+    <ul class="users follow">
+      <%= render @users %>
+    </ul>
+  </div>
   <div class='center'><%= paginate @users %></div>
 <% end %>
