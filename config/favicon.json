@@ -3,8 +3,8 @@
   "favicon_design": {
       "ios": {
           "picture_aspect": "background_and_margin",
-          "background_color": "#00b564",
-          "margin": "7%",
+          "background_color": "#ffffff",
+          "margin": "0%",
           "assets": {
               "ios6_and_prior_icons": false,
               "ios7_and_later_icons": false,
@@ -33,6 +33,7 @@
           "picture_aspect": "no_change",
           "theme_color": "#ffffff",
           "manifest": {
+              "name": "Portcurio",
               "display": "standalone",
               "orientation": "not_set",
               "on_conflict": "override",
@@ -45,12 +46,13 @@
       },
       "safari_pinned_tab": {
           "picture_aspect": "black_and_white",
-          "threshold": 85.46875,
+          "threshold": 71.875,
           "theme_color": "#00b564"
       }
   },
   "settings": {
-      "scaling_algorithm": "Mitchell",
+      "compression": 5,
+      "scaling_algorithm": "Lanczos",
       "error_on_image_too_small": false,
       "readme_file": false,
       "html_code_file": false,
