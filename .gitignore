@@ -53,3 +53,6 @@ ngrok
 
 # Ignore minitest files
 /test
+
+# Ignore service-worker
+public/service-worker.js*

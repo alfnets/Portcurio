@@ -1,5 +1,10 @@
-const { environment } = require('@rails/webpacker')
+// WebpackerPwa
+const { resolve } = require('path');
+const { config, environment, Environment } = require('@rails/webpacker');
+const WebpackerPwa = require('webpacker-pwa');
+new WebpackerPwa(config, environment);
 
+// jQuery
 const webpack = require('webpack')
 environment.plugins.prepend('Provide',
   new webpack.ProvidePlugin({
