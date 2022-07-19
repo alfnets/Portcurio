@@ -3,14 +3,18 @@ class UsersController < ApplicationController
                                         :following, :followers]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
+  before_action :set_q,          only: [:index, :search]
   
-  # include Kaminari::Helpers::UrlHelper
 
   # GET /users
   def index
-    # @users = User.page(params[:page])
-    @users = User.where(activated: true).page(params[:page])
+    if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
+      @title = "Search Result for User"
+    else
+      @title = "All users"
+    end
     @userprofile = current_user
+    @users = @q.result.page(params[:page])
   end
   
   # GET /users/:id
@@ -176,11 +180,15 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
   
-  
+
   private
   
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :lineuid)
+    end
+
+    def search_params
+      params.require(:q).permit(:name_cont)
     end
     
     # beforeアクション
@@ -194,5 +202,14 @@ class UsersController < ApplicationController
     # 管理者かどうか確認
     def admin_user
       redirect_to(root_url) unless current_user.admin?
+    end
+
+    # 検索結果の取得
+    def set_q
+      if params[:q]
+        @q = User.ransack(search_params, activated_true: true)
+      else
+        @q = User.ransack(activated_true: true)
+      end
     end
 end
