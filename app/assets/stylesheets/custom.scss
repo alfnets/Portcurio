@@ -931,13 +931,13 @@ span.image {
   position: relative;
   background-color: #ECF0F1;
   box-shadow: 8px 8px 0px 0 rgba(26, 188, 156, 0.4);
-  padding: 16px;
+  padding: 16px 16px 8px;
   margin-top: 16px;
   margin-bottom: 24px;
   border-radius: 8px;
   .micropost_form {
     form:first-child {
-      padding-bottom: 18px;
+      // padding-bottom: 18px;
       #micropost_content {
         margin-bottom: 5px;
       }
@@ -948,20 +948,20 @@ span.image {
         bottom: 8px;
       }
       .image {
-        input {
-          margin-bottom: 8px;
-        }
         .btn-image {
-          position: absolute;
-          bottom: 24px;
-          left: 80px;
-          width: 80px;
           width: 56px;
           padding: 3px 0px;
           margin-right: 4px;
         }
         .image_form {
           display: none;
+        }
+        p {
+          padding: 0;
+          margin: 0;
+          width: 56px;
+          font-size: 1.2rem;
+          text-align: center;
         }
       }
     }

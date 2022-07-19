@@ -13,6 +13,7 @@
     <span class="image">
       <%= f.label :image, "画像", class: "btn btn-image btn-info" %>
       <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: 'image_form' %>
+      <p><br></p>
     </span>
   </div>
 <% end %>
@@ -27,11 +28,20 @@
 </div>
 
 <script type="text/javascript">
-  $("#micropost_image").bind("change", function() {
-    var size_in_megabytes = this.files[0].size/1024/1024;
-    if (size_in_megabytes > 5) {
-      alert("Maximum file size is 5MB. Please choose a smaller file.");
-      $("#micropost_image").val("");
+  $('.image > input').on('change', function () {
+    var file = $(this).prop('files')[0];
+    console.log(file)
+    if (file === undefined || file === null) {
+      $('.image > p').html("<br>");
+    } else {
+      var size_in_megabytes = this.files[0].size/1024/1024;
+      if (size_in_megabytes > 5) {
+        alert("Maximum file size is 5MB. Please choose a smaller file.");
+        $("#micropost_image").val("");
+        $('.image > p').html("<br>");
+      } else {
+        $('.image > p').text('添付済');
+      }
     }
   });
 </script>
