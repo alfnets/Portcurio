@@ -559,6 +559,14 @@ input {
 }
 
 
+/* Sign up */
+.signup_form {
+  input { 
+    margin-bottom: 24px;
+    &:nth-child(2) { margin-top: 30px; }
+  }
+}
+
 
 /* Users index */
 
