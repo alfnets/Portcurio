@@ -59,6 +59,7 @@ Rails.application.routes.draw do
       get :close, on: :member
       get :mention_delete, on: :member
     end
+    resources :porcs, only: [:create, :destroy]
   end
   resources :comments, only: [:show, :close], concerns: :likeable do
     get :close, on: :member

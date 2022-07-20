@@ -5,6 +5,7 @@ class Micropost < ApplicationRecord
   has_many :like_users,    through: :likes,    source: :user
   has_many :comments, dependent: :destroy
   has_many :comment_users, through: :comments, source: :user
+  has_many :porcs,    dependent: :destroy 
   has_many :notifications, as: :notificable, dependent: :destroy
   
   # ポリモーフィックと外部キーでの関連付けはカスタマイズしないとできない

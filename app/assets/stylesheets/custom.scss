@@ -69,12 +69,12 @@ p {
 a {
   text-decoration: none;
   color: #3498DB;
+  &:hover {
+    text-decoration: underline;
+    color: #2980B9
+  }
 }
 
-a:hover {
-  text-decoration: underline;
-  color: #2980B9
-}
 
 .btn { background: none; }
 .btn:hover { background: none; }
@@ -832,6 +832,16 @@ span.image {
 
 .likes-count {
   padding-right: 5px;
+}
+
+.porcs {
+  margin-left: 8px;
+  .btn-porc {
+    color: #1ABC9C;
+  }
+  .btn-porc-unporc {
+    color: #95A5A6;
+  }
 }
 
 .comment-container{

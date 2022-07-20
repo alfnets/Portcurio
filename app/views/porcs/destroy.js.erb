@@ -1,0 +1,1 @@
+$(".porc-btn-<%= @micropost.id %>").html("<%= escape_javascript(render partial: 'porcs/porc', locals: { micropost: @micropost }) %>")

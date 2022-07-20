@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :comments,         dependent: :destroy
   has_many :comment_microposts, through: :comments,
                                  source: :micropost
+  has_many :porcs,            dependent: :destroy                              
                                  
   # Default: class_name: "Micropost"
   # Default: foreign_key: "user_id"

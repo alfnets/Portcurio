@@ -82,6 +82,14 @@
       <span class="likes-micropost-<%= micropost.id %> likes-count">
         <%= render partial: 'likes/likes_count', locals: { likeable: micropost } %>
       </span>
+
+      <span class="porc-btn-<%= micropost.id %> porcs"> 
+        <% if micropost.porcs.find_by(user: current_user) %>
+          <%= render partial: 'porcs/unporc', locals: { micropost: micropost } %>
+        <% else %>
+          <%= render partial: 'porcs/porc', locals: { micropost: micropost } %>
+        <% end %>
+      </span>
     
       <span class="comment-btn-<%= micropost.id %> comment-btn-wrap">
         <% comment_count = micropost.comments.where(parent_id: nil).count %>
