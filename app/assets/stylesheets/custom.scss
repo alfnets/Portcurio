@@ -12,6 +12,12 @@ $gray-medium-light: #eaeaea;
   box-sizing:         border-box;
 }
 
+@media screen and (max-width:374px) {
+	/* 374px以下に適用されるCSS（スマホ用） */
+  .search_container {
+    input.form-control { width: 80px !important; }
+  }
+}
 
 /* universal */
 
@@ -113,18 +119,40 @@ span.user a {
 
 
 /* header */
-#logo {
-  float: left;
-  margin-right: 10px;
-  font-size: 1.5em;
-  color: white;
-  letter-spacing: -1px;
-  padding-top: 12px;
-  padding-left: 10px;
-  font-weight: bold;
-  &:hover {
-    color: white;
-    text-decoration: none;
+.navbar-header {
+  position: relative;
+  #service_logo { 
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+.search_container {
+  form.navbar-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    padding: 0;
+    margin: 0 0 0 140px;
+    border: none;
+    .input-group {
+      border: 2px solid #DCE4EC;
+      border-radius: 8px;
+      background-color: white;
+      input.form-control { 
+        margin: 0;
+        width: 108px;
+        border: none;
+        background-color: none;
+      }
+      .btn-search {
+        background-color: white;
+        border: none;
+        color: #ACB6C0;
+        font-size: 12px;
+      }
+    }
   }
 }
 
@@ -568,15 +596,6 @@ input {
 
 
 /* Users index */
-
-.user_search_form {
-  text-align: center;
-  input { 
-    display: inline-block;
-  }
-  input[type="search"] { width: 200px; }
-  input[type="submit"] { width: 56px; }
-}
 
 .users {
   list-style: none;
