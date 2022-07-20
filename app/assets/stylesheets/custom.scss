@@ -29,10 +29,8 @@ textarea {
 
 .center {
   text-align: center;
-  h1 {
-    margin-bottom: 10px;
-  }
 }
+
 
 /* typography */
 
@@ -561,6 +559,7 @@ input {
 
 /* Sign up */
 .signup_form {
+  padding: 0 20px;
   input { 
     margin-bottom: 24px;
     &:nth-child(2) { margin-top: 30px; }
