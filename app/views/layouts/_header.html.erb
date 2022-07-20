@@ -25,14 +25,16 @@
       </button>
       <%= link_to image_tag("logo_portcurio.png", alt: "portcurio logo", height: "51px"), root_path, id: "service_logo" %>
       <span class="content_search_form inline-block">
-        <form class="navbar-form" role="search">
+        <%= search_form_for @search_microposts, url: microposts_path do |f| %>
           <div class="input-group">
-            <input type="search" class="form-control" placeholder="教材を検索">
+            <%= f.search_field :content_cont, placeholder: "教材を検索", class: "form-control" %>
             <span class="input-group-btn">
-              <button type="submit" class="btn btn-search"><i class="fas fa-search"></i></button>
+              <%= button_tag type: "submit", class: 'btn btn-search' do %>
+                <i class="fas fa-search"></i>
+              <% end %>
             </span>
           </div>
-        </form>
+        <% end %>
       </span>
     </div>
     <nav>

@@ -1,8 +1,23 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
+
+  before_action :set_search_microposts
   
   private
+
+    def search_params
+      params.require(:q).permit(:content_cont)
+    end
   
+    def set_search_microposts
+      if params[:q]
+        @search_microposts = Micropost.ransack(search_params)
+        @result_search_microposts = @search_microposts.result
+      else
+        @search_microposts = Micropost.ransack(params[:q])
+      end
+    end
+
     # ログイン済みユーザーかどうか確認
     def logged_in_user
       unless logged_in?

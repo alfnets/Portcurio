@@ -151,7 +151,7 @@ span.user a {
   }
 }
 .content_search_form {
-  form.navbar-form {
+  #micropost_search {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -161,7 +161,7 @@ span.user a {
     border: none;
     .input-group {
       input.form-control { 
-        width: 108px;
+        width: 104px;
       }
     }
   }

@@ -62,7 +62,13 @@ class MicropostsController < ApplicationController
 
   # GET /microposts
   def index
-    @feedall = Kaminari.paginate_array(Micropost.all).page(params[:page])
+    if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
+      @title = "Search Result for Micropost"
+      @feedall = Kaminari.paginate_array(@result_search_microposts).page(params[:page])
+    else
+      @title = "All users feed"
+      @feedall = Kaminari.paginate_array(Micropost.all).page(params[:page])
+    end    
     @userprofile = current_user
   end
   
