@@ -1,3 +1,3 @@
 history.replaceState('', '', '/')
 
-require("packs/render/root")
+require("packs/render_root")

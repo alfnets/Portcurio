@@ -47,7 +47,9 @@ class MicropostsController < ApplicationController
       end
 
     else
+      @userprofile = current_user
       @feed_items = current_user.feed.page(params[:page])
+      @feedall     = Kaminari.paginate_array(Micropost.all).page(params[:page])
       render 'static_pages/home'
     end
   end
