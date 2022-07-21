@@ -62,22 +62,11 @@
       }
     }
 
-    .dropdown.open .caret {
-      border-top: 0;
-      border-bottom: 4px solid;
-    }
-
     .dropdown-menu {
-      position: relative;
+      box-shadow: none;
       width: 100%;
       border: inherit;
       box-shadow: none;
-      transition: height .15s ease-in;
-
-      &.shown {
-        display: block;
-        margin-bottom: 10px;
-      }
     }
 
     ul.navbar-nav {
