@@ -19,6 +19,19 @@ $gray-medium-light: #eaeaea;
   }
 }
 
+@media (max-width: 1023px) {
+  .navbar-toggle {
+      display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .navbar-toggle {
+      display: none !important;
+  }
+}
+
+
 /* universal */
 
 body {
