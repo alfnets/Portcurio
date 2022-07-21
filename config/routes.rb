@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get   '/line',      to: 'sessions#line'
   post  '/line',      to: 'sessions#line_connection'
   delete '/logout',   to: 'sessions#destroy'
+  get    '/logout',   to: 'sessions#destroy'  # offcanvasのbug対策（post(delete含む)が効かないため）
   post  '/callback'   =>  'linebots#callback'
 
   resource :help, only: [:show, :googleslides, :powerpoint] do
