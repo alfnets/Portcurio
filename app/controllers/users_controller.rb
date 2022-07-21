@@ -180,6 +180,11 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
   
+  # GET /users/:id/portcurio
+  def portcurio
+    @userprofile = current_user
+    @portcurio = Micropost.joins(:porcs).where(porcs: { user: current_user }).page(params[:page])
+  end
 
   private
   

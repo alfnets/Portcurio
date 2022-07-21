@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   end
   resources :users do
     member do
-      get :following, :followers, :subscribing, :delete
+      get :following, :followers, :subscribing, :delete, :portcurio
       # GET /users/1/following
       # GET /users/1/followers
       # GET /users/1/subscribing

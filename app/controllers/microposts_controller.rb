@@ -15,6 +15,7 @@ class MicropostsController < ApplicationController
     rescue
     end
     if @micropost.save
+      @porc = @micropost.porcs.create(user: current_user)
       flash[:success] = "Micropost created!"
       redirect_to root_url    # => static_pages#home
       # respond_to do |format|

@@ -1,0 +1,9 @@
+<% provide(:title, "My Portcurio") %>
+
+<h1>My Portcurio</h1>
+
+<ol class="microposts">
+  <%= render @portcurio %>
+</ol>
+
+<div class='center'><%= paginate @portcurio %></div>
