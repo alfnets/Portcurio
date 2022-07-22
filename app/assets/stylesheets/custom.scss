@@ -1174,3 +1174,21 @@ padding-bottom: 24px;
     }
   }
 }
+
+
+/* links (wiki) ページ */
+.links_edit_buttons_container {
+  a {
+    display: block;
+    text-align: right;
+    margin: 8px 32px 8px 0;
+  }
+  .button_wrapper {
+    text-align: center;
+  }
+  .btn-save {
+    margin-top: 8px;
+    font-size: 20px;
+    width: 90%;
+  }
+}

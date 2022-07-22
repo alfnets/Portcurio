@@ -1,0 +1,12 @@
+<h1>お役立ちリンク集の更新</h1>
+<div id="toast_editor"></div>
+
+<div class="links_edit_buttons_container">
+  <div class="button_wrapper">
+    <%= button_to '保存', links_path, class: "btn btn-primary btn-save", id: "links_save" %>
+  </div>
+  <%= link_to "ビュー", links_path, class: "text-right" %>
+</div>
+
+<input type="hidden" id="org_markdown" value="<%= @org_markdown %>">
+<%= javascript_pack_tag 'toast_ui_editor' %>

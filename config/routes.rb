@@ -71,4 +71,5 @@ Rails.application.routes.draw do
     get :activity, on: :member
   end
   
+  resource :links, only: [:show, :edit, :create]
 end

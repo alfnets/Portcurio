@@ -1,0 +1,7 @@
+<h1>お役立ちリンク集</h1>
+<div id="toast_viewer"></div>
+<%= link_to "編集する", edit_links_path, class: "pull-right" %>
+
+<input type="hidden" id="org_markdown" value="<%= @org_markdown %>">
+
+<%= javascript_pack_tag 'toast_ui_viewer' %>
