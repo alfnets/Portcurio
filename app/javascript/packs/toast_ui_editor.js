@@ -8,7 +8,7 @@ const editor = new Editor({
   el: document.querySelector('#toast_editor'),
   height: '500px',
   initialValue: org_markdown,
-  initialEditType: 'markdown',
+  initialEditType: 'wysiwyg',
   previewStyle: 'vertical',
   options
 });
