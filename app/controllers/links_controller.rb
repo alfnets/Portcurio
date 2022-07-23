@@ -1,22 +1,24 @@
 class LinksController < ApplicationController
   def show
-    if Link.last
-      @org_markdown = Link.last.markdown
+    @last_link = Link.last
+    if @last_link
+      @org_markdown = @last_link.markdown
     else
       @org_markdown = "Let's create!"
     end
   end
 
   def edit
-    if Link.last
-      @org_markdown = Link.last.markdown
+    @last_link = Link.last
+    if @last_link
+      @org_markdown = @last_link.markdown
     else
       @org_markdown = "Let's create!"
     end
   end
 
   def create
-    markdown = params[:markdown].html_safe
+    markdown = params[:markdown]
     current_user.links.create(markdown: markdown)
     flash[:success] = "The link page saved!"
     redirect_to edit_links_path
