@@ -8,7 +8,7 @@ const editor = new Editor({
   el: document.querySelector('#toast_editor'),
   height: '500px',
   initialValue: org_markdown,
-  initialEditType: 'wysiwyg',
+  initialEditType: 'markdown',
   previewStyle: 'vertical',
   options
 });
@@ -22,8 +22,8 @@ $(document).on('turbolinks:load',
       .replace(/'/g, "&#039;")
       .replace(/`/g, "&#096;")
       .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/\n/g, "<br>");
+      .replace(/>/g, "&gt;");
+      // .replace(/\n/g, "<br>");
     $('#links_save').after(`<input type="hidden" name="markdown" value='${markdown}'>`);
   })
 );
