@@ -16,7 +16,8 @@ class LinksController < ApplicationController
   end
 
   def create
-    current_user.links.create(markdown: params[:markdown])
+    markdown = params[:markdown].html_safe
+    current_user.links.create(markdown: markdown)
     flash[:success] = "The link page saved!"
     redirect_to edit_links_path
   end

@@ -5,7 +5,7 @@
   <div class="button_wrapper">
     <%= button_to '保存', links_path, class: "btn btn-primary btn-save", id: "links_save" %>
   </div>
-  <%= link_to "ビュー", links_path, class: "text-right" %>
+  <%= link_to "ビュー", links_path, data: { confirm: "編集画面から離れます" } %>
 </div>
 
 <input type="hidden" id="org_markdown" value="<%= @org_markdown %>">

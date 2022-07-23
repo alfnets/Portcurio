@@ -15,8 +15,17 @@ const editor = new Editor({
 
 editor.getMarkdown();
 
-$('#links_save').on('click', () => {
-  $('#links_save').after(`<input type="hidden" name="markdown" value="${editor.getMarkdown()}">`);
-});
+$(document).on('turbolinks:load', 
+  $('#links_save').on('click', () => {
+    const markdown = editor.getMarkdown().replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;")
+      .replace(/`/g, "&#096;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\n/g, "<br>");
+    $('#links_save').after(`<input type="hidden" name="markdown" value='${markdown}'>`);
+  })
+);
 
 require("packs/toast_ui_editor")
