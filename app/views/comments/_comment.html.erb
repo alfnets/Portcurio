@@ -16,7 +16,11 @@
         <% end %>
       </div>
       <div class="content">
-        <%= raw Rinku.auto_link(simple_format(h(comment.content)), :all, 'target="_blank" rel="noopener noreferrer"') %>
+        <% if raw(Rinku.auto_link(simple_format(h(comment.content)))).include?("https://#{domain_name}") %>
+          <%= raw Rinku.auto_link(simple_format(h(comment.content)), :all) %>
+        <% else %>
+          <%= raw Rinku.auto_link(simple_format(h(comment.content)), :all, 'target="_blank" rel="noopener noreferrer"') %>
+        <% end %>
       </div>
       <span class="timestamp">
         Posted <%= time_ago_in_words(comment.created_at) %> ago.

@@ -8,7 +8,11 @@
     <div class="content-container">
       <div class="content">
         <p>
-          <%= raw Rinku.auto_link(simple_format(h(micropost.content)), :all, 'target="_blank" rel="noopener noreferrer"') %>
+          <% if raw(Rinku.auto_link(simple_format(h(micropost.content)))).include?("https://#{domain_name}") %>
+            <%= raw Rinku.auto_link(simple_format(h(micropost.content)), :all) %>
+          <% else %>
+            <%= raw Rinku.auto_link(simple_format(h(micropost.content)), :all, 'target="_blank" rel="noopener noreferrer"') %>
+          <% end %>
         </p>
         <div class="links">
           <% if micropost.links.present? %>
