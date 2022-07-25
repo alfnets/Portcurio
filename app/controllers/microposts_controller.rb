@@ -68,9 +68,21 @@ class MicropostsController < ApplicationController
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
       @title = "Search Result for Micropost"
       @feedall = Kaminari.paginate_array(@result_search_microposts).page(params[:page])
+    elsif params[:school_type] || params[:subject] || params[:tag]
+      click_tag = params[:school_type] if params[:school_type]
+      click_tag = params[:subject] if params[:subject]
+      click_tag = params[:tag] if params[:tag]
+      @title = click_tag
+      @feedall = Kaminari.paginate_array(Micropost.tagged_with(click_tag)).page(params[:page])
+      @school_types = Micropost.tags_on(:school_types)  # 校種タグの一覧表示
+      @subjects     = Micropost.tags_on(:subjects)      # 教科タグの一覧表示
+      @tags         = Micropost.tag_counts_on(:tags).most_used(20)  # タグの一覧表示
     else
       @title = "All users feed"
       @feedall = Kaminari.paginate_array(Micropost.all).page(params[:page])
+      @school_types = Micropost.tags_on(:school_types)  # 校種タグの一覧表示
+      @subjects     = Micropost.tags_on(:subjects)      # 教科タグの一覧表示
+      @tags         = Micropost.tag_counts_on(:tags).most_used(20)  # タグの一覧表示
     end    
     @userprofile = current_user
   end
@@ -88,7 +100,7 @@ class MicropostsController < ApplicationController
     
     # Strong parameter
     def micropost_params
-      params.require(:micropost).permit(:content, :image, :file_type, :file_link)
+      params.require(:micropost).permit(:content, :image, :file_type, :file_link, :tag_list, :school_type_list, :subject_list)
     end
 
     def correct_user

@@ -2,6 +2,19 @@
 
 <h1><%= @title %></h1>
 
+<h3>校種</h3>
+<% @school_types.each do |school_type| %>
+  <%= link_to "#{school_type.name}(#{school_type.taggings_count})", microposts_path(school_type: school_type.name) %>
+<% end %>
+<h3>教科</h3>
+<% @subjects.each do |subject| %>
+  <%= link_to "#{subject.name}(#{subject.taggings_count})", microposts_path(subject: subject.name) %>
+<% end %>
+<h3>タグ</h3>
+<% @tags.each do |tag| %>
+  <%= link_to "#{tag.name}(#{tag.taggings_count})", microposts_path(tag: tag.name) %>
+<% end %>
+
 <ol class="microposts">
   <%= render @feedall %>
 </ol>

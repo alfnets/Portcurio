@@ -1,4 +1,6 @@
 class Micropost < ApplicationRecord
+  acts_as_taggable_on :tags
+  acts_as_taggable_on :school_types, :subjects
   belongs_to :user
   # Default: foreign_key: user_id <-> User
   has_many :likes, as: :likeable, dependent: :destroy
