@@ -49,6 +49,7 @@ gem 'rails-i18n'
 gem "flat-ui-rails"
 gem 'meta-tags'
 gem 'ransack'
+gem 'acts-as-taggable-on', '~> 9.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
