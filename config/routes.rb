@@ -1,17 +1,17 @@
 Rails.application.routes.draw do
   root 'static_pages#home'
-  get   '/home'       =>  'static_pages#home'
-  get   '/about'      =>  'static_pages#about'
-  get   '/contact'    =>  'static_pages#contact'
-  get   '/signup'     =>  'users#new'
+  get   '/home',      to: 'static_pages#home'
+  get   '/about',     to: 'static_pages#about'
+  get   '/contact',   to: 'static_pages#contact'
+  get   '/signup',    to: 'users#new'
   get   '/login',     to: 'sessions#new'
   post  '/login',     to: 'sessions#create'
-  post  '/easylogin/:id' =>  'sessions#easylogin'
+  post  '/easylogin/:id', to: 'sessions#easylogin'
   get   '/line',      to: 'sessions#line'
   post  '/line',      to: 'sessions#line_connection'
   delete '/logout',   to: 'sessions#destroy'
-  get    '/logout',   to: 'sessions#destroy'  # offcanvasのbug対策（post(delete含む)が効かないため）
-  post  '/callback'   =>  'linebots#callback'
+  get   '/logout',    to: 'sessions#destroy'  # offcanvasのbug対策（post(delete含む)が効かないため）
+  post  '/callback',  to: 'linebots#callback'
 
   resource :help, only: [:show, :googleslides, :powerpoint] do
     get :googleslides, on: :member
@@ -50,7 +50,8 @@ Rails.application.routes.draw do
     patch :subscribe, on: :member
     patch :unsubscribe, on: :member
   end
-  resource  :microposts, only: [:index] do
+  resource  :microposts, only: [:index, :get_selected_schooltype] do
+    get :get_selected_school_type, on: :member
     resource :slides, only: [:new, :create, :close, :destroy] do
       get :close, on: :member
     end

@@ -68,21 +68,30 @@ class MicropostsController < ApplicationController
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
       @title = "Search Result for Micropost"
       @feedall = Kaminari.paginate_array(@result_search_microposts).page(params[:page])
-    elsif params[:school_type] || params[:subject] || params[:tag]
-      click_tag = params[:school_type] if params[:school_type]
-      click_tag = params[:subject] if params[:subject]
-      click_tag = params[:tag] if params[:tag]
-      @title = click_tag
-      @feedall = Kaminari.paginate_array(Micropost.tagged_with(click_tag)).page(params[:page])
-      @school_types = Micropost.tags_on(:school_types)  # 校種タグの一覧表示
-      @subjects     = Micropost.tags_on(:subjects)      # 教科タグの一覧表示
-      @tags         = Micropost.tag_counts_on(:tags).most_used(20)  # タグの一覧表示
+    elsif params[:subject] || params[:tag]
+      if params[:subject]
+        @click_tag = params[:subject]
+        @school_type = params[:school_type]
+        @title = @school_type + " " + @click_tag
+      elsif params[:tag]
+        @click_tag = params[:tag]
+        @school_type = nil
+        @title = "#" + @click_tag
+      end
+      @feedall = Kaminari.paginate_array(Micropost.tagged_with("#{@click_tag}, #{@school_type}")).page(params[:page])
+      @primary_subjects            = Micropost.tags_on(:primary_subjects)             # 教科タグの一覧表示
+      @secondary_subjects          = Micropost.tags_on(:secondary_subjects)           # 教科タグの一覧表示
+      @senior_common_subjects      = Micropost.tags_on(:senior_common_subjects)       # 教科タグの一覧表示
+      @senior_specialized_subjects = Micropost.tags_on(:senior_specialized_subjects)  # 教科タグの一覧表示
+      @tags                        = Micropost.tag_counts_on(:tags).most_used(20)  # タグの一覧表示
     else
       @title = "All users feed"
       @feedall = Kaminari.paginate_array(Micropost.all).page(params[:page])
-      @school_types = Micropost.tags_on(:school_types)  # 校種タグの一覧表示
-      @subjects     = Micropost.tags_on(:subjects)      # 教科タグの一覧表示
-      @tags         = Micropost.tag_counts_on(:tags).most_used(20)  # タグの一覧表示
+      @primary_subjects             = Micropost.tags_on(:primary_subjects)            # 教科タグの一覧表示
+      @secondary_subjects           = Micropost.tags_on(:secondary_subjects)          # 教科タグの一覧表示
+      @senior_common_subjects       = Micropost.tags_on(:senior_common_subjects)      # 教科タグの一覧表示
+      @senior_specialized_subjects  = Micropost.tags_on(:senior_specialized_subjects)  # 教科タグの一覧表示
+      @tags                         = Micropost.tag_counts_on(:tags).most_used(20)  # タグの一覧表示
     end    
     @userprofile = current_user
   end
@@ -95,6 +104,15 @@ class MicropostsController < ApplicationController
     @comments = @feedmicropost.comments.where(parent_id: nil).unscope(:order).order(updated_at: :desc)
   end
   
+
+  # GET /microposts/get_selected_school_type
+  def get_selected_school_type
+    @selected_school_type = params[:selected_school_type]
+    @userprofile = current_user
+    respond_to do |format|
+      format.js
+    end
+  end
 
   private
     

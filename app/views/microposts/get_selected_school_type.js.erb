@@ -1,0 +1,12 @@
+<% case @selected_school_type %>
+<% when "小学校" %>
+  $("#subject").html("<%= escape_javascript(options_for_select(Micropost.tags_on(:primary_subjects))) %>");
+<% when "中学校" %>
+  $("#subject").html("<%= escape_javascript(options_for_select(Micropost.tags_on(:secondary_subjects))) %>");
+<% when "高校(共通)" %>
+  $("#subject").html("<%= escape_javascript(options_for_select(Micropost.tags_on(:senior_common_subjects))) %>");
+<% when "高校(専門)" %>
+  $("#subject").html("<%= escape_javascript(options_for_select(Micropost.tags_on(:senior_specialized_subjects))) %>");
+<% end %>
+$("#subject").prepend('<option value="">教科を選択してください</option>');
+$("#subject").val("");
