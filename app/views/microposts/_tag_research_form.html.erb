@@ -1,4 +1,4 @@
-<% school_types = Tag.all.where(category: "school_type") %>
+<% school_types = Tag.where(category: "school_type").pluck(:name) %>
 
 <%= form_with url: microposts_path, method: :get do |f| %>
   <% case school_type %>

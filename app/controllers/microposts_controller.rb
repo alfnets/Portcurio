@@ -67,10 +67,15 @@ class MicropostsController < ApplicationController
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
       @title = "Search Result for Micropost"
       @feedall = Kaminari.paginate_array(@result_search_microposts.includes(:tags)).page(params[:page])
+    elsif params[:tags]
+      @click_tags = params[:tags].split(",")
+      @title = "Filter Result for Micropost"
+      @feedall = Kaminari.paginate_array(tag_filter(@click_tags).includes(:tags)).page(params[:page])
     else
       @title = "All users feed"
       @feedall = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])
-    end    
+    end
+    @tags = Tag.where(category: nil)  # タグの一覧表示
     @userprofile = current_user
   end
   
@@ -88,8 +93,6 @@ class MicropostsController < ApplicationController
     # Strong parameter
     def micropost_params
       params.require(:micropost).permit(:content, :image, :file_type, :file_link)
-      # para = params.require(:micropost).permit(:content, :image, :file_type, :file_link, :tags)
-      # return para
     end
 
     def tag_params
@@ -97,10 +100,15 @@ class MicropostsController < ApplicationController
       a[:tags].split(",")
     end
 
-
     def correct_user
       @micropost = current_user.microposts.find_by(id: params[:id])
       redirect_to root_url if @micropost.nil?
     end
     
+    def tag_filter(tags)
+      result = Tag.none
+      tags.each do |tag|
+        result = result.or(tag.microposts)
+      end
+    end
 end
