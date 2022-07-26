@@ -86,7 +86,16 @@ class MicropostsController < ApplicationController
     @userprofile = @feedmicropost.user
     @comments = @feedmicropost.comments.where(parent_id: nil).unscope(:order).order(updated_at: :desc)
   end
+ 
   
+  # GET /microposts/get_selected_school_type
+  def get_selected_school_type
+    @selected_school_type = params[:selected_school_type]
+    @userprofile = current_user
+    respond_to do |format|
+      format.js
+    end
+  end
 
   private
     

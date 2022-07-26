@@ -50,7 +50,8 @@ Rails.application.routes.draw do
     patch :subscribe, on: :member
     patch :unsubscribe, on: :member
   end
-  resource  :microposts, only: [:index] do
+  resource  :microposts, only: [:index, :get_selected_schooltype] do
+    get :get_selected_school_type, on: :member
     resource :slides, only: [:new, :create, :close, :destroy] do
       get :close, on: :member
     end
