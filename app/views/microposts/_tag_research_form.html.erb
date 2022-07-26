@@ -1,0 +1,22 @@
+<% school_types = Tag.all.where(category: "school_type") %>
+
+<%= form_with url: microposts_path, method: :get do |f| %>
+  <% case school_type %>
+  <% when "小学校" %>
+    <%= f.select :school_type, school_types, include_blank: "教科で検索", selected: school_type %>
+    <%= f.select :subject, Tag.all.where(category: "primary_subject"), include_blank: "教科を選択してください", selected: click_tag %>
+  <% when "中学校" %>
+    <%= f.select :school_type, school_types, include_blank: "教科で検索", selected: school_type %>
+    <%= f.select :subject, Tag.all.where(category: "secondary_subject"), include_blank: "教科を選択してください", selected: click_tag %>
+  <% when "高校(共通)" %>
+    <%= f.select :school_type, school_types, include_blank: "教科で検索", selected: school_type %>
+    <%= f.select :subject, Tag.all.where(category: "senior_common_subject"), include_blank: "教科を選択してください", selected: click_tag %>
+  <% when "高校(専門)" %>
+    <%= f.select :school_type, school_types, include_blank: "教科で検索", selected: school_type %>
+    <%= f.select :subject, Tag.all.where(category: "senior_specialized_subject"), include_blank: "教科を選択してください", selected: click_tag %>
+  <% else %>
+    <%= f.select :school_type, school_types, include_blank: "教科で検索" %>
+    <%= f.select :subject, "", include_blank: "---" %>
+  <% end %>
+  <%= f.submit '検索' %>
+<% end %>

@@ -91,3 +91,8 @@ subjects = ["農業", "工業", "商業", "水産", "家庭", "看護", "情報"
 subjects.each { |tag|
   Tag.create(name: tag, category: "senior_specialized_subject")
 }
+
+tags = ["高等教育", "幼児教育", "特別支援"]
+tags.each { |tag|
+  Tag.create(name: tag)
+}
