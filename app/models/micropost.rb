@@ -44,6 +44,24 @@ class Micropost < ApplicationRecord
     image.variant(resize_to_limit: [600, 600])
   end
   
+  # 紐づいているすべてのタグを取得
+  def all_tags
+    # sql = "SELECT tags.name
+    #        FROM
+    #         tags
+    #         JOIN taggings ON tags.id = taggings.tag_id
+    #         JOIN microposts ON taggings.taggable_id = microposts.id
+    #        WHERE microposts.id = #{self.id};"
+    # ActiveRecord::Base.connection.select_all(sql).rows.flatten
+    a = []
+    if self.school_types[0] then a.append(self.school_types[0].name) end
+    if self.primary_subjects then self.primary_subjects.each { |tag| a.append(tag.name) } end
+    if self.secondary_subjects then self.secondary_subjects.each { |tag| a.append(tag.name) } end
+    if self.senior_common_subjects then self.senior_common_subjects.each { |tag| a.append(tag.name) } end
+    if self.senior_specialized_subjects then self.senior_specialized_subjects.each { |tag| a.append(tag.name) } end
+    if self.tags then self.tags.each { |tag| a.append(tag.name) } end
+    a
+  end
   
   private
     def content_or_image_or_file_link

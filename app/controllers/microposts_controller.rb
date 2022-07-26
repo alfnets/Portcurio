@@ -67,7 +67,7 @@ class MicropostsController < ApplicationController
   def index
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
       @title = "Search Result for Micropost"
-      @feedall = Kaminari.paginate_array(@result_search_microposts).page(params[:page])
+      @feedall = Kaminari.paginate_array(@result_search_microposts.includes([:tags, :school_types, :primary_subjects, :secondary_subjects, :senior_common_subjects, :senior_specialized_subjects])).page(params[:page])
     elsif params[:subject] || params[:tag]
       if params[:subject]
         @click_tag = params[:subject]
@@ -78,7 +78,7 @@ class MicropostsController < ApplicationController
         @school_type = nil
         @title = "#" + @click_tag
       end
-      @feedall = Kaminari.paginate_array(Micropost.tagged_with("#{@click_tag}, #{@school_type}")).page(params[:page])
+      @feedall = Kaminari.paginate_array(Micropost.tagged_with("#{@click_tag}, #{@school_type}").includes([:tags, :school_types, :primary_subjects, :secondary_subjects, :senior_common_subjects, :senior_specialized_subjects])).page(params[:page])
       @primary_subjects            = Micropost.tags_on(:primary_subjects)             # 教科タグの一覧表示
       @secondary_subjects          = Micropost.tags_on(:secondary_subjects)           # 教科タグの一覧表示
       @senior_common_subjects      = Micropost.tags_on(:senior_common_subjects)       # 教科タグの一覧表示
@@ -86,7 +86,7 @@ class MicropostsController < ApplicationController
       @tags                        = Micropost.tag_counts_on(:tags).most_used(20)  # タグの一覧表示
     else
       @title = "All users feed"
-      @feedall = Kaminari.paginate_array(Micropost.all).page(params[:page])
+      @feedall = Kaminari.paginate_array(Micropost.all.includes([:tags, :school_types, :primary_subjects, :secondary_subjects, :senior_common_subjects, :senior_specialized_subjects])).page(params[:page])
       @primary_subjects             = Micropost.tags_on(:primary_subjects)            # 教科タグの一覧表示
       @secondary_subjects           = Micropost.tags_on(:secondary_subjects)          # 教科タグの一覧表示
       @senior_common_subjects       = Micropost.tags_on(:senior_common_subjects)      # 教科タグの一覧表示
