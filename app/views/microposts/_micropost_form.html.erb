@@ -3,6 +3,9 @@
   <div class="field">
     <%= f.text_area :content, placeholder: "#{current_user.name} さん、今日はどのような一日？" %>
   </div>
+  <div class="field">
+    <%= f.text_field :tags, placeholder: "タグ（,で区切って複数付けれます）", value: "" %>
+  </div>
   <% @micropost.file_type ? file_type = @micropost.file_type : file_type = "" %>
   <% @micropost.file_link ? file_link = @micropost.file_link : file_link = "" %>
   <div class="file_type_tag"><%= f.hidden_field :file_type, value: file_type %></div>

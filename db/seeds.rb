@@ -65,3 +65,29 @@ micropost = Micropost.order(:created_at).second
 content = Faker::Lorem.sentence(word_count: 5)
 micropost.comments.create!(content: content, user_id: user.id)
 end
+
+# デフォルトタグ
+school_types = ["小学校", "中学校", "高校(共通)", "高校(専門)", "高等教育", "幼児教育", "特別支援"]
+school_types.each { |tag|
+  Tag.create(name: tag, category: "school_type")
+}
+
+subjects = ["国語", "社会", "算数", "理科", "生活", "音楽", "図画工作", "家庭", "体育", "外国語(英語)", "道徳", "総合", "特別活動", "学級活動"]
+subjects.each { |tag|
+  Tag.create(name: tag, category: "primary_subject")
+}
+
+subjects = ["国語", "社会", "数学", "理科", "音楽", "美術", "保健体育", "技術", "家庭", "外国語(英語)", "道徳", "総合", "特別活動", "学級活動"]
+subjects.each { |tag|
+  Tag.create(name: tag, category: "secondary_subject")
+}
+
+subjects = ["国語", "地理歴史", "公民", "数学", "理科", "保健体育", "芸術", "外国語(英語)", "家庭", "情報", "理数", "総合", "特別活動", "学級活動"]
+subjects.each { |tag|
+  Tag.create(name: tag, category: "senior_common_subject")
+}
+
+subjects = ["農業", "工業", "商業", "水産", "家庭", "看護", "情報", "福祉", "理数", "体育", "音楽", "美術", "英語"]
+subjects.each { |tag|
+  Tag.create(name: tag, category: "senior_specialized_subject")
+}

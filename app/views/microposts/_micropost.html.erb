@@ -67,6 +67,13 @@
         <% end %>
       </div>
     </div>
+
+    <div class="tag-container">
+      <% micropost.tags.each do |tag| %>
+        <%= link_to tag.name, microposts_path(tag: tag.name) %>
+      <% end %>
+    </div>
+
     <span class="timestamp">
       Posted <%= time_ago_in_words(micropost.created_at) %> ago.
       <% if current_user?(micropost.user) %>

@@ -2,11 +2,10 @@ class MicropostsController < ApplicationController
   before_action :logged_in_user, only: [:create, :destroy, :show]
   before_action :correct_user, only: :destroy
  
-  # include Kaminari::Helpers::UrlHelper  
-
   # POST /microposts
   def create
     @micropost = current_user.microposts.build(micropost_params)
+    @micropost.tags_save(tag_params)
     @micropost.image.attach(params[:micropost][:image])
     begin
       if Nokogiri::HTML(Rinku.auto_link(@micropost.content)).at_css('a').present?
@@ -67,10 +66,10 @@ class MicropostsController < ApplicationController
   def index
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
       @title = "Search Result for Micropost"
-      @feedall = Kaminari.paginate_array(@result_search_microposts).page(params[:page])
+      @feedall = Kaminari.paginate_array(@result_search_microposts.includes(:tags)).page(params[:page])
     else
       @title = "All users feed"
-      @feedall = Kaminari.paginate_array(Micropost.all).page(params[:page])
+      @feedall = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])
     end    
     @userprofile = current_user
   end
@@ -89,7 +88,15 @@ class MicropostsController < ApplicationController
     # Strong parameter
     def micropost_params
       params.require(:micropost).permit(:content, :image, :file_type, :file_link)
+      # para = params.require(:micropost).permit(:content, :image, :file_type, :file_link, :tags)
+      # return para
     end
+
+    def tag_params
+      a = params.require(:micropost).permit(:tags)
+      a[:tags].split(",")
+    end
+
 
     def correct_user
       @micropost = current_user.microposts.find_by(id: params[:id])
