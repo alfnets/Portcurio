@@ -67,11 +67,11 @@ class MicropostsController < ApplicationController
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
       @title = "Search Result"
       @feedall = Kaminari.paginate_array(@result_search_microposts.includes(:tags)).page(params[:page])
-    elsif params[:micropost] && ( params[:micropost][:school_type].present? || params[:micropost][:subject].present? || params[:micropost][:tags].present? )
+    elsif params[:micropost] && params[:micropost][:tags].present?
       @selected_school_type = params[:micropost][:school_type]
       @selected_subject     = params[:micropost][:subject]
       @selected_tags        = params[:micropost][:tags].delete(' 　')
-      tag_microposts = tag_filter([@selected_school_type, @selected_subject, @selected_tags.split(",")])
+      tag_microposts = tag_filter(@selected_tags.split(","))
       if tag_microposts
         @title = "Filter Result"
         @feedall = Kaminari.paginate_array(tag_microposts.includes(:tags)).page(params[:page])
@@ -140,7 +140,6 @@ class MicropostsController < ApplicationController
     end
     
     def tag_filter(tags)
-      tags.flatten!
       tags.reject!(&:blank?)
       tag_0 = Tag.find_by(name: tags[0])
       result = tag_0.microposts if tag_0

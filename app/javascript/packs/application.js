@@ -16,6 +16,7 @@ require("additions/micropost_show_open")
 require("additions/user_show_close_by_tab")
 require("additions/bootstrap.offcanvas")
 require("additions/get_selected_school_type")
+require("additions/bootstrap-tagsinput")
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)

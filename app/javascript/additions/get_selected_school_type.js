@@ -7,4 +7,9 @@ $(document).on('turbolinks:load', function() {
       data: { selected_school_type: val }
     });
   });
+
+  $('#micropost_subject').on('change', function() {
+    const val = $('#micropost_subject').val();
+    $('#micropost_tags').tagsinput('add', `${val}`);
+  });
 });

@@ -12,21 +12,23 @@
     <% end %>
     <%= f.select :subject, Tag.where("category LIKE ?", "%#{category}%").pluck(:name), include_blank: "教科タグ", selected: selected_subject %>
     <div class="field">
-      <%= f.text_field :tags, placeholder: "タグ（,で区切って複数付けれます）", value: selected_tags %>
+      <%= f.text_field :tags, placeholder: "タグ", value: selected_tags, data: {role: "tagsinput"} %>
     </div>
     <% @tags.each do |tag| %>
       <%= link_to "#{tag.name}", add_search_tag_microposts_path(tag: tag.name), remote: true %>
     <% end %>
+    <p>タグの区切りは半角カンマ（ , ）</p>
     <%= f.submit '検索', id: "tag_search_submit" %>
   <% else %>
     <%= f.select :school_type, school_types, include_blank: "校種タグ" %>
     <%= f.select :subject, "", include_blank: "---" %>
     <div class="field">
-      <%= f.text_field :tags, placeholder: "タグ（,で区切って複数付けれます）", value: "" %>
+      <%= f.text_field :tags, placeholder: "タグ", value: "", data: {role: "tagsinput"} %>
     </div>
     <% @tags.each do |tag| %>
       <%= link_to "#{tag.name}", add_search_tag_microposts_path(tag: tag.name), remote: true %>
     <% end %>
+    <p>※ タグの区切りは半角カンマ（ , ）</p>
     <%= f.submit '検索', id: "tag_search_submit" %>
   <% end %>
 <% end %>
