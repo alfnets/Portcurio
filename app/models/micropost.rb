@@ -9,8 +9,6 @@ class Micropost < ApplicationRecord
   has_many :notifications, as: :notificable, dependent: :destroy
   has_many :micropost_tags, dependent: :destroy
   has_many :tags, through: :micropost_tags, dependent: :destroy
-  has_many :micropost_tags
-  has_many :tags, through: :micropost_tags
   
   # ポリモーフィックと外部キーでの関連付けはカスタマイズしないとできない
   # has_many :active_notifications,            as: :notificable,

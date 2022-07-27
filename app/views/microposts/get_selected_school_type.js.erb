@@ -7,11 +7,11 @@
 <% end %>
 
 <% unless category == "" %>
-  $("#subject").html("<%= escape_javascript(options_for_select(Tag.where("category LIKE ?", "%#{category}%").pluck(:name))) %>");
-  $("#subject").prepend('<option value="">教科を選択してください</option>');
+  $("#micropost_subject").html("<%= escape_javascript(options_for_select(Tag.where("category LIKE ?", "%#{category}%").pluck(:name))) %>");
+  $("#micropost_subject").prepend('<option value="">教科タグ</option>');
   $("#tag_search_submit").removeAttr('disabled');
 <% else %>
-  $("#subject").html('<option value="">---</option>');
+  $("#micropost_subject").html('<option value="">---</option>');
   $("#tag_search_submit").attr("disabled", "disabled");
 <% end %>
-$("#subject").val("");
+$("#micropost_subject").val("");

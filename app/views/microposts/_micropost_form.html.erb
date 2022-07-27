@@ -1,10 +1,16 @@
+<% school_types = Tag.where(category: "school_type").pluck(:name) %>
+
 <%= form_with(model: @micropost, local: true) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
     <%= f.text_area :content, placeholder: "#{current_user.name} さん、今日はどのような一日？" %>
   </div>
-  <div class="field">
-    <%= f.text_field :tags, placeholder: "タグ（,で区切って複数付けれます）", value: "" %>
+  <div class="tagging-form">
+    <%= f.select :school_type, school_types, include_blank: "校種タグ" %>
+    <%= f.select :subject, "", include_blank: "---" %>
+    <div class="field">
+      <%= f.text_field :tags, placeholder: "タグ（,で区切って複数付けれます）", value: "" %>
+    </div>
   </div>
   <% @micropost.file_type ? file_type = @micropost.file_type : file_type = "" %>
   <% @micropost.file_link ? file_link = @micropost.file_link : file_link = "" %>

@@ -5,7 +5,6 @@ class MicropostsController < ApplicationController
   # POST /microposts
   def create
     @micropost = current_user.microposts.build(micropost_params)
-    @micropost.tags_save(tag_params)
     @micropost.image.attach(params[:micropost][:image])
     begin
       if Nokogiri::HTML(Rinku.auto_link(@micropost.content)).at_css('a').present?
@@ -14,6 +13,7 @@ class MicropostsController < ApplicationController
     rescue
     end
     if @micropost.save
+      @micropost.tags_save(tag_params)
       @porc = @micropost.porcs.create(user: current_user)
       flash[:success] = "Micropost created!"
       redirect_to root_url    # => static_pages#home
@@ -67,16 +67,16 @@ class MicropostsController < ApplicationController
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
       @title = "Search Result for Micropost"
       @feedall = Kaminari.paginate_array(@result_search_microposts.includes(:tags)).page(params[:page])
-    elsif params[:school_type]
-      @selected_school_type = params[:school_type]
-      @selected_subject     = params[:subject]
+    elsif params[:micropost][:school_type]
+      @selected_school_type = params[:micropost][:school_type]
+      @selected_subject     = params[:micropost][:subject]
       @click_tags  = nil  # 後で機能を追加すること
-      @title = "#{params[:school_type]} #{params[:subject]}"
+      @title = "#{@selected_school_type} #{@selected_subject}"
       @feedall = Kaminari.paginate_array(tag_filter([@selected_school_type, @selected_subject]).includes(:tags)).page(params[:page])
-    elsif params[:tags]
+    elsif params[:micropost][:tags]
       @selected_school_type = nil
       @selected_subject     = nil
-      @click_tags  = params[:tags].split(",")
+      @click_tags  = params[:micropost][:tags].split(",")
       @title = "Filter Result for Micropost"
       @feedall = Kaminari.paginate_array(tag_filter(@click_tags).includes(:tags)).page(params[:page])
     else
@@ -113,8 +113,9 @@ class MicropostsController < ApplicationController
     end
 
     def tag_params
-      a = params.require(:micropost).permit(:tags)
-      if a.present? then a[:tags].split(",") end
+      if params[:micropost][:tags].present? then a = params[:micropost][:tags].split(",") end
+      if params[:micropost][:school_type].present? then a.insert(0, params[:micropost][:school_type]) end
+      if params[:micropost][:subject].present? then a.insert(0, params[:micropost][:subject]) end
     end
 
     def correct_user
