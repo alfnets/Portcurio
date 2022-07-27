@@ -29,6 +29,10 @@ class Micropost < ApplicationRecord
   #                           source: :notificable,
   #                     source_type: 'User'
 
+  attr_accessor :school_type, :string
+  attr_accessor :subject, :string
+                
+
   has_one_attached :image
   default_scope -> { order(created_at: :desc) }
   

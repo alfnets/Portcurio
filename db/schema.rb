@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 2022_07_26_034734) do
     t.string "category"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name", "category"], name: "index_tags_on_name_and_category", unique: true
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|

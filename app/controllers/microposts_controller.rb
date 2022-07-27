@@ -67,8 +67,16 @@ class MicropostsController < ApplicationController
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
       @title = "Search Result for Micropost"
       @feedall = Kaminari.paginate_array(@result_search_microposts.includes(:tags)).page(params[:page])
+    elsif params[:school_type]
+      @selected_school_type = params[:school_type]
+      @selected_subject     = params[:subject]
+      @click_tags  = nil  # 後で機能を追加すること
+      @title = "#{params[:school_type]} #{params[:subject]}"
+      @feedall = Kaminari.paginate_array(tag_filter([@selected_school_type, @selected_subject]).includes(:tags)).page(params[:page])
     elsif params[:tags]
-      @click_tags = params[:tags].split(",")
+      @selected_school_type = nil
+      @selected_subject     = nil
+      @click_tags  = params[:tags].split(",")
       @title = "Filter Result for Micropost"
       @feedall = Kaminari.paginate_array(tag_filter(@click_tags).includes(:tags)).page(params[:page])
     else
@@ -106,7 +114,7 @@ class MicropostsController < ApplicationController
 
     def tag_params
       a = params.require(:micropost).permit(:tags)
-      a[:tags].split(",")
+      if a.present? then a[:tags].split(",") end
     end
 
     def correct_user
@@ -115,9 +123,10 @@ class MicropostsController < ApplicationController
     end
     
     def tag_filter(tags)
-      result = Tag.none
+      result = Tag.find_by(name: tags[0]).microposts
       tags.each do |tag|
-        result = result.or(tag.microposts)
+        result.merge!(Tag.find_by(name: tag).microposts) if tag.present?
       end
+      result
     end
 end

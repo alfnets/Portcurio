@@ -67,7 +67,7 @@ micropost.comments.create!(content: content, user_id: user.id)
 end
 
 # デフォルトタグ
-school_types = ["小学校", "中学校", "高校(共通)", "高校(専門)", "高等教育", "幼児教育", "特別支援"]
+school_types = ["小学校", "中学校", "高校(共通)", "高校(専門)"]
 school_types.each { |tag|
   Tag.create(name: tag, category: "school_type")
 }
@@ -79,17 +79,41 @@ subjects.each { |tag|
 
 subjects = ["国語", "社会", "数学", "理科", "音楽", "美術", "保健体育", "技術", "家庭", "外国語(英語)", "道徳", "総合", "特別活動", "学級活動"]
 subjects.each { |tag|
-  Tag.create(name: tag, category: "secondary_subject")
+  b_tag = Tag.find_by(name: tag)
+  if b_tag.present?
+    if b_tag.category.present?
+      category = b_tag.category + "," + "secondary_subject"
+      b_tag.update(category: category)
+    end
+  else
+    Tag.create(name: tag, category: "secondary_subject")
+  end
 }
 
 subjects = ["国語", "地理歴史", "公民", "数学", "理科", "保健体育", "芸術", "外国語(英語)", "家庭", "情報", "理数", "総合", "特別活動", "学級活動"]
 subjects.each { |tag|
-  Tag.create(name: tag, category: "senior_common_subject")
+  b_tag = Tag.find_by(name: tag)
+  if b_tag.present?
+    if b_tag.category.present?
+      category = b_tag.category + "," + "senior_common_subject"
+      b_tag.update(category: category)
+    end
+  else
+    Tag.create(name: tag, category: "senior_common_subject")
+  end
 }
 
 subjects = ["農業", "工業", "商業", "水産", "家庭", "看護", "情報", "福祉", "理数", "体育", "音楽", "美術", "英語"]
 subjects.each { |tag|
-  Tag.create(name: tag, category: "senior_specialized_subject")
+  b_tag = Tag.find_by(name: tag)
+  if b_tag.present?
+    if b_tag.category.present?
+      category = b_tag.category + "," + "senior_specialized_subject"
+      b_tag.update(category: category)
+    end
+  else
+    Tag.create(name: tag, category: "senior_specialized_subject")
+  end
 }
 
 tags = ["高等教育", "幼児教育", "特別支援"]

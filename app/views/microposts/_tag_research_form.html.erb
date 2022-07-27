@@ -1,22 +1,20 @@
 <% school_types = Tag.where(category: "school_type").pluck(:name) %>
 
 <%= form_with url: microposts_path, method: :get do |f| %>
-  <% case school_type %>
-  <% when "小学校" %>
-    <%= f.select :school_type, school_types, include_blank: "教科で検索", selected: school_type %>
-    <%= f.select :subject, Tag.all.where(category: "primary_subject"), include_blank: "教科を選択してください", selected: click_tag %>
-  <% when "中学校" %>
-    <%= f.select :school_type, school_types, include_blank: "教科で検索", selected: school_type %>
-    <%= f.select :subject, Tag.all.where(category: "secondary_subject"), include_blank: "教科を選択してください", selected: click_tag %>
-  <% when "高校(共通)" %>
-    <%= f.select :school_type, school_types, include_blank: "教科で検索", selected: school_type %>
-    <%= f.select :subject, Tag.all.where(category: "senior_common_subject"), include_blank: "教科を選択してください", selected: click_tag %>
-  <% when "高校(専門)" %>
-    <%= f.select :school_type, school_types, include_blank: "教科で検索", selected: school_type %>
-    <%= f.select :subject, Tag.all.where(category: "senior_specialized_subject"), include_blank: "教科を選択してください", selected: click_tag %>
+  <% if selected_school_type %>
+    <%= f.select :school_type, school_types, include_blank: "教科で検索", selected: selected_school_type %>
+    <% case selected_school_type %>
+    <% when "小学校"     then category = "primary_subject" %>
+    <% when "中学校"     then category = "secondary_subject" %>
+    <% when "高校(共通)" then category = "senior_common_subject" %>
+    <% when "高校(専門)" then category = "senior_specialized_subject" %>
+    <% else                   category = "" %>
+    <% end %>
+    <%= f.select :subject, Tag.where("category LIKE ?", "%#{category}%").pluck(:name), include_blank: "教科を選択してください", selected: selected_subject %>
+    <%= f.submit '検索', id: "tag_search_submit" %>
   <% else %>
     <%= f.select :school_type, school_types, include_blank: "教科で検索" %>
     <%= f.select :subject, "", include_blank: "---" %>
+    <%= f.submit '検索', disabled: true, id: "tag_search_submit" %>
   <% end %>
-  <%= f.submit '検索' %>
 <% end %>

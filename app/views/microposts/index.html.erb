@@ -3,7 +3,7 @@
 <h1><%= @title %></h1>
 
 <div class="tag_select_research">
-  <%= render partial: 'microposts/tag_research_form', locals: { click_tag: @click_tag, school_type: @school_type } %>
+  <%= render partial: 'microposts/tag_research_form', locals: { selected_school_type: @selected_school_type, selected_subject: @selected_subject, click_tags: @click_tags } %>
 </div>
 
 <h4 class="inline-block">タグ</h4>
