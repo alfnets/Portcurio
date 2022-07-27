@@ -15,7 +15,7 @@
       <%= f.text_field :tags, placeholder: "タグ（,で区切って複数付けれます）", value: selected_tags %>
     </div>
     <% @tags.each do |tag| %>
-      <%= link_to "#{tag.name}", microposts_path(tags: tag.name) %>
+      <%= link_to "#{tag.name}", add_search_tag_microposts_path(tag: tag.name), remote: true %>
     <% end %>
     <%= f.submit '検索', id: "tag_search_submit" %>
   <% else %>
@@ -25,7 +25,7 @@
       <%= f.text_field :tags, placeholder: "タグ（,で区切って複数付けれます）", value: "" %>
     </div>
     <% @tags.each do |tag| %>
-      <%= link_to "#{tag.name}", microposts_path(tags: tag.name) %>
+      <%= link_to "#{tag.name}", add_search_tag_microposts_path(tag: tag.name), remote: true %>
     <% end %>
     <%= f.submit '検索', id: "tag_search_submit" %>
   <% end %>

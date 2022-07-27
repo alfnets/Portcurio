@@ -70,9 +70,15 @@ class MicropostsController < ApplicationController
     elsif params[:micropost] && ( params[:micropost][:school_type].present? || params[:micropost][:subject].present? || params[:micropost][:tags].present? )
       @selected_school_type = params[:micropost][:school_type]
       @selected_subject     = params[:micropost][:subject]
-      @selected_tags        = params[:micropost][:tags].gsub(" ", "") 
-      @title = "Filter Result"
-      @feedall = Kaminari.paginate_array(tag_filter([@selected_school_type, @selected_subject, @selected_tags.split(",")]).includes(:tags)).page(params[:page])
+      @selected_tags        = params[:micropost][:tags].delete(' 　')
+      tag_microposts = tag_filter([@selected_school_type, @selected_subject, @selected_tags.split(",")])
+      if tag_microposts
+        @title = "Filter Result"
+        @feedall = Kaminari.paginate_array(tag_microposts.includes(:tags)).page(params[:page])
+      else
+        @title = "No Result"
+        @feedall = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])
+      end
     else
       @title = "All users feed"
       @feedall = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])
@@ -99,6 +105,17 @@ class MicropostsController < ApplicationController
     end
   end
 
+
+  # GET /microposts/add_search_tag
+  def add_search_tag
+    @tag = params[:tag]
+    @userprofile = current_user
+    respond_to do |format|
+      format.js
+    end
+  end
+
+
   private
     
     # Strong parameter
@@ -107,9 +124,14 @@ class MicropostsController < ApplicationController
     end
 
     def tag_params
-      if params[:micropost][:tags].present? then a = params[:micropost][:tags].split(",") end
-      if params[:micropost][:school_type].present? then a.insert(0, params[:micropost][:school_type]) end
-      if params[:micropost][:subject].present? then a.insert(0, params[:micropost][:subject]) end
+      a = []
+      if params[:micropost][:tags].present?
+        tags_str = params[:micropost][:tags].delete(' 　')
+        a = tags_str.split(",")
+      end
+      a.insert(0, params[:micropost][:school_type]) if params[:micropost][:school_type].present?
+      a.insert(0, params[:micropost][:subject])     if params[:micropost][:subject].present?
+      a
     end
 
     def correct_user
@@ -120,9 +142,11 @@ class MicropostsController < ApplicationController
     def tag_filter(tags)
       tags.flatten!
       tags.reject!(&:blank?)
-      result = Tag.find_by(name: tags[0]).microposts
+      tag_0 = Tag.find_by(name: tags[0])
+      result = tag_0.microposts if tag_0
       tags.each do |tag|
-        result.merge!(Tag.find_by(name: tag).microposts)
+        tag_n = Tag.find_by(name: tag)
+        result.joins(tag_n.microposts) if tag_n
       end
       result
     end

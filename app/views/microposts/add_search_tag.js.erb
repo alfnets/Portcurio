@@ -1,0 +1,6 @@
+var tags = $("#micropost_tags").val();
+if (tags.length === 0 ) {
+  $("#micropost_tags").val("<%= @tag %>");
+} else {
+  $("#micropost_tags").val(`${tags},<%= @tag %>`);
+}
