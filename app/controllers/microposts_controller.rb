@@ -65,25 +65,19 @@ class MicropostsController < ApplicationController
   # GET /microposts
   def index
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
-      @title = "Search Result for Micropost"
+      @title = "Search Result"
       @feedall = Kaminari.paginate_array(@result_search_microposts.includes(:tags)).page(params[:page])
-    elsif params[:micropost][:school_type]
+    elsif params[:micropost] && ( params[:micropost][:school_type].present? || params[:micropost][:subject].present? || params[:micropost][:tags].present? )
       @selected_school_type = params[:micropost][:school_type]
       @selected_subject     = params[:micropost][:subject]
-      @click_tags  = nil  # 後で機能を追加すること
-      @title = "#{@selected_school_type} #{@selected_subject}"
-      @feedall = Kaminari.paginate_array(tag_filter([@selected_school_type, @selected_subject]).includes(:tags)).page(params[:page])
-    elsif params[:micropost][:tags]
-      @selected_school_type = nil
-      @selected_subject     = nil
-      @click_tags  = params[:micropost][:tags].split(",")
-      @title = "Filter Result for Micropost"
-      @feedall = Kaminari.paginate_array(tag_filter(@click_tags).includes(:tags)).page(params[:page])
+      @selected_tags        = params[:micropost][:tags].gsub(" ", "") 
+      @title = "Filter Result"
+      @feedall = Kaminari.paginate_array(tag_filter([@selected_school_type, @selected_subject, @selected_tags.split(",")]).includes(:tags)).page(params[:page])
     else
       @title = "All users feed"
       @feedall = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])
     end
-    @tags = Tag.where(category: nil)  # タグの一覧表示
+    @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
     @userprofile = current_user
   end
   
@@ -124,9 +118,11 @@ class MicropostsController < ApplicationController
     end
     
     def tag_filter(tags)
+      tags.flatten!
+      tags.reject!(&:blank?)
       result = Tag.find_by(name: tags[0]).microposts
       tags.each do |tag|
-        result.merge!(Tag.find_by(name: tag).microposts) if tag.present?
+        result.merge!(Tag.find_by(name: tag).microposts)
       end
       result
     end

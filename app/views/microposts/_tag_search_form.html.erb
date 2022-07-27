@@ -11,10 +11,22 @@
     <% else                   category = "" %>
     <% end %>
     <%= f.select :subject, Tag.where("category LIKE ?", "%#{category}%").pluck(:name), include_blank: "教科タグ", selected: selected_subject %>
+    <div class="field">
+      <%= f.text_field :tags, placeholder: "タグ（,で区切って複数付けれます）", value: selected_tags %>
+    </div>
+    <% @tags.each do |tag| %>
+      <%= link_to "#{tag.name}", microposts_path(tags: tag.name) %>
+    <% end %>
     <%= f.submit '検索', id: "tag_search_submit" %>
   <% else %>
     <%= f.select :school_type, school_types, include_blank: "校種タグ" %>
     <%= f.select :subject, "", include_blank: "---" %>
-    <%= f.submit '検索', disabled: true, id: "tag_search_submit" %>
+    <div class="field">
+      <%= f.text_field :tags, placeholder: "タグ（,で区切って複数付けれます）", value: "" %>
+    </div>
+    <% @tags.each do |tag| %>
+      <%= link_to "#{tag.name}", microposts_path(tags: tag.name) %>
+    <% end %>
+    <%= f.submit '検索', id: "tag_search_submit" %>
   <% end %>
 <% end %>

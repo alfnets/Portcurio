@@ -1133,6 +1133,14 @@ span.image {
 }
 
 
+/* tagging form */
+.tagging-form {
+  select {
+    width: auto;
+    display: inline-block;
+  }
+}
+
 
 /* ユーザー編集画面 */
 p#edit_user_page {

@@ -2,14 +2,9 @@
 
 <h1><%= @title %></h1>
 
-<div class="tag_select_research">
-  <%= render partial: 'microposts/tag_search_form', locals: { selected_school_type: @selected_school_type, selected_subject: @selected_subject, click_tags: @click_tags } %>
+<div class="tagging-form">
+  <%= render partial: 'microposts/tag_search_form', locals: { selected_school_type: @selected_school_type, selected_subject: @selected_subject, selected_tags: @selected_tags, tags: @tags } %>
 </div>
-
-<h4 class="inline-block">タグ</h4>
-<% @tags.each do |tag| %>
-  <%= link_to "#{tag.name}", microposts_path(tag: tag.name) %>
-<% end %>
 
 <ol class="microposts">
   <%= render @feedall %>
