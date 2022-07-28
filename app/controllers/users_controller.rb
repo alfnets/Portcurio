@@ -3,7 +3,7 @@ class UsersController < ApplicationController
                                         :following, :followers]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
-  before_action :set_q,          only: [:index, :search]
+  before_action :set_q,          only: :index
   
 
   # GET /users

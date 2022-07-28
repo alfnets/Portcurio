@@ -1,6 +1,6 @@
 class MicropostsController < ApplicationController
   before_action :logged_in_user, only: [:create, :destroy, :show]
-  before_action :correct_user, only: :destroy
+  before_action :correct_user,   only: :destroy
  
   # POST /microposts
   def create
@@ -72,6 +72,7 @@ class MicropostsController < ApplicationController
       @selected_subject     = params[:micropost][:subject]
       @selected_tags        = params[:micropost][:tags].delete(' 　')
       tag_microposts = tag_filter(@selected_tags.split(","))
+      # tag_microposts = Micropost.ransack(tags_name_cont_all: @selected_tags.split(",")).result.distinct.page(params[:page])
       if tag_microposts
         @title = "Filter Result"
         @feedall = Kaminari.paginate_array(tag_microposts.includes(:tags)).page(params[:page])
@@ -141,12 +142,11 @@ class MicropostsController < ApplicationController
     
     def tag_filter(tags)
       tags.reject!(&:blank?)
-      tag_0 = Tag.find_by(name: tags[0])
-      result = tag_0.microposts if tag_0
+      result = Micropost.ransack(tags_name_eq: tags[0]).result
+      return nil unless result
       tags.each do |tag|
-        tag_n = Tag.find_by(name: tag)
-        result.joins(tag_n.microposts) if tag_n
+        result = result & Micropost.ransack(tags_name_eq: tag).result
       end
-      result
+      Micropost.where(id: result.map(&:id))
     end
 end

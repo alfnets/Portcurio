@@ -9,7 +9,7 @@
     <%= f.select :school_type, school_types, include_blank: "校種タグ" %>
     <%= f.select :subject, "", include_blank: "---" %>
     <div class="field">
-      <%= f.text_field :tags, placeholder: "タグ（,で区切って複数付けれます）", value: "" %>
+      <%= f.text_field :tags, placeholder: "タグ", value: "", data: {role: "tagsinput"} %>
     </div>
   </div>
   <% @micropost.file_type ? file_type = @micropost.file_type : file_type = "" %>

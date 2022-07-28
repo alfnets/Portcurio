@@ -17,7 +17,7 @@
     <% @tags.each do |tag| %>
       <%= link_to "#{tag.name}", add_search_tag_microposts_path(tag: tag.name), remote: true %>
     <% end %>
-    <p>タグの区切りは半角カンマ（ , ）</p>
+    <p>※ タグの区切りは半角カンマ（ , ）か Enter</p>
     <%= f.submit '検索', id: "tag_search_submit" %>
   <% else %>
     <%= f.select :school_type, school_types, include_blank: "校種タグ" %>
@@ -28,7 +28,7 @@
     <% @tags.each do |tag| %>
       <%= link_to "#{tag.name}", add_search_tag_microposts_path(tag: tag.name), remote: true %>
     <% end %>
-    <p>※ タグの区切りは半角カンマ（ , ）</p>
+    <p>※ タグの区切りは半角カンマ（ , ）か Enter</p>
     <%= f.submit '検索', id: "tag_search_submit" %>
   <% end %>
 <% end %>

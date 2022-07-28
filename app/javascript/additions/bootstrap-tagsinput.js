@@ -3,7 +3,7 @@
  * 
  */
 
-(function ($) {
+$(document).on('turbolinks:load', function () {
   "use strict";
 
   var defaultOptions = {
