@@ -80,6 +80,11 @@ class MicropostsController < ApplicationController
         @title = "No Result"
         @feedall = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])
       end
+    elsif params[:click_tag]
+      @selected_tags = [params[:click_tag]]
+      tag_microposts = tag_filter(@selected_tags)
+      @title = "Filter Result"
+      @feedall = Kaminari.paginate_array(tag_microposts.includes(:tags)).page(params[:page])
     else
       @title = "All users feed"
       @feedall = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])

@@ -70,7 +70,7 @@
 
     <div class="tag-container">
       <% micropost.tags.each do |tag| %>
-        <%= link_to tag.name, microposts_path(tag: tag.name) %>
+        <%= link_to tag.name, microposts_path(click_tag: tag.name) %>
       <% end %>
     </div>
 

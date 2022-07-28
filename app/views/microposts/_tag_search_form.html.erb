@@ -21,9 +21,19 @@
         </span>
       </div>
     </div>
-    <% @tags.each do |tag| %>
-      <%= link_to "#{tag.name}", add_search_tag_microposts_path(tag: tag.name), remote: true %>
-    <% end %>
+  <% elsif selected_tags %>
+    <%= f.select :school_type, school_types, include_blank: "校種タグ" %>
+    <%= f.select :subject, "", include_blank: "---" %>
+    <div class="tag_search_wrap">
+      <div class="input-group">
+        <%= f.text_field :tags, placeholder: "タグ", value: selected_tags, data: {role: "tagsinput"} %>
+        <span class="input-group-btn">
+          <%= button_tag type: "submit", class: 'btn btn-search' do %>
+            <i class="fas fa-search"></i>
+          <% end %>
+        </span>
+      </div>
+    </div>
   <% else %>
     <%= f.select :school_type, school_types, include_blank: "校種タグ" %>
     <%= f.select :subject, "", include_blank: "---" %>
@@ -37,8 +47,8 @@
         </span>
       </div>
     </div>
-    <% @tags.each do |tag| %>
-      <%= link_to "#{tag.name}", add_search_tag_microposts_path(tag: tag.name), remote: true %>
-    <% end %>
+  <% end %>
+  <% @tags.each do |tag| %>
+    <%= link_to "#{tag.name}", add_search_tag_microposts_path(tag: tag.name), remote: true %>
   <% end %>
 <% end %>
