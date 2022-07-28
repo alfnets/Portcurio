@@ -695,6 +695,10 @@ input {
     margin-top: 5em;
     padding-top: 0;
   }
+  .tag-container {
+    margin-left: 60px;
+    margin-bottom: 4px;
+  }
   .timestamp {
     color: $gray-light;
     display: block;
@@ -1138,11 +1142,25 @@ span.image {
   select {
     width: auto;
     display: inline-block;
+    margin-bottom: 0;
   }
   .bootstrap-tagsinput {
     width: 100%;
   //   input { width: 100%; }
   }
+  .tag_search_wrap {
+    .input-group {
+      width: 100%;
+      .input-group-btn {
+        width: 37px;
+      }
+    }
+    .bootstrap-tagsinput {
+      border: none;
+      box-shadow: none;
+    }
+  }
+  margin-bottom: 8px;
 }
 
 

@@ -674,4 +674,4 @@ $(document).on('turbolinks:load', function () {
   $(function() {
     $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
   });
-})(window.jQuery);
+});

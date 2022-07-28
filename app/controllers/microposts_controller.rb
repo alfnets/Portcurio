@@ -13,7 +13,7 @@ class MicropostsController < ApplicationController
     rescue
     end
     if @micropost.save
-      @micropost.tags_save(tag_params)
+      @micropost.tags_save(tag_params) if tag_params
       @porc = @micropost.porcs.create(user: current_user)
       flash[:success] = "Micropost created!"
       redirect_to root_url    # => static_pages#home
@@ -130,9 +130,6 @@ class MicropostsController < ApplicationController
         tags_str = params[:micropost][:tags].delete(' 　')
         a = tags_str.split(",")
       end
-      a.insert(0, params[:micropost][:school_type]) if params[:micropost][:school_type].present?
-      a.insert(0, params[:micropost][:subject])     if params[:micropost][:subject].present?
-      a
     end
 
     def correct_user

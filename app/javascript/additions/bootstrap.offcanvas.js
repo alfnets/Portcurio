@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load',function() {
+$(document).on('turbolinks:load', function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   (function($, window) {
