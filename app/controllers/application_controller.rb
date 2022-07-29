@@ -4,14 +4,10 @@ class ApplicationController < ActionController::Base
   before_action :set_search_microposts
   
   private
-
-    def search_params
-      params.require(:q).permit(:content_cont)
-    end
   
     def set_search_microposts
       if params[:q]
-        @search_microposts = Micropost.ransack(search_params)
+        @search_microposts = Micropost.ransack(content_cont_all: params[:q][:content_cont_all].gsub("　"," ").split)
         @result_search_microposts = @search_microposts.result
       else
         @search_microposts = Micropost.ransack(params[:q])
