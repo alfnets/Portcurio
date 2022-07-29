@@ -72,7 +72,6 @@ class MicropostsController < ApplicationController
       @selected_subject     = params[:micropost][:subject]
       @selected_tags        = params[:micropost][:tags].delete(' 　')
       tag_microposts = tag_filter(@selected_tags.split(","))
-      # tag_microposts = Micropost.ransack(tags_name_cont_all: @selected_tags.split(",")).result.distinct.page(params[:page])
       if tag_microposts
         @title = "Filter Result"
         @feedall = Kaminari.paginate_array(tag_microposts.includes(:tags)).page(params[:page])
