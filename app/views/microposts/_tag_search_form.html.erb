@@ -11,16 +11,13 @@
     <% else                   category = "" %>
     <% end %>
     <%= f.select :subject, Tag.where("category LIKE ?", "%#{category}%").pluck(:name), include_blank: "教科タグ", selected: selected_subject %>
-  <% elsif selected_tags %>
-    <%= f.select :school_type, school_types, include_blank: "校種タグ" %>
-    <%= f.select :subject, "", include_blank: "---" %>
   <% else %>
     <%= f.select :school_type, school_types, include_blank: "校種タグ" %>
     <%= f.select :subject, "", include_blank: "---" %>
   <% end %>
   <div class="tag_search_wrap">
     <div class="input-group">
-      <%= f.text_field :tags, placeholder: "タグ", value: selected_tags, data: {role: "tagsinput"} %>
+      <%= f.text_field :tags, placeholder: "タグ or キーワード", value: selected_tags, data: {role: "tagsinput"} %>
       <span class="input-group-btn">
         <%= button_tag type: "submit", class: 'btn btn-search' do %>
           <i class="fas fa-search"></i>

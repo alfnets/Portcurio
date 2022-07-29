@@ -73,10 +73,10 @@ class MicropostsController < ApplicationController
       @selected_school_type = params[:micropost][:school_type]
       @selected_subject     = params[:micropost][:subject]
       @selected_tags        = params[:micropost][:tags].delete(' 　')
-      tag_microposts = tag_filter(@selected_tags.split(","))
-      if tag_microposts
-        @title = "Filter Result"
-        @feedall = Kaminari.paginate_array(tag_microposts.includes(:tags)).page(params[:page])
+      result_microposts = search_microposts(@selected_tags.split(","))
+      if result_microposts
+        @title = "Search Result"
+        @feedall = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
       else
         @title = "No Result"
         @feedall = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])
@@ -84,7 +84,7 @@ class MicropostsController < ApplicationController
     elsif params[:click_tag]
       @selected_tags = [params[:click_tag]]
       tag_microposts = tag_filter(@selected_tags)
-      @title = "Filter Result"
+      @title = "##{params[:click_tag]}"
       @feedall = Kaminari.paginate_array(tag_microposts.includes(:tags)).page(params[:page])
     else
       @selected_tags = ""
