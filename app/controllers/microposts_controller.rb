@@ -64,9 +64,11 @@ class MicropostsController < ApplicationController
 
   # GET /microposts
   def index
-    if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
+    if params[:keywords]
       @title = "Search Result"
-      @feedall = Kaminari.paginate_array(@result_search_microposts.includes(:tags)).page(params[:page])
+      @keywords = params[:keywords].gsub("　"," ").split
+      result_microposts = search_microposts(@keywords)
+      @feedall = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
     elsif params[:micropost] && params[:micropost][:tags].present?
       @selected_school_type = params[:micropost][:school_type]
       @selected_subject     = params[:micropost][:subject]
@@ -150,5 +152,25 @@ class MicropostsController < ApplicationController
         result = result & Micropost.ransack(tags_name_eq: tag).result
       end
       Micropost.where(id: result.map(&:id))
+    end
+
+    def search_microposts(keywords)
+      where_command = ""
+      keywords.each do |keyword|
+        where_command += where_command.empty? ? "(T.content LIKE \'%#{keyword}%\' OR T.tag_names LIKE \'%#{keyword}%\')" : " AND (T.content LIKE \'%#{keyword}%\' OR T.tag_names LIKE \'%#{keyword}%\')"
+      end
+
+      sql = "SELECT T.*
+        FROM
+          (SELECT
+          `microposts`.*, GROUP_CONCAT(`tags`.name) AS tag_names
+          FROM `microposts` JOIN `micropost_tags` ON `microposts`.id = `micropost_tags`.micropost_id JOIN `tags` ON `micropost_tags`.tag_id = `tags`.id
+          GROUP BY `microposts`.id
+          ) AS T
+        WHERE (#{where_command})
+        ORDER BY T.`created_at` DESC;"
+
+      a = ActiveRecord::Base.connection.select_all(sql).to_a
+      Micropost.where(id: a.map{|val| val["id"]})
     end
 end

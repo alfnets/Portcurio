@@ -1,0 +1,12 @@
+<span class="keyword_search_form inline-block">
+  <%= form_with url: microposts_path, method: :get, id: "micropost_search" do |f| %>
+    <div class="input-group">
+      <%= f.search_field :keywords, placeholder: "教材を検索", class: "form-control", value: keywords %>
+      <span class="input-group-btn">
+        <%= button_tag type: "submit", class: 'btn btn-search' do %>
+          <i class="fas fa-search"></i>
+        <% end %>
+      </span>
+    </div>
+  <% end %>
+</span>

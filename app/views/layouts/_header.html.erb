@@ -22,7 +22,7 @@
     </button>
     <div class="navbar-header">
       <%= link_to image_tag("logo_portcurio.png", alt: "portcurio logo", height: "51px"), root_path, id: "service_logo" %>
-      <%= render partial: 'layouts/content_search_form', locals: { search_microposts: @search_microposts } %>
+      <%= render partial: 'layouts/keyword_search_form', locals: { keywords: @keywords } %>
     </div>
     <nav role="navigation">
       <div class="navbar-offcanvas navbar-offcanvas-touch navbar-offcanvas-right" id="js-bootstrap-offcanvas">

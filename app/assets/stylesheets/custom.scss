@@ -14,7 +14,7 @@ $gray-medium-light: #eaeaea;
 
 @media screen and (max-width:374px) {
 	/* 374px以下に適用されるCSS（スマホ用） */
-  .content_search_form {
+  .keyword_search_form {
     input.form-control { width: 80px !important; }
   }
 }
@@ -163,7 +163,7 @@ header {
       top: 0;
       left: 0;
     }
-    .content_search_form {
+    .keyword_search_form {
       #micropost_search {
         display: flex;
         justify-content: center;

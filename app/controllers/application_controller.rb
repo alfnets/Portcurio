@@ -1,18 +1,18 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
 
-  before_action :set_search_microposts
+  # before_action :set_search_microposts
   
   private
   
-    def set_search_microposts
-      if params[:q]
-        @search_microposts = Micropost.ransack(content_cont_all: params[:q][:content_cont_all].gsub("　"," ").split)
-        @result_search_microposts = @search_microposts.result
-      else
-        @search_microposts = Micropost.ransack(params[:q])
-      end
-    end
+    # def set_search_microposts
+    #   if params[:q]
+    #     @search_microposts = Micropost.ransack(content_cont_all: params[:q][:content_cont_all].gsub("　"," ").split)
+    #     @result_search_microposts = @search_microposts.result
+    #   else
+    #     @search_microposts = Micropost.ransack(params[:q])
+    #   end
+    # end
 
     # ログイン済みユーザーかどうか確認
     def logged_in_user
