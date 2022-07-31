@@ -1,18 +1,7 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
-
-  # before_action :set_search_microposts
   
   private
-  
-    # def set_search_microposts
-    #   if params[:q]
-    #     @search_microposts = Micropost.ransack(content_cont_all: params[:q][:content_cont_all].gsub("　"," ").split)
-    #     @result_search_microposts = @search_microposts.result
-    #   else
-    #     @search_microposts = Micropost.ransack(params[:q])
-    #   end
-    # end
 
     # ログイン済みユーザーかどうか確認
     def logged_in_user
@@ -30,5 +19,26 @@ class ApplicationController < ActionController::Base
         config.channel_secret = ENV.fetch("LINE_CHANNEL_SECRET", nil)
         config.channel_token = ENV.fetch("LINE_CHANNEL_TOKEN", nil)
       }
+    end
+
+    # マイクロポストの検索
+    def search_microposts(keywords)
+      where_command = ""
+      keywords.each do |keyword|
+        where_command += where_command.empty? ? "(T.content LIKE \'%#{keyword}%\' OR T.tag_names LIKE \'%#{keyword}%\')" : " AND (T.content LIKE \'%#{keyword}%\' OR T.tag_names LIKE \'%#{keyword}%\')"
+      end
+
+      sql = "SELECT T.*
+        FROM
+          (SELECT
+          `microposts`.*, GROUP_CONCAT(`tags`.name) AS tag_names
+          FROM `microposts` JOIN `micropost_tags` ON `microposts`.id = `micropost_tags`.micropost_id JOIN `tags` ON `micropost_tags`.tag_id = `tags`.id
+          GROUP BY `microposts`.id
+          ) AS T
+        WHERE (#{where_command})
+        ORDER BY T.`created_at` DESC;"
+
+      a = ActiveRecord::Base.connection.select_all(sql).to_a
+      Micropost.where(id: a.map{|val| val["id"]})
     end
 end

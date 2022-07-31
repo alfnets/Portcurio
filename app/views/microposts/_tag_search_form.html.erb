@@ -1,6 +1,12 @@
 <% school_types = Tag.where(category: "school_type").pluck(:name) %>
 
-<%= form_with model: Micropost.new, url: microposts_path, method: :get do |f| %>
+<% if request.path_info == microposts_path %>
+  <% path = microposts_path %>
+<% elsif request.path_info == portcurio_user_path(current_user) %>
+  <% path = portcurio_user_path(current_user) %>
+<% end %>
+
+<%= form_with model: Micropost.new, url: path, method: :get do |f| %>
   <% if selected_school_type %>
     <%= f.select :school_type, school_types, { include_blank: "校種タグ", selected: selected_school_type }, class: "form-control" %>
     <% case selected_school_type %>

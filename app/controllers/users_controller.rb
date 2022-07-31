@@ -182,8 +182,18 @@ class UsersController < ApplicationController
   
   # GET /users/:id/portcurio
   def portcurio
+    if params[:micropost] && params[:micropost][:tags].present?
+      @selected_school_type = params[:micropost][:school_type]
+      @selected_subject     = params[:micropost][:subject]
+      @selected_tags        = params[:micropost][:tags].delete(' 　')
+      result_microposts = search_microposts(@selected_tags.split(","))
+      @portcurio = Kaminari.paginate_array(result_microposts.joins(:porcs).where(porcs: { user: current_user }).includes(:tags)).page(params[:page])
+    else
+      @selected_tags = ""
+      @portcurio = Micropost.joins(:porcs).where(porcs: { user: current_user }).page(params[:page])
+    end
+    @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
     @userprofile = current_user
-    @portcurio = Micropost.joins(:porcs).where(porcs: { user: current_user }).page(params[:page])
   end
 
   private
