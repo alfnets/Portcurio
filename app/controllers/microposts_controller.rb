@@ -68,6 +68,7 @@ class MicropostsController < ApplicationController
       @title = "Search Result"
       @keywords = params[:keywords].gsub("　"," ").split
       result_microposts = search_microposts(@keywords)
+      @selected_tags    = @keywords.join(",")
       @feedall = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
     elsif params[:micropost] && params[:micropost][:tags].present?
       @selected_school_type = params[:micropost][:school_type]
