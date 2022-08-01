@@ -89,7 +89,9 @@ a {
 }
 
 
-.btn { background: none; }
+.btn { 
+  background: none;
+}
 .btn:hover { background: none; }
 
 .btn[disabled] { background: none; }
@@ -796,13 +798,17 @@ input {
       padding: 0;
       display: inline;
     }
-    .timestamp {
-      color: $gray-light;
-      display: inline;
-      margin-left: 10px;
-    }
     a {
       display: inline;
+    }
+    .btn-tagsedit {
+      color: #777777;
+      background-color: rgb(239, 239, 239);
+      font-size: inherit;
+      padding: 3px 8px;
+      &:hover {
+        color: white;
+      }
     }
   }
   .wrap {
@@ -1149,6 +1155,8 @@ span.image {
   }
   .bootstrap-tagsinput {
     width: 100%;
+    border: none;
+    box-shadow: none;
   //   input { width: 100%; }
   }
   .tag_search_wrap {
@@ -1158,12 +1166,11 @@ span.image {
         width: 37px;
       }
     }
-    .bootstrap-tagsinput {
-      border: none;
-      box-shadow: none;
-    }
   }
   margin-bottom: 8px;
+}
+.tags_edit {
+  form { padding: 0; }
 }
 
 

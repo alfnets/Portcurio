@@ -109,6 +109,7 @@
       <span class="comment-close-<%= micropost.id %> comment-btn-wrap comment-close-btn">
         <!-- 親コメントでReplyボタンをクリックするとここに「閉じる」リンクがrenderされる -->
       </span>
+      <%= link_to "edit tags", edit_micropost_tags_path(micropost), class: "btn btn-tagsedit", remote: true %>
     </div>
   
     <div class="comment-<%= micropost.id %> wrap comments-wrap">

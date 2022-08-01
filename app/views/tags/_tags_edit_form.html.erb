@@ -1,0 +1,14 @@
+<div class="tagging-form tags_edit">
+  <%= form_with model: micropost, url: micropost_tags_path(micropost) , local: false do |f| %>
+    <div class="tag_search_wrap">
+      <div class="input-group">
+        <%= f.text_field :tags, placeholder: "タグ or キーワード", value: micropost_tags, data: {role: "tagsinput"} %>
+        <span class="input-group-btn">
+          <%= button_tag type: "submit", class: 'btn btn-search' do %>
+            <i class="fa-solid fa-arrows-rotate"></i>
+          <% end %>
+        </span>
+      </div>
+    </div>
+  <% end %>
+</div>

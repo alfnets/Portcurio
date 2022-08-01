@@ -1,0 +1,5 @@
+$(".micropost-<%= @micropost.id %> .tag-container").html("<%= escape_javascript(render(partial: 'tags/tags_edit_form', locals: {micropost: @micropost, micropost_tags: @micropost_tags})) %>");
+
+$(function() {
+  $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
+});

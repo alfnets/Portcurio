@@ -1,0 +1,1 @@
+$(".micropost-<%= @micropost.id %> .tag-container").html("<%= escape_javascript(render(partial: 'tags/show_tags', locals: {micropost: @micropost})) %>");

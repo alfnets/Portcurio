@@ -59,6 +59,18 @@ class Micropost < ApplicationRecord
       self.tags << inspected_tag
     end
   end
+
+  def tags_update(tag_list)
+    micropost_tags_records = MicropostTag.where(micropost_id: self.id)
+    micropost_tags_records.destroy_all
+
+    if tag_list
+      tag_list.each do |tag|
+        inspected_tag = Tag.where(name: tag).first_or_create
+        self.tags << inspected_tag
+      end
+    end
+  end
   
   private
     def content_or_image_or_file_link
