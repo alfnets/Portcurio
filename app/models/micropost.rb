@@ -55,7 +55,7 @@ class Micropost < ApplicationRecord
     end
     tag_list.each do |tag|
       inspected_tag = Tag.where(name: tag).first_or_create
-      self.micropost_tags.create(tag: inspected_tag, user: user)
+      self.micropost_tags.create(tag: inspected_tag, user: user, lock_flag: true)
     end
   end
 
