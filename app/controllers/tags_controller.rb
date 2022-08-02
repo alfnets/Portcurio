@@ -5,7 +5,7 @@ class TagsController < ApplicationController
     @micropost = Micropost.find(params[:micropost_id])
     if current_user == @micropost.user
       @lock_tags = []
-      @edit_tags = @micropost.tags.pluck(:name)
+      @edit_tags = Tag.find(@micropost.micropost_tags.pluck(:tag_id)).pluck(:name)
     else
       @lock_tags = Tag.find(@micropost.micropost_tags.where(lock_flag: true).pluck(:tag_id)).pluck(:name)
       @edit_tags = Tag.find(@micropost.micropost_tags.where(lock_flag: false).pluck(:tag_id)).pluck(:name)
