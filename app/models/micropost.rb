@@ -56,16 +56,38 @@ class Micropost < ApplicationRecord
   end
 
   def tags_update(tag_list, user)
-    micropost_free_tags_records = self.user_id == user.id ? MicropostTag.where(micropost_id: self.id) : MicropostTag.where(micropost_id: self.id, lock_flag: false)
-    micropost_free_tags_records.each do |micropost_tag|
-      tag = micropost_tag.tag
-      micropost_tag.destroy
-      tag.destroy unless MicropostTag.exists?(tag_id: tag.id) || tag.default_flag
+    unless self.user == user  # 投稿者ではない場合
+      # lockされていないタグを全て削除
+      micropost_free_tags_records = MicropostTag.where(micropost_id: self.id, lock_flag: false)
+      micropost_free_tags_records.each do |micropost_tag|
+        tag = micropost_tag.tag
+        micropost_tag.destroy
+        tag.destroy unless MicropostTag.exists?(tag_id: tag.id) || tag.default_flag # タグがMicropostTagで0かつデフォルトタグでもなかった場合はタグテーブルからも削除
+      end
+      # タグを登録
+      tag_list.each do |tag|
+        inspected_tag = Tag.where(name: tag).first_or_create
+        self.micropost_tags.create(tag: inspected_tag, user: user, lock_flag: false)
+      end
+    else  # 投稿者の場合
+      org_tags = self.tags.pluck(:name) # 既存のタグを取得
+      # 既存のタグリストから新しいタグを比較
+      tag_list.each do |new_tag|
+        unless org_tags.include?(new_tag) # 既存のタグリストに新しいタグがなかった場合はそのタグを作成
+          inspected_tag = Tag.where(name: new_tag).first_or_create
+          self.micropost_tags.create(tag: inspected_tag, user: user, lock_flag: true)
+        end
+      end
+      # 新しいタグリストから既存のタグを比較
+      org_tags.each do |org_tag|
+        unless tag_list.include?(org_tag) # 新しいタグリストに既存のタグがなかった場合はそのタグを削除
+          tag = Tag.find_by(name: org_tag)
+          self.micropost_tags.find_by(tag_id: tag.id).destroy
+          tag.destroy unless MicropostTag.exists?(tag_id: tag.id) || tag.default_flag # タグがMicropostTagで0かつデフォルトタグでもなかった場合はタグテーブルからも削除
+        end
+      end
     end
-    tag_list.each do |tag|
-      inspected_tag = Tag.where(name: tag).first_or_create
-      self.micropost_tags.create(tag: inspected_tag, user: user)
-    end
+
   end
   
   private
