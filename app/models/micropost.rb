@@ -57,7 +57,11 @@ class Micropost < ApplicationRecord
 
   def tags_update(tag_list, user)
     micropost_free_tags_records = self.user_id == user.id ? MicropostTag.where(micropost_id: self.id) : MicropostTag.where(micropost_id: self.id, lock_flag: false)
-    micropost_free_tags_records.destroy_all
+    micropost_free_tags_records.each do |micropost_tag|
+      tag = micropost_tag.tag
+      micropost_tag.destroy
+      tag.destroy unless MicropostTag.exists?(tag_id: tag.id) || tag.default_flag
+    end
     tag_list.each do |tag|
       inspected_tag = Tag.where(name: tag).first_or_create
       self.micropost_tags.create(tag: inspected_tag, user: user)

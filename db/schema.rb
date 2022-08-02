@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_01_094701) do
+ActiveRecord::Schema.define(version: 2022_08_02_023239) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 2022_08_01_094701) do
     t.string "category"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "default_flag", default: false, null: false
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 

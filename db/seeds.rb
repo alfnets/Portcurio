@@ -69,12 +69,12 @@ end
 # デフォルトタグ
 school_types = ["小学校", "中学校", "高校(共通)", "高校(専門)"]
 school_types.each { |tag|
-  Tag.create(name: tag, category: "school_type")
+  Tag.create(name: tag, category: "school_type", default_flag: true)
 }
 
 subjects = ["国語", "社会", "算数", "理科", "生活", "音楽", "図画工作", "家庭", "体育", "外国語(英語)", "道徳", "総合", "特別活動", "学級活動"]
 subjects.each { |tag|
-  Tag.create(name: tag, category: "primary_subject")
+  Tag.create(name: tag, category: "primary_subject", default_flag: true)
 }
 
 subjects = ["国語", "社会", "数学", "理科", "音楽", "美術", "保健体育", "技術", "家庭", "外国語(英語)", "道徳", "総合", "特別活動", "学級活動"]
@@ -86,7 +86,7 @@ subjects.each { |tag|
       b_tag.update(category: category)
     end
   else
-    Tag.create(name: tag, category: "secondary_subject")
+    Tag.create(name: tag, category: "secondary_subject", default_flag: true)
   end
 }
 
@@ -99,7 +99,7 @@ subjects.each { |tag|
       b_tag.update(category: category)
     end
   else
-    Tag.create(name: tag, category: "senior_common_subject")
+    Tag.create(name: tag, category: "senior_common_subject", default_flag: true)
   end
 }
 
@@ -112,11 +112,11 @@ subjects.each { |tag|
       b_tag.update(category: category)
     end
   else
-    Tag.create(name: tag, category: "senior_specialized_subject")
+    Tag.create(name: tag, category: "senior_specialized_subject", default_flag: true)
   end
 }
 
 tags = ["高等教育", "幼児教育", "特別支援"]
 tags.each { |tag|
-  Tag.create(name: tag)
+  Tag.create(name: tag, default_flag: true)
 }
