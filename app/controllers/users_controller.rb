@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     redirect_to root_url and return unless @userprofile.activated?
 
     # Microposts
-    @microposts = @userprofile.microposts.page(params[:page]).per(20)
+    @microposts = @userprofile.microposts.page(params[:page]).per(10)
     
     # Comments & likes
     @comments_and_likes = Notification.where(
