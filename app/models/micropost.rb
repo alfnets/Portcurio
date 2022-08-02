@@ -49,10 +49,6 @@ class Micropost < ApplicationRecord
   end
   
   def tags_save(tag_list, user)
-    if self.tags != nil
-      micropost_tags_records = MicropostTag.where(micropost_id: self.id)
-      micropost_tags_records.destroy_all
-    end
     tag_list.each do |tag|
       inspected_tag = Tag.where(name: tag).first_or_create
       self.micropost_tags.create(tag: inspected_tag, user: user, lock_flag: true)
@@ -60,7 +56,7 @@ class Micropost < ApplicationRecord
   end
 
   def tags_update(tag_list, user)
-    micropost_free_tags_records = MicropostTag.where(micropost_id: self.id, lock_flag: false)
+    micropost_free_tags_records = self.user_id == user.id ? MicropostTag.where(micropost_id: self.id) : MicropostTag.where(micropost_id: self.id, lock_flag: false)
     micropost_free_tags_records.destroy_all
     tag_list.each do |tag|
       inspected_tag = Tag.where(name: tag).first_or_create
