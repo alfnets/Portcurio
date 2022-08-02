@@ -5,7 +5,13 @@
   <div class="field">
     <%= f.text_area :content, placeholder: "#{current_user.name} さん、今日はどのような一日？" %>
   </div>
-
+  <div class="tagging-form">
+    <%= f.select :school_type, school_types, { include_blank: "校種タグ" }, class: "form-control" %>
+    <%= f.select :subject, "", { include_blank: "---" }, class: "form-control" %>
+    <div class="field">
+      <%= f.text_field :tags, placeholder: "タグ", value: "", data: {role: "tagsinput"} %>
+    </div>
+  </div>
   <% @micropost.file_type ? file_type = @micropost.file_type : file_type = "" %>
   <% @micropost.file_link ? file_link = @micropost.file_link : file_link = "" %>
   <div class="file_type_tag"><%= f.hidden_field :file_type, value: file_type %></div>

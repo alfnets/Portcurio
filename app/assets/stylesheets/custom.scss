@@ -1155,13 +1155,13 @@ span.image {
   }
   .bootstrap-tagsinput {
     width: 100%;
-    border: none;
     box-shadow: none;
   //   input { width: 100%; }
   }
   .tag_search_wrap {
     .input-group {
       width: 100%;
+      .bootstrap-tagsinput { border: none; }
       .input-group-btn {
         width: 37px;
       }

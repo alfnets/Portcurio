@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_26_034734) do
+ActiveRecord::Schema.define(version: 2022_08_01_094701) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -76,8 +76,11 @@ ActiveRecord::Schema.define(version: 2022_07_26_034734) do
     t.bigint "tag_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.boolean "lock_flag", default: false, null: false
     t.index ["micropost_id"], name: "index_micropost_tags_on_micropost_id"
     t.index ["tag_id"], name: "index_micropost_tags_on_tag_id"
+    t.index ["user_id"], name: "index_micropost_tags_on_user_id"
   end
 
   create_table "microposts", charset: "utf8mb4", force: :cascade do |t|
@@ -160,6 +163,7 @@ ActiveRecord::Schema.define(version: 2022_07_26_034734) do
   add_foreign_key "links", "users"
   add_foreign_key "micropost_tags", "microposts"
   add_foreign_key "micropost_tags", "tags"
+  add_foreign_key "micropost_tags", "users"
   add_foreign_key "microposts", "users"
   add_foreign_key "porcs", "microposts"
   add_foreign_key "porcs", "users"

@@ -13,7 +13,7 @@ class MicropostsController < ApplicationController
     rescue
     end
     if @micropost.save
-      @micropost.tags_save(tag_params) if tag_params
+      @micropost.tags_save(tag_params, current_user) if tag_params
       @porc = @micropost.porcs.create(user: current_user)
       flash[:success] = "Micropost created!"
       redirect_to root_url    # => static_pages#home
