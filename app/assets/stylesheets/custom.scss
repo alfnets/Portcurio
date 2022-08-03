@@ -703,6 +703,10 @@ input {
   .tag-container {
     margin-left: 60px;
     margin-bottom: 4px;
+    a {
+      text-decoration: underline;
+      padding-right: 8px;
+    }
   }
   .timestamp {
     color: $gray-light;
@@ -1156,7 +1160,6 @@ span.image {
   .bootstrap-tagsinput {
     width: 100%;
     box-shadow: none;
-  //   input { width: 100%; }
   }
   .tag_search_wrap {
     .input-group {
