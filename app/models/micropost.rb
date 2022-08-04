@@ -37,7 +37,7 @@ class Micropost < ApplicationRecord
   validates :user_id, presence: true
   validates :content_or_image_or_file_link, presence: true
   validates :content, length: { maximum: 280,
-                                message: "should be less than 280 charactor"}}
+                                message: "should be less than 280 charactor" }
   validates :image,   content_type: { in: %w[image/jpeg image/gif image/png],
                                       message: "must be a valid image format" },
                       size:         { less_than: 10.megabytes,
