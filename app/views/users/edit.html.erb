@@ -32,15 +32,19 @@
   <%= f.label :password_confirmation, "New Password Confirmation" %>
   <%= f.password_field :password_confirmation, class: 'form-control' %>
 
+  <div class="profile_icon_edit">
+    <span class='profile_icon_frame'>
+      <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
+    </span>
+    <%# <a href="https://gravatar.com/emails" target="_blank">change</a> %>
+    <span class="image inline-block">
+      <%= f.file_field :image %>
+    </span>
+  </div>
+
   <%= f.submit "Save changes", class: "btn btn-primary" %>
 <% end %>
 
-<div class="gravatar_edit">
-  <span class='gravator_frame'>
-    <%= gravatar_for @user %>
-  </span>
-  <a href="https://gravatar.com/emails" target="_blank">change</a>
-</div>
 <p id="edit_user_page">
   <%= link_to "The page for deleting your account", delete_user_path(@user) %>
 </p>

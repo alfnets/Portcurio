@@ -1,8 +1,8 @@
 <% provide(:title, @userprofile.name) %>
 
 <section class="user_info user_show">
-  <span class='gravator_frame'>
-    <%= gravatar_for @userprofile %>
+  <span class='profile_icon_frame'>
+    <%= @userprofile.image.attached? ? (image_tag @userprofile.image) : (gravatar_for @userprofile) %>
   </span>
   <h1><%= @userprofile.name %></h1>
   <%= render partial: 'relationships/follow_form', locals: {user: @userprofile} if logged_in? %>

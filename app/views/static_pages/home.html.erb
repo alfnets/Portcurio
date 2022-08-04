@@ -1,6 +1,6 @@
 <div class='micropost_form_container'>
-  <span class='gravator_frame'>
-    <%= link_to gravatar_for(current_user, size: 50), current_user %>
+  <span class='profile_icon_frame'>
+    <%= current_user.image.attached? ? (link_to image_tag(current_user.image), current_user) : (link_to gravatar_for(current_user), current_user) %>
   </span>
 
   <section class="micropost_form">

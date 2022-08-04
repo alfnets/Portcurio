@@ -54,7 +54,8 @@ class UsersController < ApplicationController
     # User.create(params[:user]) マスアサイメント脆弱性になる
       # ex.) POST + params[:user][:admin] = true
     # => name, email, pass/confirmation のみに限定するチェック機構である(user_params)を作って使う
-    @user = User.new(user_params) 
+    @user = User.new(user_params)
+    @user.image.attach(params[:user][:image])
     if @user.save #  == true
       # Success (valid params)
       # GET "/users/#{@user.id}"
@@ -199,7 +200,7 @@ class UsersController < ApplicationController
   private
   
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :lineuid)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :lineuid, :image)
     end
 
     def search_params

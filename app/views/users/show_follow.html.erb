@@ -2,8 +2,8 @@
 
 <h1><%= @title %></h1>
 <section class="user_info user_follow">
-  <span class='gravator_frame'>
-    <%= gravatar_for @userprofile, size: 50 %>
+  <span class='profile_icon_frame'>
+    <%= @userprofile.image.attached? ? (image_tag @userprofile.image) : (gravatar_for @userprofile) %>
   </span>
   <h1><%= @userprofile.name %></h1>
   <span><%= link_to "view my profile", @userprofile %></span>
@@ -14,8 +14,8 @@
   <% if @users.any? %>
     <div class="user_avatars">
       <% @users.each do |user| %>
-        <span class='gravator_frame'>
-          <%= link_to gravatar_for(user, size: 30), user %>
+        <span class='profile_icon_frame'>
+          <%= user.image.attached? ? (link_to image_tag(user.image), user) : (link_to gravatar_for(user), user) %>
         </span>
       <% end %>
     </div>

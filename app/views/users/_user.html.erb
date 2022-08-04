@@ -1,6 +1,6 @@
 <li>
-  <span class='gravator_frame'>
-    <%= link_to gravatar_for(user, size: 50), user %>
+  <span class='profile_icon_frame'>
+    <%= user.image.attached? ? (link_to image_tag(user.image), user) : (link_to gravatar_for(user), user) %>
   </span>
   <div class='inline-block'>
     <span class='user'><%= link_to user.name, user %></span>
