@@ -36,11 +36,11 @@ class Micropost < ApplicationRecord
   
   validates :user_id, presence: true
   validates :content_or_image_or_file_link, presence: true
-  validates :content, length: { maximum: 140 }
+  validates :content, length: { maximum: 280 }
   validates :image,   content_type: { in: %w[image/jpeg image/gif image/png],
                                       message: "must be a valid image format" },
-                      size:         { less_than: 5.megabytes,
-                                      message: "should be less than 5MB" }
+                      size:         { less_than: 10.megabytes,
+                                      message: "should be less than 10MB" }
   validate  :valid_file_type, :valid_file_link
                                       
   # 表示用のリサイズ済み画像を返す
