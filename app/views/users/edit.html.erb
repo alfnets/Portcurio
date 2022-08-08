@@ -41,6 +41,8 @@
       <%= f.file_field :image %>
     </span>
   </div>
+  <div id="image_preview">
+  </div>
 
   <%= f.submit "Save changes", class: "btn btn-primary" %>
 <% end %>
@@ -48,3 +50,5 @@
 <p id="edit_user_page">
   <%= link_to "The page for deleting your account", delete_user_path(@user) %>
 </p>
+
+<%= javascript_pack_tag 'icon_preview' %>
