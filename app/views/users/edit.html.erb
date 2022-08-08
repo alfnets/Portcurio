@@ -34,9 +34,10 @@
 
   <div class="profile_icon_edit">
     <span class='profile_icon_frame'>
-      <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
+      <div id="image-preview">
+        <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
+      </div>
     </span>
-    <%# <a href="https://gravatar.com/emails" target="_blank">change</a> %>
     <span class="image inline-block">
       <%= f.file_field :image %>
     </span>
