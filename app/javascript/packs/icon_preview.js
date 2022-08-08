@@ -5,7 +5,7 @@ $(document).on("turbolinks:load", function () {
       $("#image_preview").html("");
       $('#image_preview').css({'max-width':'0px','padding-bottom':'0px'});
     } else {
-      const d = new $.Deferred().resolve();
+      let d = new $.Deferred().resolve();
       $.each(files, function (i, file) {
         d = d.then(function () {
           return previewImage(file);

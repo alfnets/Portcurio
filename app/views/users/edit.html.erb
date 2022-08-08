@@ -34,9 +34,7 @@
 
   <div class="profile_icon_edit">
     <span class='profile_icon_frame'>
-      <div id="image-preview">
-        <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
-      </div>
+      <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
     </span>
     <span class="image inline-block">
       <%= f.file_field :image %>
