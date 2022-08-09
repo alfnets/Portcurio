@@ -123,6 +123,9 @@ class UsersController < ApplicationController
         lineuid = @user.lineuid
         user_params.merge!(params[:user][:lineuid] = nil)
       end
+      if params[:user][:delete_icon] === '1'
+        user_params.merge!(params[:user][:image] = nil)
+      end
       if @user.update(user_params)
         # 更新に成功した場合を扱う
         flash[:success] = "Profile updated"

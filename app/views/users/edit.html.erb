@@ -44,7 +44,14 @@
       <%= f.file_field :image %>
     </span>
   </div>
-
+  <% if @user.image.attached? %>
+    <div class="check_box">
+      <%= f.label :delete_icon do %>
+        <%= f.check_box :delete_icon, class: 'inline-block' %>
+        <span>アイコンを削除する（デフォルトはGravator）</span>
+      <% end %>
+    </div>
+  <% end %>
   <%= f.submit "Save changes", class: "btn btn-primary" %>
 <% end %>
 
@@ -53,3 +60,7 @@
 </p>
 
 <%= javascript_pack_tag 'icon_preview' %>
+
+<% if @user.errors.any? %>
+  <%= javascript_pack_tag 'render_user_edit' %>
+<% end %>

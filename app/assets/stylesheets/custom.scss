@@ -102,9 +102,14 @@ a {
 
 .btn-default {
   background-color: #95A5A6;
+  &:hover {
+    background-color: #7F8C8D;
+  }
 }
-.btn-default:hover {
-  background-color: #7F8C8D;
+
+input[type='checkbox'] {
+  transform: scale(1.5);
+  margin-right: 8px;
 }
 
 .back_link {
@@ -523,7 +528,7 @@ input {
   color: red;
   ul {
     color: red;
-    margin: 0 0 30px 0;
+    margin: 0 0 16px 0;
   }
 }
 
@@ -534,11 +539,11 @@ input {
   }
 }
 
-.checkbox {
-  margin-top: -10px;
-  margin-bottom: 10px;
+.check_box {
+  margin-bottom: 8px;
+  margin-left: 8px;
+  input { width:auto; }
   span {
-    margin-left: 20px;
     font-weight: normal;
   }
 }
@@ -611,10 +616,6 @@ input {
     text-align: left;
     margin-left: 8px;
     margin-bottom: 16px;
-    input[type='checkbox'] {
-      transform: scale(1.5);
-      margin-right: 8px;
-    }
   }
   .forgot_link {
     text-align: right;
