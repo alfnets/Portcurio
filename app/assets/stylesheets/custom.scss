@@ -737,12 +737,7 @@ input {
     padding-top: 0;
   }
   .tag-container {
-    margin-left: 60px;
-    margin-bottom: 4px;
-    a {
-      text-decoration: underline;
-      padding-right: 8px;
-    }
+    margin: 0 0 4px 60px;
   }
   .timestamp {
     color: $gray-light;
@@ -871,6 +866,13 @@ input {
   }
   .pagination {
     display: none;
+  }
+}
+.tag-container {
+  margin: 4px 0 0 8px;
+  a {
+    text-decoration: underline;
+    padding-right: 8px;
   }
 }
 

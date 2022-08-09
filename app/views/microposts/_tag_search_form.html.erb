@@ -31,7 +31,9 @@
       </span>
     </div>
   </div>
-  <% @tags.each do |tag| %>
-    <%= link_to "#{tag.name}", add_search_tag_microposts_path(tag: tag.name), remote: true %>
-  <% end %>
+  <div class="tag-container">
+    <% @tags.each do |tag| %>
+      <%= link_to "#{tag.name}", add_search_tag_microposts_path(tag: tag.name), remote: true %>
+    <% end %>
+  </div>
 <% end %>
