@@ -111,7 +111,7 @@ class User < ApplicationRecord
 
   validates :image,   content_type: { in: %w[image/jpeg image/gif image/png],
                                       message: "must be a valid image format" },
-                      size:         { less_than: 1.megabytes,
+                      size:         { less_than: 10.megabytes,
                                       message: "should be less than 10MB" }
 
   attr_encrypted :lineuid, key: 'This is a key that is 256 bits!!'
