@@ -9,7 +9,7 @@
     "@rails/webpacker": "5.4.3",
     "@toast-ui/editor": "^3.1.8",
     "bootstrap": "3.4.1",
-    "jquery": "3.4.1",
+    "jquery": "^3.6.0",
     "turbolinks": "^5.2.0",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12",
