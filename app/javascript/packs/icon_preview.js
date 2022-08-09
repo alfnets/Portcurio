@@ -30,3 +30,5 @@ $(document).on("turbolinks:load", function () {
     return def.promise();
   }
 });
+
+require("packs/icon_preview")
