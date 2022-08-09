@@ -109,6 +109,11 @@ class User < ApplicationRecord
                          length: { minimum: 6 },
                       allow_nil: true
 
+  validates :image,   content_type: { in: %w[image/jpeg image/gif image/png],
+                                      message: "must be a valid image format" },
+                      size:         { less_than: 10.megabytes,
+                                      message: "should be less than 10MB" }
+
   attr_encrypted :lineuid, key: 'This is a key that is 256 bits!!'
   
   # 渡された文字列のハッシュ値を返す
