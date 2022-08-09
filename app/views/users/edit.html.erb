@@ -34,13 +34,15 @@
 
   <div class="profile_icon_edit">
     <span class='profile_icon_frame'>
-      <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
+      <div id="icon_image">
+        <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
+      </div>
+      <div id="image_preview">
+      </div>
     </span>
     <span class="image inline-block">
       <%= f.file_field :image %>
     </span>
-  </div>
-  <div id="image_preview">
   </div>
 
   <%= f.submit "Save changes", class: "btn btn-primary" %>

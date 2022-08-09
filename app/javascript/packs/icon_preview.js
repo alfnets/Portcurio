@@ -3,7 +3,7 @@ $(document).on("turbolinks:load", function () {
     const files = e.target.files;
     if (files.length === 0) {
       $("#image_preview").html("");
-      $('#image_preview').css({'max-width':'0px','padding-bottom':'0px'});
+      $("#icon_image").css({'display':'block'});
     } else {
       let d = new $.Deferred().resolve();
       $.each(files, function (i, file) {
@@ -20,12 +20,11 @@ $(document).on("turbolinks:load", function () {
     const def = $.Deferred();
     reader.onload = function (e) {
       // 画像を表示
-      $('#image_preview').css({ 'max-width': '300px', 'padding-bottom': '16px' });
+      $("#icon_image").css({'display':'none'});
       $("#image_preview").empty();
       $("#image_preview").append(img);
       img.src = e.target.result;
       def.resolve(img);
-      $('#image_preview img').css('width', '100%');
     };
     reader.readAsDataURL(imageFile);
     return def.promise();
