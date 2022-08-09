@@ -1,3 +1,3 @@
 history.replaceState('', '', `${location.pathname}/edit`)
 
-require("packs/user_edit")
+require("packs/render_user_edit")
