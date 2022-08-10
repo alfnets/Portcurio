@@ -723,7 +723,7 @@ input {
   list-style: none;
   padding: 0;
   li {
-    padding: 10px 0;
+    padding: 16px 0 0;
     border-top: 1px solid #e8e8e8;
   }
   li:first-child {
@@ -921,6 +921,7 @@ span.image {
 
 .comments-container {
   padding: 20px 20px 5px;
+  li { padding: 0 0 8px; }
 }
 
 .replies-container {
@@ -1026,11 +1027,14 @@ span.image {
 }
 
 .notification-wrap {
-  padding: 10px 20px;
+  padding: 0px 20px;
   margin-top: 10px;
   margin-left: auto;
   width: calc(100% - 20px);
   background-color: #eeeeee80;
+  li {
+    padding: 16px 0 0;
+  }
   p {
     font-size: 1em;
     line-height: 1.3em;
@@ -1042,7 +1046,6 @@ span.image {
 .notification {
   li {
     border-top: none;
-    padding: 0;
   }
 }
 
