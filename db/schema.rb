@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_02_023239) do
+ActiveRecord::Schema.define(version: 2022_08_10_051602) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -152,6 +152,8 @@ ActiveRecord::Schema.define(version: 2022_08_02_023239) do
     t.string "encrypted_lineuid"
     t.string "encrypted_lineuid_iv"
     t.string "delete_digest"
+    t.string "school_type"
+    t.string "subject"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
