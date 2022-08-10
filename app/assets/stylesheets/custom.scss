@@ -1220,18 +1220,30 @@ span.image {
 
 /* ユーザープロフィール画面 */
 section.profile {
+  background-color: #eeeeee80;
+  padding: 8px;
+  margin: 8px;
+  border-radius: 6px;
   ul {
-    padding: 0 0 8px 8px ;
+    padding: 0 0 0 8px;
+    margin: 0;
     list-style:none;
     li {
       margin: 4px 0;
       font-size: 1.6rem;
       p {
         font-size: 1.4rem;
-        color: #777777;
+        color: #666;
         margin-left: 8px;
         padding: 4px;
       }
+      .inline-block {
+        padding: 0;
+        margin: 0;
+      }
+    }
+    .profile_description {
+      padding-top: 8px;
     }
   }
 } 

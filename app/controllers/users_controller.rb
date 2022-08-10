@@ -118,6 +118,12 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @user.attributes = user_params
+    begin
+      if Nokogiri::HTML(Rinku.auto_link(@user.website)).at_css('a').present?
+        @user.website = Nokogiri::HTML(Rinku.auto_link(@user.website)).at_css('a')[:href]
+      end
+    rescue
+    end
     if @user.authenticate(params[:user][:current_password])
       if params[:user][:line_connection_delete] === '1'
         lineuid = @user.lineuid
@@ -126,7 +132,14 @@ class UsersController < ApplicationController
       if params[:user][:delete_icon] === '1'
         user_params.merge!(params[:user][:image] = nil)
       end
+      
       @user.attributes = user_params
+      begin
+        if Nokogiri::HTML(Rinku.auto_link(@user.website)).at_css('a').present?
+          @user.website = Nokogiri::HTML(Rinku.auto_link(@user.website)).at_css('a')[:href]
+        end
+      rescue
+      end
       if @user.save
         # 更新に成功した場合を扱う
         if params[:user][:line_connection_delete] === '1'
@@ -212,7 +225,7 @@ class UsersController < ApplicationController
   private
   
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :lineuid, :image, :school_type, :subject, :profile)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :lineuid, :image, :school_type, :subject, :profile, :website)
     end
 
     def search_params
