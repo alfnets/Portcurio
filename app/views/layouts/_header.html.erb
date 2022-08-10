@@ -21,15 +21,15 @@
       <span class="icon-bar"></span>
     </button>
     <div class="navbar-header">
-      <%= link_to image_tag("logo_portcurio.png", alt: "portcurio logo", height: "51px"), root_path, id: "service_logo" %>
+      <%= link_to image_tag("logo_portcurio.png", alt: "portcurio logo", height: "51px"), root_path, 'data-turbolinks': false, id: "service_logo" %>
       <%= render partial: 'layouts/keyword_search_form', locals: { keywords: @keywords } %>
     </div>
     <nav role="navigation">
       <div class="navbar-offcanvas navbar-offcanvas-touch navbar-offcanvas-right" id="js-bootstrap-offcanvas">
         <ul class="nav navbar-nav navbar-right" id="navbar">
-          <li><%= link_to "Home", root_path %></li>
+          <li><%= link_to "Home", root_path, 'data-turbolinks': false %></li>
           <% if logged_in? %>
-            <li><%= link_to "MyPortcurio", portcurio_user_path(current_user) %></li>
+            <li><%= link_to "MyPortcurio", portcurio_user_path(current_user), 'data-turbolinks': false %></li>
             <li><%= link_to "Links", links_path %></li>
             <li><%= link_to "Feed", microposts_path %></li>
             <li><%= link_to "Users", users_path %></li>
@@ -43,7 +43,7 @@
               <ul class="dropdown-menu">
                 <li><%= link_to "Activity", activity_notifications_path %></li>
                 <li><%= link_to "Profile", current_user %></li>
-                <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+                <li><%= link_to "Settings", edit_user_path(current_user), 'data-turbolinks': false %></li>
                 <li><%= link_to "Log out", logout_path %></li>
               </ul>
             </li>

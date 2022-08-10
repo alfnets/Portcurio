@@ -6,13 +6,13 @@
   <section class="side_menu">
     <ul class="nav flex-column">
       <li>
-        <%= link_to root_path do %>
+        <%= link_to root_path, 'data-turbolinks': false do %>
           <span data-feather="home"></span>
           ホーム
         <% end %>
       </li>
       <li>
-        <%= link_to portcurio_user_path(current_user) do %>
+        <%= link_to portcurio_user_path(current_user), 'data-turbolinks': false do %>
           <%# <span data-feather="home"></span> %>
           マイPortcurio
         <% end %>
@@ -54,7 +54,7 @@
         <% end %>
       </li>
       <li>
-        <%= link_to edit_user_path(current_user) do %>
+        <%= link_to edit_user_path(current_user), 'data-turbolinks': false do %>
           <%# <span data-feather="users"></span> %>
           設定
         <% end %>
