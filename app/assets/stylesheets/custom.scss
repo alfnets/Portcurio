@@ -1218,6 +1218,25 @@ span.image {
 }
 
 
+/* ユーザープロフィール画面 */
+section.profile {
+  ul {
+    padding: 0 0 8px 8px ;
+    list-style:none;
+    li {
+      margin: 4px 0;
+      font-size: 1.6rem;
+      p {
+        font-size: 1.4rem;
+        color: #777777;
+        margin-left: 8px;
+        padding: 4px;
+      }
+    }
+  }
+} 
+
+
 /* ユーザー編集画面 */
 p#edit_user_page {
   clear: both;

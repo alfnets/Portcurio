@@ -10,6 +10,19 @@
 <section class="stats">
   <%= render 'shared/stats' %>
 </section>
+<section class="profile">
+  <ul>
+    <% if @userprofile.school_type %>
+      <li>メイン校種&#009;：<%= @userprofile.school_type %></li>
+    <% end %>
+    <% if @userprofile.subject %>
+      <li>メイン教科&#009;：<%= @userprofile.subject %></li>
+    <% end %>
+    <% if @userprofile.profile %>
+      <li>プロフィール<p><%= @userprofile.profile %></p></li>
+    <% end %>
+  </ul>
+</section>
 <ul id="activityTab" class="nav nav-tabs nav-fill">
   <li class="nav-item active">
     <a href="#contents1" data-toggle="tab">Microposts (<%= @userprofile.microposts.count %>)</a>
