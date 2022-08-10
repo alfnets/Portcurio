@@ -14,7 +14,7 @@
   <%= f.email_field :email, class: 'form-control' %>
 
   <% @selected_school_type ||= @user.school_type %>
-  <% if @selected_school_type %>
+  <% if @selected_school_type.present? %>
     <%= f.label :School_type %>
     <%= f.select :school_type, school_types, { include_blank: "校種タグ", selected: @selected_school_type }, class: "form-control" %>
     <% case @selected_school_type %>

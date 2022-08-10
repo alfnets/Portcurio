@@ -12,10 +12,10 @@
 </section>
 <section class="profile">
   <ul>
-    <% if @userprofile.school_type %>
+    <% if @userprofile.school_type.present? %>
       <li>メイン校種: <%= @userprofile.school_type %></li>
     <% end %>
-    <% if @userprofile.subject %>
+    <% if @userprofile.subject.present? %>
       <li>メイン教科: <%= @userprofile.subject %></li>
     <% end %>
     <% if @userprofile.profile.present? %>
