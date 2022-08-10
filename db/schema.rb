@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_10_072752) do
+ActiveRecord::Schema.define(version: 2022_08_10_101909) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(version: 2022_08_10_072752) do
     t.string "school_type"
     t.string "subject"
     t.text "profile"
+    t.string "website"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
