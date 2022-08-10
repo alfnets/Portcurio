@@ -1,0 +1,15 @@
+<% case @selected_school_type %>
+<% when "小学校"     then category = "primary_subject" %>
+<% when "中学校"     then category = "secondary_subject" %>
+<% when "高校(共通)" then category = "senior_common_subject" %>
+<% when "高校(専門)" then category = "senior_specialized_subject" %>
+<% else                   category = "" %>
+<% end %>
+
+<% unless category == "" %>
+  $("#user_subject").html("<%= escape_javascript(options_for_select(Tag.where("category LIKE ?", "%#{category}%").pluck(:name))) %>");
+  $("#user_subject").prepend('<option value="">メイン教科</option>');
+<% else %>
+  $("#user_subject").html('<option value="">---</option>');
+<% end %>
+$("#user_subject").val("");

@@ -200,10 +200,18 @@ class UsersController < ApplicationController
     @userprofile = current_user
   end
 
+  # GET /users/get_selected_school_type
+  def get_selected_school_type
+    @selected_school_type = params[:selected_school_type]
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
   
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :lineuid, :image)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :lineuid, :image, :school_type, :subject)
     end
 
     def search_params

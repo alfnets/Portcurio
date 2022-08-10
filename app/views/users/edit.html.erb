@@ -1,3 +1,5 @@
+<% school_types = Tag.where(category: "school_type").pluck(:name) %>
+
 <% provide(:title, "Edit user") %>
 
 <h1>Update your profile</h1>
@@ -10,7 +12,28 @@
 
   <%= f.label :email %>
   <%= f.email_field :email, class: 'form-control' %>
-  
+
+  <% @selected_school_type ||= @user.school_type %>
+  <% if @selected_school_type %>
+    <%= f.label :School_type %>
+    <%= f.select :school_type, school_types, { include_blank: "校種タグ", selected: @selected_school_type }, class: "form-control" %>
+    <% case @selected_school_type %>
+    <% when "小学校"     then category = "primary_subject" %>
+    <% when "中学校"     then category = "secondary_subject" %>
+    <% when "高校(共通)" then category = "senior_common_subject" %>
+    <% when "高校(専門)" then category = "senior_specialized_subject" %>
+    <% else                   category = "" %>
+    <% end %>
+    <% selected_subject = @user.subject %>
+    <%= f.label :Subject %>
+    <%= f.select :subject, Tag.where("category LIKE ?", "%#{category}%").pluck(:name), { include_blank: "教科タグ", selected: selected_subject }, class: "form-control" %>
+  <% else %>
+    <%= f.label :School_type %>
+    <%= f.select :school_type, school_types, { include_blank: "メイン校種" }, class: "form-control" %>
+    <%= f.label :Subject %>
+    <%= f.select :subject, "", { include_blank: "---" }, class: "form-control" %>
+  <% end %>
+
   <div class="line-checkbox-wrap">
     <%= f.label :line_connection_delete do %>
       <% if current_user.lineuid %>

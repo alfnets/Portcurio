@@ -18,8 +18,9 @@ Rails.application.routes.draw do
     get :powerpoint, on: :member
   end
 
-  resource :users, only: [:setting] do
+  resource :users, only: [:setting, :get_selected_school_type] do
     get :setting, on: :member
+    get :get_selected_school_type, on: :member
     # redirect to edit_user_path for line
   end
   resources :users do
@@ -29,6 +30,7 @@ Rails.application.routes.draw do
       # GET /users/1/followers
       # GET /users/1/subscribing
       # GET /users/1/delete
+      # GET /users/1/portcurio
     end
   end
 
