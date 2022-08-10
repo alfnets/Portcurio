@@ -10,28 +10,30 @@
 <section class="stats">
   <%= render 'shared/stats' %>
 </section>
-<section class="profile">
-  <ul>
-    <% if @userprofile.school_type.present? %>
-      <li>メイン校種: <%= @userprofile.school_type %></li>
-    <% end %>
-    <% if @userprofile.subject.present? %>
-      <li>メイン教科: <%= @userprofile.subject %></li>
-    <% end %>
-    <% if @userprofile.profile.present? %>
-      <li class="profile_description">プロフィール:<p><%= @userprofile.profile %></p></li>
-    <% end %>
-    <% if @userprofile.website.present? %>
-      <li>Webサイト:
-        <% if raw(Rinku.auto_link(simple_format(h(@userprofile.website)))).include?("https://#{domain_name}") %>
-            <%= raw Rinku.auto_link(simple_format(h(@userprofile.website), class: "inline-block"), :all) %>
-        <% else %>
-          <%= raw Rinku.auto_link(simple_format(h(@userprofile.website), class: "inline-block"), :all, 'target="_blank" rel="noopener noreferrer"') %>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-</section>
+<% if @userprofile.school_type.present? || @userprofile.subject.present? || @userprofile.profile.present? || @userprofile.website.present? %>
+  <section class="profile">
+    <ul>
+      <% if @userprofile.school_type.present? %>
+        <li>メイン校種: <%= @userprofile.school_type %></li>
+      <% end %>
+      <% if @userprofile.subject.present? %>
+        <li>メイン教科: <%= @userprofile.subject %></li>
+      <% end %>
+      <% if @userprofile.profile.present? %>
+        <li class="profile_description">プロフィール:<p><%= @userprofile.profile %></p></li>
+      <% end %>
+      <% if @userprofile.website.present? %>
+        <li>Webサイト:
+          <% if raw(Rinku.auto_link(simple_format(h(@userprofile.website)))).include?("https://#{domain_name}") %>
+              <%= raw Rinku.auto_link(simple_format(h(@userprofile.website), class: "inline-block"), :all) %>
+          <% else %>
+            <%= raw Rinku.auto_link(simple_format(h(@userprofile.website), class: "inline-block"), :all, 'target="_blank" rel="noopener noreferrer"') %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+<% end %>
 <ul id="activityTab" class="nav nav-tabs nav-fill">
   <li class="nav-item active">
     <a href="#contents1" data-toggle="tab">Microposts (<%= @userprofile.microposts.count %>)</a>
