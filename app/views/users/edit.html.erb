@@ -34,6 +34,9 @@
     <%= f.select :subject, "", { include_blank: "---" }, class: "form-control" %>
   <% end %>
 
+  <%= f.label :profile %>
+  <%= f.text_area :profile, placeholder: "プロフィールを入力しましょう（600文字以内）", class: 'form-control' %>
+
   <div class="line-checkbox-wrap">
     <%= f.label :line_connection_delete do %>
       <% if current_user.lineuid %>
@@ -43,7 +46,7 @@
         <span>LINE通知連携</span>
         <a class="line-add-button" href="<%= ENV["LINE_ADD_URL"] %>"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="24" border="0"></a>
       <% end %>
-  <% end %>
+    <% end %>
   </div>
 
   <%= f.label :current_password, "Current Password" %><span class="require-charm"> *</span>

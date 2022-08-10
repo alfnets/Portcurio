@@ -117,7 +117,7 @@ class UsersController < ApplicationController
   # PATCH /users/:id
   def update
     @user = User.find(params[:id])
-    
+    @user.attributes = user_params
     if @user.authenticate(params[:user][:current_password])
       if params[:user][:line_connection_delete] === '1'
         lineuid = @user.lineuid
@@ -126,21 +126,22 @@ class UsersController < ApplicationController
       if params[:user][:delete_icon] === '1'
         user_params.merge!(params[:user][:image] = nil)
       end
-      if @user.update(user_params)
+      @user.attributes = user_params
+      if @user.save
         # 更新に成功した場合を扱う
+        if params[:user][:line_connection_delete] === '1'
+          client.unlink_user_rich_menu(lineuid)
+          message = {
+            type: 'text',
+            text: "通知連携が解除されました。再度、通知連携をしたい場合には画面下部の「通知の認証をする」をタップしてください。"
+          }
+          client.push_message(lineuid, message)
+        end
         flash[:success] = "Profile updated"
         redirect_to edit_user_path(@user)
       else
         # @users.errors # <== ここにデータが入っている
         render 'edit'
-      end
-      if params[:user][:line_connection_delete] === '1'
-        client.unlink_user_rich_menu(lineuid)
-        message = {
-          type: 'text',
-          text: "通知連携が解除されました。再度、通知連携をしたい場合には画面下部の「通知の認証をする」をタップしてください。"
-        }
-        client.push_message(lineuid, message)
       end
     else
       flash.now[:danger] = 'Invalid password' unless @user.authenticate(params[:user][:current_password])
@@ -211,7 +212,7 @@ class UsersController < ApplicationController
   private
   
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :lineuid, :image, :school_type, :subject)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :lineuid, :image, :school_type, :subject, :profile)
     end
 
     def search_params
