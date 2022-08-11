@@ -65,16 +65,16 @@ class MicropostsController < ApplicationController
   # GET /microposts
   def index
     if params[:keywords]
+      @micropost = Micropost.new
       @title = "Search Result"
       @keywords = params[:keywords].gsub("　"," ").split
       result_microposts = search_microposts(@keywords)
       @selected_tags    = @keywords.join(",")
       @feedall = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
     elsif params[:micropost] && params[:micropost][:tags].present?
-      @selected_school_type = params[:micropost][:school_type]
-      @selected_subject     = params[:micropost][:subject]
-      @selected_tags        = params[:micropost][:tags].delete(' 　')
-      result_microposts = search_microposts(@selected_tags.split(","))
+      @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: params[:micropost][:educational_material])
+      @selected_tags    = params[:micropost][:tags].delete(' 　')
+      result_microposts = search_microposts(@selected_tags.split(","), @micropost.educational_material)
       if result_microposts
         @title = "Search Result"
         @feedall = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
@@ -83,11 +83,13 @@ class MicropostsController < ApplicationController
         @feedall = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])
       end
     elsif params[:click_tag]
+      @micropost = Micropost.new
       @selected_tags = [params[:click_tag]]
       tag_microposts = tag_filter(@selected_tags)
       @title = "##{params[:click_tag]}"
       @feedall = Kaminari.paginate_array(tag_microposts.includes(:tags)).page(params[:page])
     else
+      @micropost = Micropost.new
       @selected_tags = ""
       @title = "All users feed"
       @feedall = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])

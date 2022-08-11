@@ -3,7 +3,7 @@
 <h1><%= @title %></h1>
 
 <div class="tagging-form">
-  <%= render partial: 'microposts/tag_search_form', locals: { selected_school_type: @selected_school_type, selected_subject: @selected_subject, selected_tags: @selected_tags, tags: @tags } %>
+  <%= render partial: 'microposts/tag_search_form', locals: { micropost: @micropost, selected_tags: @selected_tags, tags: @tags } %>
 </div>
 
 <ol class="microposts">

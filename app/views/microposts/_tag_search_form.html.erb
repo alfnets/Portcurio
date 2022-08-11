@@ -6,24 +6,23 @@
   <% path = portcurio_user_path(current_user) %>
 <% end %>
 
-<%= form_with model: Micropost.new(educational_material: true), url: path, method: :get do |f| %>
-  <% if selected_school_type %>
-    <%= f.select :school_type, school_types, { include_blank: "校種タグ", selected: selected_school_type }, class: "form-control" %>
-    <% case selected_school_type %>
+<%= form_with model: micropost, url: path, method: :get do |f| %>
+  <%= f.select :school_type, school_types, { include_blank: "校種タグ" }, class: "form-control" %>
+  <% if micropost.school_type %>
+    <% case micropost.school_type %>
     <% when "小学校"     then category = "primary_subject" %>
     <% when "中学校"     then category = "secondary_subject" %>
     <% when "高校(共通)" then category = "senior_common_subject" %>
     <% when "高校(専門)" then category = "senior_specialized_subject" %>
     <% else                   category = "" %>
     <% end %>
-    <%= f.select :subject, Tag.where("category LIKE ?", "%#{category}%").pluck(:name), { include_blank: "教科タグ", selected: selected_subject }, class: "form-control" %>
+    <%= f.select :subject, Tag.where("category LIKE ?", "%#{category}%").pluck(:name), { include_blank: "教科タグ" }, class: "form-control" %>
   <% else %>
-    <%= f.select :school_type, school_types, { include_blank: "校種タグ" }, class: "form-control" %>
     <%= f.select :subject, "", { include_blank: "---" }, class: "form-control" %>
   <% end %>
   <div class="check_box inline-block pull-right">
     <%= f.label :educational_material do %>
-      <%= f.check_box :educational_material, class: 'inline-block' %>
+      <%= f.check_box :educational_material %>
       <span>教材・記事</span>
     <% end %>
   </div>

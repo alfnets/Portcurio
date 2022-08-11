@@ -22,11 +22,13 @@ class ApplicationController < ActionController::Base
     end
 
     # マイクロポストの検索
-    def search_microposts(keywords)
+    def search_microposts(keywords, educational_material=false)
       where_command = ""
       keywords.each do |keyword|
         where_command += where_command.empty? ? "(T.content LIKE \'%#{keyword}%\' OR T.tag_names LIKE \'%#{keyword}%\')" : " AND (T.content LIKE \'%#{keyword}%\' OR T.tag_names LIKE \'%#{keyword}%\')"
       end
+      
+      filter_educational_material_command = educational_material ? "AND (T.`educational_material` = true)" : ""
 
       sql = "SELECT T.*
         FROM
@@ -35,7 +37,7 @@ class ApplicationController < ActionController::Base
           FROM `microposts` JOIN `micropost_tags` ON `microposts`.id = `micropost_tags`.micropost_id JOIN `tags` ON `micropost_tags`.tag_id = `tags`.id
           GROUP BY `microposts`.id
           ) AS T
-        WHERE (#{where_command} AND (T.`publishing` = 'public' OR T.`user_id` = '#{current_user.id}'))
+        WHERE (#{where_command} AND (T.`publishing` = 'public' OR T.`user_id` = '#{current_user.id}') #{filter_educational_material_command})
         ORDER BY T.`created_at` DESC;"
 
       a = ActiveRecord::Base.connection.select_all(sql).to_a
