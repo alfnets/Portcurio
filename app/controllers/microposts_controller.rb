@@ -28,7 +28,7 @@ class MicropostsController < ApplicationController
           notified_id: user.id,
           # micropost_id: @micropost.id
         )
-        notification.save if notification.valid?
+        notification.save if notification.valid? && @micropost.publishing == "public"
         if notification.notified.lineuid
           host_name = ENV.fetch("HOST", nil)
           url = "https://#{host_name}/microposts/#{notification.notificable_id}"
