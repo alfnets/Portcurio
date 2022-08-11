@@ -213,8 +213,8 @@ class User < ApplicationRecord
     # 相関副問合せで一回の問い合わせで済むようにしている
     following_ids = "SELECT followed_id FROM relationships
                      WHERE follower_id = :user_id"
-    Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id",
-                    user_id: self.id)
+    Micropost.where("user_id IN (#{following_ids})",
+                    user_id: self.id).where(publishing: "public").or(Micropost.where(user_id: self.id))
   end
 
   # ユーザーをフォローする

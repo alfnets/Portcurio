@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
           FROM `microposts` JOIN `micropost_tags` ON `microposts`.id = `micropost_tags`.micropost_id JOIN `tags` ON `micropost_tags`.tag_id = `tags`.id
           GROUP BY `microposts`.id
           ) AS T
-        WHERE (#{where_command})
+        WHERE (#{where_command} AND (T.`publishing` = 'public' OR T.`user_id` = '#{current_user.id}'))
         ORDER BY T.`created_at` DESC;"
 
       a = ActiveRecord::Base.connection.select_all(sql).to_a
