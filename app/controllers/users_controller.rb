@@ -201,12 +201,12 @@ class UsersController < ApplicationController
   # GET /users/:id/portcurio
   def portcurio
     if params[:micropost] && params[:micropost][:tags].present?
-      @selected_school_type = params[:micropost][:school_type]
-      @selected_subject     = params[:micropost][:subject]
-      @selected_tags        = params[:micropost][:tags].delete(' 　')
-      result_microposts = search_microposts(@selected_tags.split(","))
+      @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: params[:micropost][:educational_material])
+      @selected_tags    = params[:micropost][:tags].delete(' 　')
+      result_microposts = search_microposts(@selected_tags.split(","), @micropost.educational_material)
       @portcurio = Kaminari.paginate_array(result_microposts.joins(:porcs).where(porcs: { user: current_user }).includes(:tags)).page(params[:page])
     else
+      @micropost = Micropost.new
       @selected_tags = ""
       @portcurio = Micropost.joins(:porcs).where(porcs: { user: current_user }).page(params[:page])
     end
