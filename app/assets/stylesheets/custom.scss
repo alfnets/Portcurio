@@ -162,6 +162,12 @@ input[type='checkbox'] {
     color: #ACB6C0;
     font-size: 14px;
   }
+  .btn-send {
+    color: white;
+    background-color: transparent;
+    height: 58px;
+    font-size: 16px;
+  }
 }
 
 span.user a {
@@ -880,6 +886,8 @@ input {
       }
       .input-group-btn {
         width: 20px;
+        background-color: #1abc9c;
+        border-radius: 0 6px 6px 0px;
       }
 
     }
