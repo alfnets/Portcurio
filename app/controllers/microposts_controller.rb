@@ -92,7 +92,7 @@ class MicropostsController < ApplicationController
       @micropost = Micropost.new
       @selected_tags = ""
       @title = "All users feed"
-      @feedall = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])
+      @feedall = Kaminari.paginate_array(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)).includes(:tags)).page(params[:page])
     end
     @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
     @userprofile = current_user
