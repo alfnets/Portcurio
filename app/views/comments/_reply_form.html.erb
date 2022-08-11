@@ -16,9 +16,15 @@
       <div><%= hidden_field_tag :userprofile_id, current_user.id, { id: SecureRandom.hex(4) } %></div>
     <% end %>
     
-    <div class="field">
-      <%= f.text_area :content, placeholder: "リプライする（リプライしたいコメントの Replyボタン を押してメンションしよう）" %>
+    <div class="response_text_wrap">
+      <div class="input-group">
+        <%= f.text_area :content, placeholder: "リプライする（リプライしたいコメントの Replyボタン を押してメンションしよう）" %>
+        <span class="input-group-btn">
+          <%= button_tag type: "submit", class: 'btn btn-send' do %>
+            <i class="fa-regular fa-paper-plane"></i>
+          <% end %>
+        </span>
+      </div>
     </div>
-    <%= f.submit "Post", class: "btn btn-primary" %>
   <% end %>
 </div>

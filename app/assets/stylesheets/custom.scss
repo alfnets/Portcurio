@@ -44,6 +44,8 @@ section {
 
 textarea {
   resize: vertical;
+  height: 58px;
+  border: 2px solid #DCE4EC;
 }
 
 .center {
@@ -154,7 +156,7 @@ input[type='checkbox'] {
     border: none;
     background-color: none;
   }
-  .btn-search {
+  .btn-search, .btn-send {
     background-color: white;
     border: none;
     color: #ACB6C0;
@@ -320,6 +322,7 @@ footer {
 aside {
   section.user_info {
     margin-top: 20px;
+    h1 { margin-top: 4px; }
   }
   section {
     padding: 10px 0;
@@ -428,7 +431,7 @@ aside {
     text-align: left;
     letter-spacing: -1px;
     margin-bottom: 3px;
-    margin-top: 0px;
+    margin-top: 8px;
   }
 }
 
@@ -516,7 +519,7 @@ aside {
 /* forms */
 
 input, textarea, select, .uneditable-input {
-  border: 1px solid #bbb;
+  border: 2px solid #DCE4EC;
   width: 100%;
   margin-bottom: 15px;
   @include box_sizing;
@@ -863,11 +866,23 @@ input {
     padding-bottom: 15px;
   }
   textarea {
-    height: 50px;
     margin-bottom: 5px;
   }
   .pagination {
     display: none;
+  }
+  .response_text_wrap {
+    .input-group {
+      width: 100%;
+      textarea { 
+        border: none;
+        margin: 0;
+      }
+      .input-group-btn {
+        width: 20px;
+      }
+
+    }
   }
 }
 .tag-container {
@@ -1076,7 +1091,6 @@ span.image {
   border-radius: 8px;
   .micropost_form {
     form:first-child {
-      // padding-bottom: 18px;
       #micropost_content {
         margin-bottom: 5px;
       }
