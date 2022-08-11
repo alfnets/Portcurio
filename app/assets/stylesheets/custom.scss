@@ -134,7 +134,9 @@ input[type='checkbox'] {
 }
 
 .bootstrap-tagsinput {
-  span { font-size: 1em; }
+  span { 
+    font-size: 0.85em;
+  }
 }
 
 .block-right {
@@ -1100,7 +1102,17 @@ span.image {
   .micropost_form {
     form:first-child {
       #micropost_content {
-        margin-bottom: 5px;
+        margin-bottom: 0px;
+      }
+      .micropost_attr {
+        margin-bottom: 4px;
+        .check_box {
+          padding-right: 16px;
+          margin: 0;
+        }
+        select {
+          margin: 0;
+        }
       }
       .btn-post {
         width: 80px;
@@ -1228,6 +1240,7 @@ span.image {
   .bootstrap-tagsinput {
     width: 100%;
     box-shadow: none;
+    line-height: 170%;
   }
   .tag_search_wrap {
     .input-group {

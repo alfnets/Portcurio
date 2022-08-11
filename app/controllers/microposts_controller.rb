@@ -129,7 +129,7 @@ class MicropostsController < ApplicationController
     
     # Strong parameter
     def micropost_params
-      params.require(:micropost).permit(:content, :image, :file_type, :file_link)
+      params.require(:micropost).permit(:content, :image, :file_type, :file_link, :publishing, :educational_material)
     end
 
     def tag_params
