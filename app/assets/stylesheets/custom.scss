@@ -923,11 +923,14 @@ span.image {
 
 .comments-container {
   padding: 20px 20px 5px;
-  li { padding: 0 0 8px; }
+  margin: 0 0 16px;
+  li:first-child { padding: 0 0 8px; }
+  li { padding: 16px 0 8px; }
 }
 
 .replies-container {
-  padding: 5px 20px 0px;
+  padding: 16px 20px 0px;
+  margin: 4px 0 0;
   li {
     border-top: none;
     border-bottom: 1px solid #e8e8e8;
