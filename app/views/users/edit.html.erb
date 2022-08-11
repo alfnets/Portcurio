@@ -71,7 +71,8 @@
       </div>
     </span>
     <span class="image inline-block">
-      <%= f.file_field :image %>
+      <%= f.label :image, "アイコンを変更する", class: "btn btn-image btn-default" %>
+      <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: 'image_form hidden' %>
     </span>
   </div>
   <% if @user.image.attached? %>
