@@ -200,7 +200,7 @@ class UsersController < ApplicationController
   
   # GET /users/:id/portcurio
   def portcurio
-    if params[:micropost] && params[:micropost][:tags].present?
+    if params[:micropost] && (params[:micropost][:tags].present? || params[:micropost][:educational_material].present?)
       @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: params[:micropost][:educational_material])
       @selected_tags    = params[:micropost][:tags].delete(' 　')
       result_microposts = search_microposts(@selected_tags.split(","), @micropost.educational_material)
