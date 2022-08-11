@@ -6,7 +6,7 @@
   <% path = portcurio_user_path(current_user) %>
 <% end %>
 
-<%= form_with model: Micropost.new, url: path, method: :get do |f| %>
+<%= form_with model: Micropost.new(educational_material: true), url: path, method: :get do |f| %>
   <% if selected_school_type %>
     <%= f.select :school_type, school_types, { include_blank: "校種タグ", selected: selected_school_type }, class: "form-control" %>
     <% case selected_school_type %>
@@ -21,6 +21,13 @@
     <%= f.select :school_type, school_types, { include_blank: "校種タグ" }, class: "form-control" %>
     <%= f.select :subject, "", { include_blank: "---" }, class: "form-control" %>
   <% end %>
+  <div class="check_box inline-block pull-right">
+    <%= f.label :educational_material do %>
+      <%= f.check_box :educational_material, class: 'inline-block' %>
+      <span>教材・記事</span>
+    <% end %>
+  </div>
+
   <div class="tag_search_wrap">
     <div class="input-group">
       <%= f.text_field :tags, placeholder: "タグ or キーワード", value: selected_tags, data: {role: "tagsinput"} %>
