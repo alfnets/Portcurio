@@ -31,7 +31,9 @@
   <% @micropost.file_link ? file_link = @micropost.file_link : file_link = "" %>
   <div class="file_type_tag"><%= f.hidden_field :file_type, value: file_type %></div>
   <div class="file_link_tag"><%= f.hidden_field :file_link, value: file_link %></div>
-  <%= f.submit "Post", class: "btn btn-primary inline-block btn-post" %>
+  <%= button_tag type: "submit", class: 'btn btn-primary btn-post inline-block' do %>
+    <i class="fa-regular fa-paper-plane"></i>
+  <% end %>
 
   <div class="attach_form inline-block">
     <span class="image">
