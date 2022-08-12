@@ -1095,7 +1095,7 @@ span.image {
   position: relative;
   background-color: #ECF0F1;
   box-shadow: 8px 8px 0px 0 rgba(26, 188, 156, 0.4);
-  padding: 16px 16px 8px;
+  padding: 16px 16px 0px;
   margin-top: 16px;
   margin-bottom: 24px;
   border-radius: 8px;
@@ -1115,10 +1115,12 @@ span.image {
         }
       }
       .btn-post {
-        width: 60px;
+        font-size: 20px;
+        width: 48px;
         position: absolute;
-        right: 14px;
-        bottom: 8px;
+        right: 16px;
+        bottom: px;
+        padding: 1px 0;
       }
       .image {
         .btn-image {
@@ -1142,7 +1144,7 @@ span.image {
     /* slide_post */
     .slide_post {
       position: absolute;
-      bottom: 24px;
+      bottom: 15.59px;
       left: 140px;
       .button_to {
         display: inline-block;
@@ -1152,11 +1154,6 @@ span.image {
         width: 80px;
         margin-right: 4px;
         padding: 3px 0px;
-        // font-size: 14px;
-        // background-color: #EEEEEE;
-        // color: black;
-        // border: 1px solid #777777;
-        // border-radius: 3px;
       }
       span {
         display: inline-block;
@@ -1254,7 +1251,7 @@ span.image {
       }
     }
   }
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 .tags_edit {
   form { padding: 0; }
