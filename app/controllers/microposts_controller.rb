@@ -73,8 +73,12 @@ class MicropostsController < ApplicationController
       @feedall = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
     elsif params[:micropost] && (params[:micropost][:tags].present? || params[:micropost][:educational_material].present?)
       @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: params[:micropost][:educational_material])
-      @selected_tags    = params[:micropost][:tags].delete(' 　')
-      result_microposts = search_microposts(@selected_tags.split(","), @micropost.educational_material)
+      if params[:micropost][:tags].present?
+        @selected_tags    = params[:micropost][:tags].delete(' 　')
+        result_microposts = search_microposts(@selected_tags.split(","), @micropost.educational_material)
+      else
+        result_microposts = Micropost.where(educational_material: @micropost.educational_material).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
+      end
       if result_microposts
         @title = "Search Result"
         @feedall = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
