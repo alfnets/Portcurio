@@ -200,13 +200,13 @@ class UsersController < ApplicationController
   
   # GET /users/:id/portcurio
   def portcurio
-    if params[:micropost] && (params[:micropost][:tags].present? || params[:micropost][:educational_material].present?)
-      @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: params[:micropost][:educational_material])
+    if params[:micropost] && (params[:micropost][:tags].present? || params[:micropost][:educational_material].to_boolean)
+      @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: params[:micropost][:educational_material].to_boolean)
       if params[:micropost][:tags].present?
         @selected_tags    = params[:micropost][:tags]
         result_microposts = search_microposts(@selected_tags.split(","), @micropost.educational_material)
       else
-        result_microposts = Micropost.where(educational_material: @micropost.educational_material).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
+        result_microposts = Micropost.where(educational_material: true).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
       end
       @portcurio = Kaminari.paginate_array(result_microposts.joins(:porcs).where(porcs: { user: current_user }).includes(:tags)).page(params[:page])
     else
