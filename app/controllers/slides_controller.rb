@@ -9,6 +9,14 @@ class SlidesController < ApplicationController
     end
   end
 
+  # GET /microposts/:micropost_id/slides/edit
+  def edit
+    @micropost = Micropost.find(params[:micropost_id])
+    respond_to do |format|
+      format.html { redirect_to request.referer || root_url }
+      format.js { render action: "new" }
+    end
+  end
 
   # GET /microposts/slides/close
   def close
@@ -20,33 +28,64 @@ class SlidesController < ApplicationController
   end
 
 
-  # POST /microposts/slides
-  def create
+  # GET /microposts/slides/set
+  def set
+    @micropost = current_user.microposts.build(micropost_params)
     if valid_params?
-      @micropost = current_user.microposts.build(micropost_params)
       respond_to do |format|
         format.html { redirect_to request.referer || root_url }
         format.js
       end
     else
-      @micropost = current_user.microposts.build
       @micropost.errors.add(:slide, "Invalid params")
       respond_to do |format|
         format.html { redirect_to request.referer || root_url }
-        format.js { render :action => "new" }
+        format.js { render action: "new" }
       end
     end
   end
 
 
-  # DELETE /microposts/slides
-  def destroy
+  # GET /microposts/:micropost_id/slides/replace
+  def replace
+    @micropost = Micropost.find(params[:micropost_id])
+    @micropost.attributes = micropost_params
+
+    if valid_params?
+      respond_to do |format|
+        format.html { redirect_to request.referer || root_url }
+        format.js { render action: "set" }
+      end
+    else
+      @micropost.errors.add(:slide, "Invalid params")
+      respond_to do |format|
+        format.html { redirect_to request.referer || root_url }
+        format.js { render action: "new" }
+      end
+    end
+  end
+
+
+  # GET /microposts/slides/remove
+  def remove
     @micropost = current_user.microposts.build
     respond_to do |format|
       format.html { redirect_to request.referer || root_url }
       format.js
     end
   end
+
+
+  # GET /microposts/:micropost_id/slides/remove_exist
+  def remove_exist
+    @micropost = Micropost.find(params[:micropost_id])
+    @micropost.attributes = {file_type: nil, file_link: nil}
+    respond_to do |format|
+      format.html { redirect_to request.referer || root_url }
+      format.js { render action: "remove" }
+    end
+  end
+
   
   private
     

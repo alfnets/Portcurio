@@ -1,0 +1,7 @@
+$(".micropost_form_container").hide().html("")
+
+$(".micropost-edit-modal-<%= @micropost.id %>").html("<%= escape_javascript(render partial: 'microposts/edit_modal', locals: { micropost: @micropost }) %>").hide().fadeIn(300)
+
+$('.close-modal').on("click", function(){
+  location.reload();
+});

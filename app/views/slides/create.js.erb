@@ -1,7 +1,0 @@
-$(".slide_post_modal").html("")
-
-$("#micropost_file_type").val("<%= @micropost.file_type %>")
-$("#micropost_file_link").val('<%= @micropost.file_link %>')
-
-<%# $(".slide_post > .file_type").html('<%= @micropost.file_type % <%= link_to microposts_slides_path, remote: true, class: "btn-link", method: :delete do %<i class="far fa-times-circle"></i><% end %') %>
-$(".slide_post > .file_type").html('<%= link_to microposts_slides_path, remote: true, class: "btn-link", method: :delete do %><i class="far fa-times-circle"></i><% end %>')

@@ -1,16 +1,18 @@
+<% @micropost ||= micropost %>
+<% url = @micropost.created_at.present? ? replace_micropost_slides_path(@micropost) : set_slides_path %>
 <div class="slide-modal-wrapper" >
   <div class="slide-modal">
     <span class="close-modal">
-      <%= link_to close_microposts_slides_path, remote: true do %>
+      <%= link_to close_slides_path, remote: true do %>
         <i class="fa fa-2x fa-times"></i>
       <% end %>
     </span>
-    <%= form_with(model: @micropost, url: microposts_slides_path, method: :post, local: false) do |f| %>
+    <%= form_with(model: @micropost, url: url, method: :get, local: false) do |f| %>
       <%= render 'shared/error_messages_easy', object: f.object %>
-      <%= f.radio_button :file_type, :GoogleSlides %>
-      <%= f.label :file_type, "Google Slides", {value: :GoogleSlides, style: "display: inline-block;"} %>
-      <%= f.radio_button :file_type, :PowerPoint %>
-      <%= f.label :file_type, "PowerPoint", {value: :PowerPoint, style: "display: inline-block;"} %>
+      <%= f.radio_button :file_type, :GoogleSlides, class: "form-control" %>
+      <%= f.label :file_type, "Google Slides", value: :GoogleSlides %>
+      <%= f.radio_button :file_type, :PowerPoint, class: "form-control" %>
+      <%= f.label :file_type, "PowerPoint", value: :PowerPoint %>
       <div class="field">
         <%= f.text_area :file_link, placeholder: "スライドの埋め込みコードを入力する" %>
       </div>

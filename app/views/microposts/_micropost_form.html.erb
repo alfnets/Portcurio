@@ -1,6 +1,8 @@
+<% @micropost ||= micropost %>
+<% local = !@micropost.created_at.present? ? true : false %>
 <% school_types = Tag.where(category: "school_type").pluck(:name) %>
 
-<%= form_with(model: @micropost, local: true) do |f| %>
+<%= form_with(model: @micropost, local: local) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
     <%= f.text_area :content, placeholder: "#{current_user.name} さん、今日はどのような一日？" %>
@@ -9,13 +11,13 @@
   <div class="micropost_attr pull-right">
     <div class="check_box inline-block">
       <%= f.label :educational_material do %>
-        <%= f.check_box :educational_material, {}, true, false %>
+        <%= f.check_box :educational_material, {}, true, 0 %>
         <span>教材・記事</span>
       <% end %>
     </div>
 
     <div class="publishing inline-block">
-      <%= f.select :publishing, {"公開": "public", "非公開": "private"}, { selected: "public" }, class: "form-control" %>
+      <%= f.select :publishing, {"公開": "public", "非公開": "private"}, {}, class: "form-control" %>
     </div>
   </div>
 
@@ -23,7 +25,7 @@
     <%= f.select :school_type, school_types, { include_blank: "校種タグ" }, class: "form-control" %>
     <%= f.select :subject, "", { include_blank: "---" }, class: "form-control" %>
     <div class="field">
-      <%= f.text_field :tags, placeholder: "タグ", value: "", data: {role: "tagsinput"} %>
+      <%= f.text_field :tags, placeholder: "タグ", value: @micropost.tags.pluck('name').join(","), data: {role: "tagsinput"} %>
     </div>
   </div>
 
@@ -39,16 +41,28 @@
     <span class="image">
       <%= f.label :image, "画像", class: "btn btn-image btn-info" %>
       <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: 'image_form' %>
-      <p><br></p>
+      <% if @micropost.image.attached? %>
+        <p>添付済</p>
+      <% else %>
+        <p><br></p>
+      <% end %>
     </span>
   </div>
 <% end %>
 
 <div class="slide_post inline-block">
   <span class="slide_form">
-    <%= button_to "スライド", new_microposts_slides_path, method: :get, class: "btn btn-slide btn-info", remote: true %>
+    <% if @micropost.created_at.present? %>
+      <%= button_to "スライド", edit_micropost_slides_path(@micropost), method: :get, class: "btn btn-slide btn-info", remote: true %>
+    <% else %>
+      <%= button_to "スライド", new_slides_path, method: :get, class: "btn btn-slide btn-info", remote: true %>
+    <% end %>
   </span>
-  <span class="file_type"></span>
+  <span class="file_link_exist">
+    <% if @micropost.file_link.present? %>
+      <%= link_to remove_exist_micropost_slides_path(@micropost), remote: true, class: "btn-link" do %><i class="far fa-times-circle"></i><% end %>
+    <% end %>
+  </span>
   <span class="slide_post_modal"></span>
 </div>
 

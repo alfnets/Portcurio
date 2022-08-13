@@ -133,6 +133,10 @@ input[type='checkbox'] {
   color:#7F8C8D ;
 }
 
+.error_explanation {
+  li { padding: 0 !important; }
+}
+
 .bootstrap-tagsinput {
   span { 
     font-size: 0.85em;
@@ -988,6 +992,69 @@ span.image {
 }
 
 
+/* micropostの編集のためのモーダルウィンドウ */
+.edit-modal-wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  width: 100%;
+  display: block;
+  h2 {
+    color: white;
+  }
+  .edit-modal {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    background-color: #e6ecf0;
+    padding: 0;
+    width: 350px;
+    height: auto;
+    border-radius: 6px;
+    .edit-modal-form {
+      position: relative;
+      padding: 24px 32px 0;
+      .close-modal {
+        cursor: pointer;
+        display: block;
+        float: right;
+        position: absolute;
+        top: 8px;
+        right: 8px;
+      }
+      .micropost_form {
+        .tagging-form {
+          display: none;
+        }
+        .attach_form {
+          margin-top: 40px;
+        }
+        form {
+          padding: 0;
+        }
+        #micropost_tags {
+          margin: 0;
+        }
+        .slide_post {
+          left: 96px;
+        }
+        .btn-post {
+          right: 32.5px;
+          bottom: 14px;
+        }
+      }
+    }
+  }
+}
+
+
 /* いいね！した人を表示するモーダルウィンドウ */
 .like-modal-wrapper {
   position: fixed;
@@ -1099,118 +1166,119 @@ span.image {
   margin-top: 16px;
   margin-bottom: 24px;
   border-radius: 8px;
-  .micropost_form {
-    form:first-child {
-      #micropost_content {
-        margin-bottom: 0px;
+}
+.micropost_form {
+  form:first-child {
+    #micropost_content {
+      margin-bottom: 0px;
+    }
+    .micropost_attr {
+      margin-bottom: 4px;
+      .check_box {
+        padding-right: 16px;
+        margin: 0;
       }
-      .micropost_attr {
-        margin-bottom: 4px;
-        .check_box {
-          padding-right: 16px;
-          margin: 0;
-        }
-        select {
-          margin: 0;
-        }
-      }
-      .btn-post {
-        font-size: 20px;
-        width: 48px;
-        position: absolute;
-        right: 16.5px;
-        padding: 1px 0;
-      }
-      .image {
-        .btn-image {
-          width: 56px;
-          padding: 3px 0px;
-          margin-right: 4px;
-        }
-        .image_form {
-          display: none;
-        }
-        p {
-          padding: 0;
-          margin: 0;
-          width: 56px;
-          font-size: 1.2rem;
-          text-align: center;
-        }
+      select {
+        margin: 0;
       }
     }
-  
-    /* slide_post */
-    .slide_post {
+    .btn-post {
+      font-size: 20px;
+      width: 48px;
       position: absolute;
-      bottom: 15.59px;
-      left: 140px;
-      .button_to {
-        display: inline-block;
-        padding: 0;
-      }
-      .btn-slide {
-        width: 80px;
-        margin-right: 4px;
+      right: 16.5px;
+      padding: 1px 0;
+    }
+    .image {
+      .btn-image {
+        width: 56px;
         padding: 3px 0px;
+        margin-right: 4px;
       }
-      span {
-        display: inline-block;
+      .image_form {
+        display: none;
       }
-      .slide-modal-wrapper {
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 100;
-        width: 100%;
-        display: block;
-        color: rgba(0, 0, 0, 0.7);
-        .slide-modal {
-          position: absolute;
-          top: 20%;
-          left: 50%;
-          transform: translateX(-50%);
-          -webkit-transform: translateX(-50%);
-          -ms-transform: translateX(-50%);
-          background-color: #e6ecf0;
-          padding: 10px;
-          width: 350px;
-          // height: 200px;
-          border-radius: 4px;
-          .close-modal {
-            display: block;
-            float: right;
-            padding-right: 4px;
+      p {
+        padding: 0;
+        margin: 0;
+        width: 56px;
+        font-size: 1.2rem;
+        text-align: center;
+      }
+    }
+  }
+
+  /* slide_post */
+  .slide_post {
+    position: absolute;
+    bottom: 15.59px;
+    left: 140px;
+    .button_to {
+      display: inline-block;
+      padding: 0;
+    }
+    .btn-slide {
+      width: 80px;
+      margin-right: 4px;
+      padding: 3px 0px;
+    }
+    span {
+      display: inline-block;
+    }
+    .slide-modal-wrapper {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      width: 100%;
+      display: block;
+      color: rgba(0, 0, 0, 0.7);
+      .slide-modal {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        background-color: #e6ecf0;
+        padding: 10px;
+        width: 350px;
+        // height: 200px;
+        border-radius: 6px;
+        .close-modal {
+          display: block;
+          float: right;
+          padding-right: 4px;
+        }
+        #micropost_file_link {
+          margin-bottom: 4px;
+        }
+        input {
+          display: inline-block;
+          width: auto;
+        }
+        label {
+          padding-right: 10px;
+        }
+        .method_link_container {
+          width: 280px;
+          a {
+            display: block; 
+            padding-bottom: 4px;
           }
-          #micropost_file_link {
-            margin-bottom: 4px;
-          }
-          input {
-            display: inline-block;
-            width: auto;
-          }
-          label {
-            padding-right: 10px;
-          }
-          .method_link_container {
-            width: 280px;
-            a {
-              display: block; 
-              padding-bottom: 4px;
-            }
-          }
-          .btn-ok {
-            display: block;
-            float: right;
-            font-size: 16px;
-          }
-          .error_messages_easy {
-            color: red;
-            list-style: none;
-          }
+        }
+        .btn-ok {
+          display: block;
+          float: right;
+          font-size: 16px;
+        }
+        .error_messages_easy {
+          color: red;
+          list-style: none;
+          li { padding: 0 !important; }
         }
       }
     }

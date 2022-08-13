@@ -44,7 +44,6 @@ class MicropostsController < ApplicationController
           client.push_message(notification.notified.lineuid, message)
         end
       end
-
     else
       @userprofile = current_user
       @feed_items = current_user.feed.page(params[:page])
@@ -52,7 +51,42 @@ class MicropostsController < ApplicationController
       render 'static_pages/home'
     end
   end
-  
+
+  # GET /microposts/:id/edit
+  def edit
+    @micropost = Micropost.find(params[:id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  # PATCH /microposts/:id
+  def update
+    @micropost = Micropost.find(params[:id])
+    # @micropost.image.purge if !micropost_params[:image].present?
+    @micropost.attributes = micropost_params
+    # @micropost.image.attach(params[:micropost][:image])
+    begin
+      if Nokogiri::HTML(Rinku.auto_link(@micropost.content)).at_css('a').present?
+        @micropost.links = Nokogiri::HTML(Rinku.auto_link(@micropost.content)).at_css('a')[:href]
+      end
+    rescue
+    end
+    if @micropost.save
+      flash[:success] = "Micropost updated!"
+      redirect_to request.referer    # => static_pages#home
+      # respond_to do |format|
+      #   format.html { redirect_to request.referer || root_url }
+      #   format.js
+      # end
+    else
+      @userprofile = current_user
+      respond_to do |format|
+        format.js { render action: "edit" }
+      end
+    end
+  end
+
   
   # DELETE /microposts/:id
   def destroy

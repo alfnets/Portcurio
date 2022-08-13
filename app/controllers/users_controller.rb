@@ -55,7 +55,6 @@ class UsersController < ApplicationController
       # ex.) POST + params[:user][:admin] = true
     # => name, email, pass/confirmation のみに限定するチェック機構である(user_params)を作って使う
     @user = User.new(user_params)
-    @user.image.attach(params[:user][:image])
     if @user.save #  == true
       # Success (valid params)
       # GET "/users/#{@user.id}"

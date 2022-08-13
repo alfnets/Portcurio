@@ -52,14 +52,20 @@ Rails.application.routes.draw do
     patch :subscribe, on: :member
     patch :unsubscribe, on: :member
   end
-  resource  :microposts, only: [:index, :get_selected_schooltype, :add_search_tag] do
-    get :get_selected_school_type, on: :member
-    get :add_search_tag, on: :member
-    resource :slides, only: [:new, :create, :close, :destroy] do
-      get :close, on: :member
+  resources :microposts, except: :new, concerns: :likeable do
+    collection do
+      get :get_selected_school_type
+      get :add_search_tag
+      resource :slides, only: [:new, :set, :close, :remove] do
+        get :set,     on: :collection
+        get :close,   on: :collection
+        get :remove,   on: :collection
+      end
     end
-  end
-  resources :microposts, only: [:create, :destroy, :show, :index], concerns: :likeable do
+    resource :slides, only: [:edit, :replace, :remove_exist] do
+      get :replace,      on: :collection
+      get :remove_exist, on: :collection
+    end
     resources :comments, only: [:create, :destroy, :show, :close, :mention_delete] do
       get :close, on: :member
       get :mention_delete, on: :member
