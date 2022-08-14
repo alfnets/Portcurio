@@ -83,10 +83,11 @@
         <i class="fas fa-lock"></i>
       <% end %>
       <% if current_user?(micropost.user) %>
-        <%= link_to "edit", edit_micropost_path(micropost), remote: true %>
+        <%= link_to edit_micropost_path(micropost), remote: true do %><i class="fa-solid fa-pen-to-square"></i><% end %>
         <span class="micropost-edit-modal-<%= micropost.id %>"></span>
-        <%= link_to "delete", micropost, method: :delete,
-                                         data: { confirm: "You sure?" } %>
+        <%= link_to micropost, method: :delete, data: { confirm: "You sure?" } do %>
+          <i class="fa-solid fa-trash-can"></i>
+        <% end %>
       <% end %>
     </span>
   

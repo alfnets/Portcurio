@@ -63,9 +63,7 @@ class MicropostsController < ApplicationController
   # PATCH /microposts/:id
   def update
     @micropost = Micropost.find(params[:id])
-    # @micropost.image.purge if !micropost_params[:image].present?
     @micropost.attributes = micropost_params
-    # @micropost.image.attach(params[:micropost][:image])
     begin
       if Nokogiri::HTML(Rinku.auto_link(@micropost.content)).at_css('a').present?
         @micropost.links = Nokogiri::HTML(Rinku.auto_link(@micropost.content)).at_css('a')[:href]
@@ -73,6 +71,7 @@ class MicropostsController < ApplicationController
     rescue
     end
     if @micropost.save
+      @micropost.image.purge if params[:micropost][:image_delete] === '1'
       flash[:success] = "Micropost updated!"
       redirect_to request.referer    # => static_pages#home
       # respond_to do |format|
@@ -161,6 +160,25 @@ class MicropostsController < ApplicationController
     @userprofile = current_user
     respond_to do |format|
       format.js
+    end
+  end
+
+
+  # GET /microposts/remove_image
+  def remove_image
+    @userprofile = current_user
+    respond_to do |format|
+      format.js
+    end
+  end
+
+
+  # GET /microposts/:id/remove_exist_image
+  def remove_exist_image
+    @userprofile = current_user
+    @micropost = Micropost.find(params[:id])
+    respond_to do |format|
+      format.js { render "remove_image" }
     end
   end
 

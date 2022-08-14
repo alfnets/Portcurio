@@ -2,84 +2,100 @@
 <% local = !@micropost.created_at.present? ? true : false %>
 <% school_types = Tag.where(category: "school_type").pluck(:name) %>
 
-<%= form_with(model: @micropost, local: local) do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
-  <div class="field">
-    <%= f.text_area :content, placeholder: "#{current_user.name} さん、今日はどのような一日？" %>
-  </div>
-
-  <div class="micropost_attr pull-right">
-    <div class="check_box inline-block">
-      <%= f.label :educational_material do %>
-        <%= f.check_box :educational_material, {}, true, 0 %>
-        <span>教材・記事</span>
-      <% end %>
-    </div>
-
-    <div class="publishing inline-block">
-      <%= f.select :publishing, {"公開": "public", "非公開": "private"}, {}, class: "form-control" %>
-    </div>
-  </div>
-
-  <div class="tagging-form">
-    <%= f.select :school_type, school_types, { include_blank: "校種タグ" }, class: "form-control" %>
-    <%= f.select :subject, "", { include_blank: "---" }, class: "form-control" %>
+<div class="micropost_attr">
+  <%= form_with(model: @micropost, local: local) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
     <div class="field">
-      <%= f.text_field :tags, placeholder: "タグ", value: @micropost.tags.pluck('name').join(","), data: {role: "tagsinput"} %>
+      <%= f.text_area :content, placeholder: "#{current_user.name} さん、今日はどのような一日？" %>
     </div>
-  </div>
 
-  <% @micropost.file_type ? file_type = @micropost.file_type : file_type = "" %>
-  <% @micropost.file_link ? file_link = @micropost.file_link : file_link = "" %>
-  <div class="file_type_tag"><%= f.hidden_field :file_type, value: file_type %></div>
-  <div class="file_link_tag"><%= f.hidden_field :file_link, value: file_link %></div>
-  <%= button_tag type: "submit", class: 'btn btn-primary btn-post inline-block' do %>
-    <i class="fa-regular fa-paper-plane"></i>
+    <div class="micropost_opt pull-right">
+      <div class="check_box inline-block">
+        <%= f.label :educational_material do %>
+          <%= f.check_box :educational_material, {}, true, 0 %>
+          <span>教材・記事</span>
+        <% end %>
+      </div>
+
+      <div class="publishing inline-block">
+        <%= f.select :publishing, {"公開": "public", "非公開": "private"}, {}, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="tagging-form">
+      <%= f.select :school_type, school_types, { include_blank: "校種タグ" }, class: "form-control" %>
+      <%= f.select :subject, "", { include_blank: "---" }, class: "form-control" %>
+      <div class="field">
+        <%= f.text_field :tags, placeholder: "タグ", value: @micropost.tags.pluck('name').join(","), data: {role: "tagsinput"} %>
+      </div>
+    </div>
+
+    <% @micropost.file_type ? file_type = @micropost.file_type : file_type = "" %>
+    <% @micropost.file_link ? file_link = @micropost.file_link : file_link = "" %>
+    <div class="file_type_tag"><%= f.hidden_field :file_type, value: file_type %></div>
+    <div class="file_link_tag"><%= f.hidden_field :file_link, value: file_link %></div>
+    <%= button_tag type: "submit", class: 'btn btn-primary btn-post inline-block' do %>
+      <i class="fa-regular fa-paper-plane"></i>
+    <% end %>
+
+    <div class="attach_form inline-block">
+      <span class="image">
+        <%= f.label :image, "画像", class: "btn btn-image btn-info" %>
+        <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: 'image_form' %>
+        <%= f.hidden_field :image_delete, value: 0 %>
+      </span>
+    </div>
   <% end %>
 
-  <div class="attach_form inline-block">
-    <span class="image">
-      <%= f.label :image, "画像", class: "btn btn-image btn-info" %>
-      <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: 'image_form' %>
-      <% if @micropost.image.attached? %>
-        <p>添付済</p>
+  <div class="slide_post inline-block">
+    <span class="slide_form">
+      <% if @micropost.created_at.present? %>
+        <%= button_to "スライド", edit_micropost_slides_path(@micropost), method: :get, class: "btn btn-slide btn-info", remote: true %>
       <% else %>
-        <p><br></p>
+        <%= button_to "スライド", new_slides_path, method: :get, class: "btn btn-slide btn-info", remote: true %>
       <% end %>
     </span>
+    <span class="file_link_exist">
+      <% if @micropost.file_link.present? %>
+        <%= link_to remove_exist_micropost_slides_path(@micropost), remote: true, class: "btn-link" do %><i class="far fa-times-circle"></i><% end %>
+      <% end %>
+    </span>
+    <span class="slide_post_modal"></span>
   </div>
-<% end %>
-
-<div class="slide_post inline-block">
-  <span class="slide_form">
-    <% if @micropost.created_at.present? %>
-      <%= button_to "スライド", edit_micropost_slides_path(@micropost), method: :get, class: "btn btn-slide btn-info", remote: true %>
-    <% else %>
-      <%= button_to "スライド", new_slides_path, method: :get, class: "btn btn-slide btn-info", remote: true %>
-    <% end %>
-  </span>
-  <span class="file_link_exist">
-    <% if @micropost.file_link.present? %>
-      <%= link_to remove_exist_micropost_slides_path(@micropost), remote: true, class: "btn-link" do %><i class="far fa-times-circle"></i><% end %>
-    <% end %>
-  </span>
-  <span class="slide_post_modal"></span>
 </div>
 
+<div id="image_preview">
+  <% if @micropost.image.attached? %>
+    <%= image_tag @micropost.display_image %>
+    <%= link_to remove_exist_image_micropost_path(@micropost), remote: true do %><i class="fa-solid fa-circle-xmark fa-2x"></i><% end %>
+  <% end %>
+</div>
+
+
 <script type="text/javascript">
-  $('.image > input').on('change', function () {
+  $('#micropost_image').on('change', function () {
     var file = $(this).prop('files')[0];
     console.log(file)
     if (file === undefined || file === null) {
-      $('.image > p').html("<br>");
+      $("#image_preview").html("");
     } else {
       var size_in_megabytes = this.files[0].size/1024/1024;
       if (size_in_megabytes > 5) {
         alert("Maximum file size is 5MB. Please choose a smaller file.");
         $("#micropost_image").val("");
-        $('.image > p').html("<br>");
       } else {
-        $('.image > p').text('添付済');
+        const reader = new FileReader();
+        const img = new Image();
+        reader.onload = function (e) {
+          // 画像を表示
+          $("#image_preview").empty();
+          $("#image_preview").append(img);
+          <% path = @micropost.created_at.present? ? remove_exist_image_micropost_path(@micropost) : remove_image_microposts_path %>
+          $("#image_preview").append('<%= link_to path, remote: true do %><i class="fa-solid fa-circle-xmark fa-2x"></i><% end %>');
+          img.src = e.target.result;
+        };
+        $("#micropost_image_delete").val('0');
+        reader.readAsDataURL(file);
       }
     }
   });

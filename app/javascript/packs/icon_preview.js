@@ -3,17 +3,16 @@ $(document).on("turbolinks:load", function () {
     const files = e.target.files;
     const file = e.target.files[0];
     if (files.length === 0) {
-      $("#image_preview").html("");
+      $("#icon_preview").html("");
       $("#icon_image").css({'display':'block'});
     } else {
-      console.log("hoge");
       const reader = new FileReader();
       const img = new Image();
       reader.onload = function (e) {
         // 画像を表示
         $("#icon_image").css({'display':'none'});
-        $("#image_preview").empty();
-        $("#image_preview").append(img);
+        $("#icon_preview").empty();
+        $("#icon_preview").append(img);
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);

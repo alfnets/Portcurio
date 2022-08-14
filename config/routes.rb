@@ -53,9 +53,11 @@ Rails.application.routes.draw do
     patch :unsubscribe, on: :member
   end
   resources :microposts, except: :new, concerns: :likeable do
+    get :remove_exist_image, on: :member
     collection do
       get :get_selected_school_type
       get :add_search_tag
+      get :remove_image
       resource :slides, only: [:new, :set, :close, :remove] do
         get :set,     on: :collection
         get :close,   on: :collection

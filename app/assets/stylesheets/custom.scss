@@ -760,6 +760,7 @@ input {
     color: $gray-light;
     display: block;
     margin-left: 60px;
+    .fa-pen-to-square { padding: 0 8px; }
   }
   .content-container{
     position: relative;
@@ -1019,8 +1020,7 @@ span.image {
     height: auto;
     border-radius: 6px;
     .edit-modal-form {
-      position: relative;
-      padding: 24px 32px 0;
+      padding: 24px 32px;
       .close-modal {
         cursor: pointer;
         display: block;
@@ -1030,6 +1030,9 @@ span.image {
         right: 8px;
       }
       .micropost_form {
+        .micropost_attr {
+          position: relative;
+        }
         .tagging-form {
           display: none;
         }
@@ -1042,12 +1045,8 @@ span.image {
         #micropost_tags {
           margin: 0;
         }
-        .slide_post {
-          left: 96px;
-        }
         .btn-post {
-          right: 32.5px;
-          bottom: 14px;
+          bottom: 0;
         }
       }
     }
@@ -1159,20 +1158,22 @@ span.image {
 
 /* micropost_form */
 .micropost_form_container {
-  position: relative;
   background-color: #ECF0F1;
-  box-shadow: 8px 8px 0px 0 rgba(26, 188, 156, 0.4);
-  padding: 16px 16px 0px;
+  box-shadow: 8px 8px 0 0 rgba(26, 188, 156, 0.4);
+  padding: 16px;
   margin-top: 16px;
   margin-bottom: 24px;
   border-radius: 8px;
+  .micropost_attr {
+    position: relative;
+  }
 }
 .micropost_form {
   form:first-child {
     #micropost_content {
       margin-bottom: 0px;
     }
-    .micropost_attr {
+    .micropost_opt {
       margin-bottom: 4px;
       .check_box {
         padding-right: 16px;
@@ -1186,7 +1187,7 @@ span.image {
       font-size: 20px;
       width: 48px;
       position: absolute;
-      right: 16.5px;
+      right: 0.5px;
       padding: 1px 0;
     }
     .image {
@@ -1208,11 +1209,25 @@ span.image {
     }
   }
 
+  #image_preview {
+    position: relative;
+    img {
+      padding: 8px;
+      width: 100%;
+    }
+    .fa-circle-xmark {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      cursor: pointer;
+    }
+  }
+
   /* slide_post */
   .slide_post {
     position: absolute;
-    bottom: 15.59px;
-    left: 140px;
+    bottom: 0;
+    left: 64px;
     .button_to {
       display: inline-block;
       padding: 0;
