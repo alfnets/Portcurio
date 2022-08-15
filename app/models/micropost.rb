@@ -108,10 +108,11 @@ class Micropost < ApplicationRecord
     def valid_file_link
       if file_link.present?
         if file_type == "GoogleSlides"
-          check = file_link.start_with?('<iframe src="https://docs.google.com/presentation/d/')
+          check = file_link.start_with?('<iframe src="https://docs.google.com/presentation/d/') && \
+                  file_link.end_with?('</iframe>')
         elsif file_type == "PowerPoint"
-          check = file_link.start_with?('<iframe src="https://onedrive.live.com/embed?resid=') && \
-                  file_link.end_with?('これは、<a target="_blank" href="https://office.com/webapps">Office</a> の機能を利用した、<a target="_blank" href="https://office.com">Microsoft Office</a> の埋め込み型のプレゼンテーションです。</iframe>')
+          check = file_link.start_with?('<iframe src="https://onedrive.live.com/embed?') && \
+                  file_link.end_with?('</iframe>')
         elsif file_type == "pdf_link"
           check = file_link.html_safe.start_with?('https://') && \
                   file_link.html_safe.end_with?('.pdf')

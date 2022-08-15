@@ -37,8 +37,11 @@ class SlidesController < ApplicationController
         format.js
       end
     else
-      @micropost.errors.add(:slide, "Invalid params") unless valid_params?
-      @micropost.errors.add(:slide, "Please check file authority and URL") unless valid_authority?
+      unless valid_params?
+        @micropost.errors.add(:slide, "Invalid params")
+      else
+        @micropost.errors.add(:slide, "Please check file authority and URL")
+      end
       respond_to do |format|
         format.html { redirect_to request.referer || root_url }
         format.js { render action: "new" }
@@ -58,8 +61,11 @@ class SlidesController < ApplicationController
         format.js { render action: "set" }
       end
     else
-      @micropost.errors.add(:slide, "Invalid params") unless valid_params?
-      @micropost.errors.add(:slide, "Please check file authority and URL") unless valid_authority?
+      unless valid_params?
+        @micropost.errors.add(:slide, "Invalid params")
+      else
+        @micropost.errors.add(:slide, "Please check file authority and URL")
+      end
       respond_to do |format|
         format.html { redirect_to request.referer || root_url }
         format.js { render action: "new" }
@@ -100,11 +106,12 @@ class SlidesController < ApplicationController
     file_link = micropost_params[:file_link]
     if micropost_params[:file_type] == "GoogleSlides"
       file_link.present? && \
-      file_link.start_with?('<iframe src="https://docs.google.com/presentation/d/')
+      ( file_link.start_with?('<iframe src="https://docs.google.com/presentation/d/') && \
+        file_link.end_with?('</iframe>') )
     elsif micropost_params[:file_type] == "PowerPoint"
       file_link.present? && \
-      ( file_link.start_with?('<iframe src="https://onedrive.live.com/embed?resid=') && \
-        file_link.end_with?('これは、<a target="_blank" href="https://office.com/webapps">Office</a> の機能を利用した、<a target="_blank" href="https://office.com">Microsoft Office</a> の埋め込み型のプレゼンテーションです。</iframe>') )
+      ( file_link.start_with?('<iframe src="https://onedrive.live.com/embed?') && \
+        file_link.end_with?('</iframe>') )
     elsif micropost_params[:file_type] == "pdf_link"
       file_link.present? && \
       ( file_link.start_with?('https://') && \
@@ -117,8 +124,12 @@ class SlidesController < ApplicationController
   end
 
   def valid_authority?
-    og = OpenGraph.new(micropost_params[:file_link], { :headers => {'User-Agent' => 'ruby'} })
-    micropost_params[:file_type] == "pdf_google" && og.metadata.present?
+    if micropost_params[:file_type] == "pdf_google"
+      og = OpenGraph.new(micropost_params[:file_link], { :headers => {'User-Agent' => 'ruby'} })
+      micropost_params[:file_type] == "pdf_google" && og.metadata.present?
+    else
+      return true
+    end
   end
 
 end
