@@ -1261,7 +1261,6 @@ span.image {
         background-color: #e6ecf0;
         padding: 10px;
         width: 350px;
-        // height: 200px;
         border-radius: 6px;
         .close-modal {
           display: block;
@@ -1271,12 +1270,14 @@ span.image {
         #micropost_file_link {
           margin-bottom: 4px;
         }
+        select {
+          width: auto;
+          margin-top: 8px;
+          margin-bottom: 4px;
+        }
         input {
           display: inline-block;
           width: auto;
-        }
-        label {
-          padding-right: 10px;
         }
         .method_link_container {
           width: 280px;

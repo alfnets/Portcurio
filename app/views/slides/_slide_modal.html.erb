@@ -9,12 +9,9 @@
     </span>
     <%= form_with(model: @micropost, url: url, method: :get, local: false) do |f| %>
       <%= render 'shared/error_messages_easy', object: f.object %>
-      <%= f.radio_button :file_type, :GoogleSlides, class: "form-control" %>
-      <%= f.label :file_type, "Google Slides", value: :GoogleSlides %>
-      <%= f.radio_button :file_type, :PowerPoint, class: "form-control" %>
-      <%= f.label :file_type, "PowerPoint", value: :PowerPoint %>
+      <%= f.select :file_type, {"Google Slides": "GoogleSlides", "PowerPoint": "PowerPoint", "PDFリンク": "pdf_link", "Google ドライブ 上の PDF": "pdf_google"}, { include_blank: "スライドの種類" }, class: "form-control" %>
       <div class="field">
-        <%= f.text_area :file_link, placeholder: "スライドの埋め込みコードを入力する" %>
+        <%= f.text_area :file_link, placeholder: "スライドの埋め込みコード または PDFのURL を入力する" %>
       </div>
       <div class="method_link_container inline-block">
         <%= link_to "Google Slides 投稿方法", googleslides_help_path %>

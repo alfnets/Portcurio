@@ -1,7 +1,7 @@
 $(".slide_post_modal").html("")
 
 $("#micropost_file_type").val("<%= @micropost.file_type %>")
-$("#micropost_file_link").val('<%= @micropost.file_link.html_safe %>')
+$("#micropost_file_link").val('<%= escape_javascript(@micropost.file_link.html_safe) %>')
 
 <% if @micropost.created_at.present? %>
   $(".slide_post > .file_link_exist").html('<%= link_to remove_exist_micropost_slides_path(@micropost), remote: true, class: "btn-link" do %><i class="far fa-times-circle"></i><% end %>')

@@ -98,7 +98,7 @@ class Micropost < ApplicationRecord
 
     def valid_file_type
       if file_type.present?
-        valid_file_types = [ "GoogleSlides", "PowerPoint" ]
+        valid_file_types = [ "GoogleSlides", "PowerPoint", "pdf_link", "pdf_google" ]
         unless valid_file_types.include?(file_type)
           errors.add(:file_type, "Invalid file type")
         end
@@ -112,6 +112,12 @@ class Micropost < ApplicationRecord
         elsif file_type == "PowerPoint"
           check = file_link.start_with?('<iframe src="https://onedrive.live.com/embed?resid=') && \
                   file_link.end_with?('これは、<a target="_blank" href="https://office.com/webapps">Office</a> の機能を利用した、<a target="_blank" href="https://office.com">Microsoft Office</a> の埋め込み型のプレゼンテーションです。</iframe>')
+        elsif file_type == "pdf_link"
+          check = file_link.html_safe.start_with?('https://') && \
+                  file_link.html_safe.end_with?('.pdf')
+        elsif file_type == "pdf_google"
+          check = file_link.start_with?('https://drive.google.com/file/d/') && \
+                  file_link.end_with?('/view?usp=sharing')
         end
         errors.add(:file_link, "Invalid file link") unless check
       end

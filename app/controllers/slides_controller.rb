@@ -31,13 +31,14 @@ class SlidesController < ApplicationController
   # GET /microposts/slides/set
   def set
     @micropost = current_user.microposts.build(micropost_params)
-    if valid_params?
+    if valid_params? && valid_authority?
       respond_to do |format|
         format.html { redirect_to request.referer || root_url }
         format.js
       end
     else
-      @micropost.errors.add(:slide, "Invalid params")
+      @micropost.errors.add(:slide, "Invalid params") unless valid_params?
+      @micropost.errors.add(:slide, "Please check file authority and URL") unless valid_authority?
       respond_to do |format|
         format.html { redirect_to request.referer || root_url }
         format.js { render action: "new" }
@@ -51,13 +52,14 @@ class SlidesController < ApplicationController
     @micropost = Micropost.find(params[:micropost_id])
     @micropost.attributes = micropost_params
 
-    if valid_params?
+    if valid_params? && valid_authority?
       respond_to do |format|
         format.html { redirect_to request.referer || root_url }
         format.js { render action: "set" }
       end
     else
-      @micropost.errors.add(:slide, "Invalid params")
+      @micropost.errors.add(:slide, "Invalid params") unless valid_params?
+      @micropost.errors.add(:slide, "Please check file authority and URL") unless valid_authority?
       respond_to do |format|
         format.html { redirect_to request.referer || root_url }
         format.js { render action: "new" }
@@ -95,14 +97,28 @@ class SlidesController < ApplicationController
   end
 
   def valid_params?
+    file_link = micropost_params[:file_link]
     if micropost_params[:file_type] == "GoogleSlides"
-      micropost_params[:file_link].present? && \
-      micropost_params[:file_link].start_with?('<iframe src="https://docs.google.com/presentation/d/')
+      file_link.present? && \
+      file_link.start_with?('<iframe src="https://docs.google.com/presentation/d/')
     elsif micropost_params[:file_type] == "PowerPoint"
-      micropost_params[:file_link].present? && \
-      ( micropost_params[:file_link].start_with?('<iframe src="https://onedrive.live.com/embed?resid=') && \
-        micropost_params[:file_link].end_with?('これは、<a target="_blank" href="https://office.com/webapps">Office</a> の機能を利用した、<a target="_blank" href="https://office.com">Microsoft Office</a> の埋め込み型のプレゼンテーションです。</iframe>') )
+      file_link.present? && \
+      ( file_link.start_with?('<iframe src="https://onedrive.live.com/embed?resid=') && \
+        file_link.end_with?('これは、<a target="_blank" href="https://office.com/webapps">Office</a> の機能を利用した、<a target="_blank" href="https://office.com">Microsoft Office</a> の埋め込み型のプレゼンテーションです。</iframe>') )
+    elsif micropost_params[:file_type] == "pdf_link"
+      file_link.present? && \
+      ( file_link.start_with?('https://') && \
+        file_link.end_with?('.pdf') )
+    elsif micropost_params[:file_type] == "pdf_google"
+      file_link.present? && \
+      ( file_link.start_with?('https://drive.google.com/file/d/') && \
+        file_link.end_with?('/view?usp=sharing') )
     end
+  end
+
+  def valid_authority?
+    og = OpenGraph.new(micropost_params[:file_link], { :headers => {'User-Agent' => 'ruby'} })
+    micropost_params[:file_type] == "pdf_google" && og.metadata.present?
   end
 
 end
