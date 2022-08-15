@@ -60,6 +60,7 @@ class MicropostsController < ApplicationController
     end
   end
 
+
   # PATCH /microposts/:id
   def update
     @micropost = Micropost.find(params[:id])
@@ -139,6 +140,7 @@ class MicropostsController < ApplicationController
   # GET /microposts/:id
   def show
     @feedmicropost = Micropost.find(params[:id])
+    redirect_to root_url if @feedmicropost.publishing == 'private' && @feedmicropost.user != current_user
     @userprofile = @feedmicropost.user
     @comments = @feedmicropost.comments.where(parent_id: nil).unscope(:order).order(updated_at: :desc)
   end
