@@ -55,7 +55,7 @@ module ApplicationHelper
     {
       title: title,
       reverse: true,
-      description: 'このSNSは世界中の教材を集約し、協力してブラッシュアップしていくことを目的としています。ご自身の教材のポートフォリオとしても活用してください。',
+      description: 'Portcurio（ポートキュリオ）は世界中の教材を集約し、協力してブラッシュアップしていくことを目的としています。ご自身の教材のポートフォリオとしても活用してください。',
       keywords: 'Portcurio, ポートキュリオ, 教材共有, SNS, ポートフォリオ, キュレーション',
       canonical: request.original_url,
       noindex: ! Rails.env.production?,
