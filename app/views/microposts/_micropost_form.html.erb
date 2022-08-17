@@ -47,20 +47,20 @@
     </div>
   <% end %>
 
-  <div class="slide_post inline-block">
-    <span class="slide_form">
+  <div class="file_post inline-block">
+    <span class="file_form">
       <% if @micropost.created_at.present? %>
-        <%= button_to "スライド", edit_micropost_slides_path(@micropost), method: :get, class: "btn btn-slide btn-info", remote: true %>
+        <%= button_to "ファイル", edit_micropost_files_path(@micropost), method: :get, class: "btn btn-file btn-info", remote: true %>
       <% else %>
-        <%= button_to "スライド", new_slides_path, method: :get, class: "btn btn-slide btn-info", remote: true %>
+        <%= button_to "ファイル", new_files_path, method: :get, class: "btn btn-file btn-info", remote: true %>
       <% end %>
     </span>
     <span class="file_link_exist">
       <% if @micropost.file_link.present? %>
-        <%= link_to remove_exist_micropost_slides_path(@micropost), remote: true, class: "btn-link" do %><i class="far fa-times-circle"></i><% end %>
+        <%= link_to remove_exist_micropost_files_path(@micropost), remote: true, class: "btn-link" do %><i class="far fa-times-circle"></i><% end %>
       <% end %>
     </span>
-    <span class="slide_post_modal"></span>
+    <span class="file_post_modal"></span>
   </div>
 </div>
 

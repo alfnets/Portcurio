@@ -1,6 +1,6 @@
-class SlidesController < ApplicationController
+class FilesController < ApplicationController
 
-  # GET /microposts/slides/new
+  # GET /microposts/files/new
   def new
     @micropost = current_user.microposts.build
     respond_to do |format|
@@ -9,7 +9,7 @@ class SlidesController < ApplicationController
     end
   end
 
-  # GET /microposts/:micropost_id/slides/edit
+  # GET /microposts/:micropost_id/files/edit
   def edit
     @micropost = Micropost.find(params[:micropost_id])
     respond_to do |format|
@@ -18,7 +18,7 @@ class SlidesController < ApplicationController
     end
   end
 
-  # GET /microposts/slides/close
+  # GET /microposts/files/close
   def close
     @micropost = current_user.microposts.build
     respond_to do |format|
@@ -28,7 +28,7 @@ class SlidesController < ApplicationController
   end
 
 
-  # GET /microposts/slides/set
+  # GET /microposts/files/set
   def set
     @micropost = current_user.microposts.build(micropost_params)
     if valid_params? && valid_authority?
@@ -38,9 +38,9 @@ class SlidesController < ApplicationController
       end
     else
       unless valid_params?
-        @micropost.errors.add(:slide, "Invalid params")
+        @micropost.errors.add(:file, "Invalid params")
       else
-        @micropost.errors.add(:slide, "Please check file authority and URL")
+        @micropost.errors.add(:file, "Please check file authority and URL")
       end
       respond_to do |format|
         format.html { redirect_to request.referer || root_url }
@@ -50,7 +50,7 @@ class SlidesController < ApplicationController
   end
 
 
-  # GET /microposts/:micropost_id/slides/replace
+  # GET /microposts/:micropost_id/files/replace
   def replace
     @micropost = Micropost.find(params[:micropost_id])
     @micropost.attributes = micropost_params
@@ -62,9 +62,9 @@ class SlidesController < ApplicationController
       end
     else
       unless valid_params?
-        @micropost.errors.add(:slide, "Invalid params")
+        @micropost.errors.add(:file, "Invalid params")
       else
-        @micropost.errors.add(:slide, "Please check file authority and URL")
+        @micropost.errors.add(:file, "Please check file authority and URL")
       end
       respond_to do |format|
         format.html { redirect_to request.referer || root_url }
@@ -74,7 +74,7 @@ class SlidesController < ApplicationController
   end
 
 
-  # GET /microposts/slides/remove
+  # GET /microposts/files/remove
   def remove
     @micropost = current_user.microposts.build
     respond_to do |format|
@@ -84,7 +84,7 @@ class SlidesController < ApplicationController
   end
 
 
-  # GET /microposts/:micropost_id/slides/remove_exist
+  # GET /microposts/:micropost_id/files/remove_exist
   def remove_exist
     @micropost = Micropost.find(params[:micropost_id])
     @micropost.attributes = {file_type: nil, file_link: nil}

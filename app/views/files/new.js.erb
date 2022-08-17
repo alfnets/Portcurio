@@ -1,0 +1,7 @@
+$(".file_post_modal").html("<%= escape_javascript(render partial: 'file_modal') %>").hide().fadeIn(300)
+
+var file_type = $(".file_type_tag > #micropost_file_type").val();
+var file_link = $(".file_link_tag > #micropost_file_link").val();
+
+$(".file-modal #micropost_file_type").val(file_type)
+$(".file-modal #micropost_file_link").val(file_link)

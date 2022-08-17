@@ -830,7 +830,7 @@ input {
           min-height: 250px;
         }
       }
-      .slide-container {
+      .file-container {
         width: 100%;
         max-width: 400px;
         iframe {
@@ -1223,8 +1223,8 @@ span.image {
     }
   }
 
-  /* slide_post */
-  .slide_post {
+  /* file_post */
+  .file_post {
     position: absolute;
     bottom: 0;
     left: 64px;
@@ -1232,7 +1232,7 @@ span.image {
       display: inline-block;
       padding: 0;
     }
-    .btn-slide {
+    .btn-file {
       width: 80px;
       margin-right: 4px;
       padding: 3px 0px;
@@ -1240,7 +1240,7 @@ span.image {
     span {
       display: inline-block;
     }
-    .slide-modal-wrapper {
+    .file-modal-wrapper {
       position: fixed;
       top: 0;
       right: 0;
@@ -1251,7 +1251,7 @@ span.image {
       width: 100%;
       display: block;
       color: rgba(0, 0, 0, 0.7);
-      .slide-modal {
+      .file-modal {
         position: absolute;
         top: 20%;
         left: 50%;

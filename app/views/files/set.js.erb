@@ -1,0 +1,10 @@
+$(".file_post_modal").html("")
+
+$("#micropost_file_type").val("<%= @micropost.file_type %>")
+$("#micropost_file_link").val('<%= escape_javascript(@micropost.file_link.html_safe) %>')
+
+<% if @micropost.created_at.present? %>
+  $(".file_post > .file_link_exist").html('<%= link_to remove_exist_micropost_files_path(@micropost), remote: true, class: "btn-link" do %><i class="far fa-times-circle"></i><% end %>')
+<% else %>
+  $(".file_post > .file_link_exist").html('<%= link_to remove_files_path, remote: true, class: "btn-link" do %><i class="far fa-times-circle"></i><% end %>')
+<% end %>

@@ -54,10 +54,10 @@
           <% end %>
           <% if micropost.file_link.present? %>
             <div class="links-container">
-              <div class="slide-container">
+              <div class="file-container">
                 <% if micropost.file_type == 'pdf_link' %>
-                  <% pdf_slide_link = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{micropost.file_link.html_safe}" %>
-                  <iframe src=<%= pdf_slide_link %>></iframe>
+                  <% pdf_file_link = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{micropost.file_link.html_safe}" %>
+                  <iframe src=<%= pdf_file_link %>></iframe>
                 <% elsif micropost.file_type == 'pdf_google' %>
                   <% file_id = micropost.file_link.html_safe.split("/")[5] %>
                   <iframe src="https://drive.google.com/file/d/<%= file_id %>/preview"></iframe>

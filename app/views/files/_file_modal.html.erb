@@ -1,17 +1,17 @@
 <% @micropost ||= micropost %>
-<% url = @micropost.created_at.present? ? replace_micropost_slides_path(@micropost) : set_slides_path %>
-<div class="slide-modal-wrapper" >
-  <div class="slide-modal">
+<% url = @micropost.created_at.present? ? replace_micropost_files_path(@micropost) : set_files_path %>
+<div class="file-modal-wrapper" >
+  <div class="file-modal">
     <span class="close-modal">
-      <%= link_to close_slides_path, remote: true do %>
+      <%= link_to close_files_path, remote: true do %>
         <i class="fa fa-2x fa-times"></i>
       <% end %>
     </span>
     <%= form_with(model: @micropost, url: url, method: :get, local: false) do |f| %>
       <%= render 'shared/error_messages_easy', object: f.object %>
-      <%= f.select :file_type, {"Google Slides": "GoogleSlides", "PowerPoint": "PowerPoint", "PDFリンク": "pdf_link", "Google ドライブ 上の PDF": "pdf_google"}, { include_blank: "スライドの種類" }, class: "form-control" %>
+      <%= f.select :file_type, {"Google Slides": "GoogleSlides", "PowerPoint": "PowerPoint", "PDFリンク": "pdf_link", "Google ドライブ 上の PDF": "pdf_google"}, { include_blank: "ファイルの種類" }, class: "form-control" %>
       <div class="field">
-        <%= f.text_area :file_link, placeholder: "スライドの埋め込みコード または PDFのURL を入力する" %>
+        <%= f.text_area :file_link, placeholder: "ファイルの埋め込みコード または PDFのURL を入力する" %>
       </div>
       <div class="method_link_container inline-block">
         <%= link_to "Google Slides 投稿方法", googleslides_help_path %>

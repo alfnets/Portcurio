@@ -58,13 +58,13 @@ Rails.application.routes.draw do
       get :get_selected_school_type
       get :add_search_tag
       get :remove_image
-      resource :slides, only: [:new, :set, :close, :remove] do
+      resource :files, only: [:new, :set, :close, :remove] do
         get :set,     on: :collection
         get :close,   on: :collection
         get :remove,   on: :collection
       end
     end
-    resource :slides, only: [:edit, :replace, :remove_exist] do
+    resource :files, only: [:edit, :replace, :remove_exist] do
       get :replace,      on: :collection
       get :remove_exist, on: :collection
     end
