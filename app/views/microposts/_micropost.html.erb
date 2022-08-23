@@ -27,7 +27,7 @@
           <% elsif micropost.links.end_with?(".pdf") %> <!-- pdfリンクのプレビュー -->
             <div class="links">
               <div class="links-container">
-                <div class="links-wrap file">
+                <div class="links-wrap">
                   <% pdf_link = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{micropost.links}" %>
                   <div class="pdf-container">
                     <iframe class="pdf" src=<%= pdf_link %>></iframe>
@@ -65,7 +65,7 @@
         <% if micropost.file_link.present? %>
           <div class="links">
             <div class="links-container">
-              <div class="links-wrap file">
+              <div class="links-wrap">
                 <div class="file-container">
                   <% if micropost.file_type.value == 'PDF_link' %>
                     <% link_url = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{micropost.file_link.html_safe}" %>
