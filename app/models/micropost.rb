@@ -1,6 +1,6 @@
 class Micropost < ApplicationRecord
   belongs_to :user
-  # belongs_to :file_type
+  belongs_to :file_type
   # Default: foreign_key: user_id <-> User
   has_many :likes, as: :likeable, dependent: :destroy
   has_many :like_users,    through: :likes,    source: :user
