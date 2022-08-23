@@ -1,11 +1,12 @@
 class Micropost < ApplicationRecord
   belongs_to :user
+  # belongs_to :file_type
   # Default: foreign_key: user_id <-> User
   has_many :likes, as: :likeable, dependent: :destroy
   has_many :like_users,    through: :likes,    source: :user
   has_many :comments, dependent: :destroy
   has_many :comment_users, through: :comments, source: :user
-  has_many :porcs,    dependent: :destroy 
+  has_many :porcs,    dependent: :destroy
   has_many :notifications, as: :notificable, dependent: :destroy
   has_many :micropost_tags, dependent: :destroy
   has_many :tags, through: :micropost_tags, dependent: :destroy
@@ -91,6 +92,10 @@ class Micropost < ApplicationRecord
 
   end
   
+  def file_category
+    self.file_type.file_category
+  end
+
   private
     def content_or_image_or_file_link
       content.present? || image.present? || file_link.present?
@@ -98,7 +103,7 @@ class Micropost < ApplicationRecord
 
     def valid_file_type
       if file_type.present?
-        valid_file_types = [ "GoogleSlides", "PowerPoint", "pdf_link", "pdf_google" ]
+        valid_file_types = FileType.all.pluck("value")
         unless valid_file_types.include?(file_type)
           errors.add(:file_type, "Invalid file type")
         end
@@ -110,13 +115,22 @@ class Micropost < ApplicationRecord
         if file_type == "GoogleSlides"
           check = file_link.start_with?('<iframe src="https://docs.google.com/presentation/d/') && \
                   file_link.end_with?('</iframe>')
+        elsif file_type == "GoogleDocs"
+          check = file_link.start_with?('<iframe src="https://docs.google.com/document/d/e/') && \
+                  file_link.end_with?('</iframe>')
+        elsif file_type == "GoogleSheets"
+          check = file_link.start_with?('<iframe src="https://docs.google.com/spreadsheets/d/e/') && \
+                  file_link.end_with?('</iframe>')
+        elsif file_type == "GoogleForms"
+          check = file_link.start_with?('<iframe src="https://docs.google.com/forms/d/e/') && \
+                  file_link.end_with?('</iframe>')
         elsif file_type == "PowerPoint"
           check = file_link.start_with?('<iframe src="https://onedrive.live.com/embed?') && \
                   file_link.end_with?('</iframe>')
-        elsif file_type == "pdf_link"
+        elsif file_type == "PDF_link"
           check = file_link.html_safe.start_with?('https://') && \
                   file_link.html_safe.end_with?('.pdf')
-        elsif file_type == "pdf_google"
+        elsif file_type == "GooglePDF"
           check = file_link.start_with?('https://drive.google.com/file/d/') && \
                   file_link.end_with?('/view?usp=sharing')
         end

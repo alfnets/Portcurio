@@ -9,7 +9,7 @@
     </span>
     <%= form_with(model: @micropost, url: url, method: :get, local: false) do |f| %>
       <%= render 'shared/error_messages_easy', object: f.object %>
-      <%= f.select :file_type, {"Google Slides": "GoogleSlides", "PowerPoint": "PowerPoint", "PDFリンク": "pdf_link", "Google ドライブ 上の PDF": "pdf_google"}, { include_blank: "ファイルの種類" }, class: "form-control" %>
+      <%= f.grouped_collection_select(:file_type, FileCategory.all, :file_types, :name, :value, :name, {include_blank: "ファイルの種類"}, class: "form-control") %>
       <div class="field">
         <%= f.text_area :file_link, placeholder: "ファイルの埋め込みコード または PDFのURL を入力する" %>
       </div>

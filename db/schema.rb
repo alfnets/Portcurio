@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_11_083910) do
+ActiveRecord::Schema.define(version: 2022_08_23_073902) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -53,6 +53,21 @@ ActiveRecord::Schema.define(version: 2022_08_11_083910) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "file_categories", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "file_types", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.string "value"
+    t.bigint "file_category_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["file_category_id"], name: "index_file_types_on_file_category_id"
+  end
+
   create_table "likes", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -89,10 +104,12 @@ ActiveRecord::Schema.define(version: 2022_08_11_083910) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "links"
-    t.string "file_type"
+    t.bigint "file_type_id"
     t.text "file_link"
     t.string "publishing", default: "public", null: false
     t.boolean "educational_material", default: false, null: false
+    t.string "file_type"
+    t.index ["file_type_id"], name: "index_microposts_on_file_type_id"
     t.index ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_microposts_on_user_id"
   end
@@ -166,11 +183,13 @@ ActiveRecord::Schema.define(version: 2022_08_11_083910) do
   add_foreign_key "comments", "comments", column: "parent_id"
   add_foreign_key "comments", "microposts"
   add_foreign_key "comments", "users"
+  add_foreign_key "file_types", "file_categories"
   add_foreign_key "likes", "users"
   add_foreign_key "links", "users"
   add_foreign_key "micropost_tags", "microposts"
   add_foreign_key "micropost_tags", "tags"
   add_foreign_key "micropost_tags", "users"
+  add_foreign_key "microposts", "file_types"
   add_foreign_key "microposts", "users"
   add_foreign_key "porcs", "microposts"
   add_foreign_key "porcs", "users"

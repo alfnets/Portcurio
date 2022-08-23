@@ -120,3 +120,23 @@ tags = ["高等教育", "幼児教育", "特別支援"]
 tags.each { |tag|
   Tag.create(name: tag, default_flag: true)
 }
+
+# 添付できるファイルの種類
+file_categories = ["Google", "Microsoft", "LoiLo", "PDF"]
+file_categories.each { |file_category|
+  FileCategory.create(name: file_category)
+}
+file_types = [
+  {name: "Google スライド",         value: "GoogleSlides",  file_category_id: 1},
+  {name: "Google ドキュメント",     value: "GoogleDocs",    file_category_id: 1},
+  {name: "Google スプレッドシート", value: "GoogleSheets",  file_category_id: 1},
+  {name: "Google フォーム",         value: "GoogleForms",   file_category_id: 1},
+  {name: "PowerPoint",              value: "PowerPoint",    file_category_id: 2},
+  {name: "PDFリンク",               value: "PDF_link",      file_category_id: 4},
+  {name: "Google PDF",              value: "GooglePDF",     file_category_id: 4}
+]
+file_types.each do |file_type|
+  FileType.create!(name: file_type[:name],
+                  value: file_type[:value],
+       file_category_id: file_type[:file_category_id])
+end
