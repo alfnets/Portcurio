@@ -1,6 +1,6 @@
 class Micropost < ApplicationRecord
   belongs_to :user
-  belongs_to :file_type
+  belongs_to :file_type, optional: true
   # Default: foreign_key: user_id <-> User
   has_many :likes, as: :likeable, dependent: :destroy
   has_many :like_users,    through: :likes,    source: :user
@@ -104,7 +104,7 @@ class Micropost < ApplicationRecord
     def valid_file_type
       if file_type.present?
         valid_file_types = FileType.all.pluck("value")
-        unless valid_file_types.include?(file_type)
+        unless valid_file_types.include?(file_type.value)
           errors.add(:file_type, "Invalid file type")
         end
       end
@@ -112,29 +112,29 @@ class Micropost < ApplicationRecord
   
     def valid_file_link
       if file_link.present?
-        if file_type == "GoogleSlides"
+        if file_type.value == "GoogleSlides"
           check = file_link.start_with?('<iframe src="https://docs.google.com/presentation/d/') && \
                   file_link.end_with?('</iframe>')
-        elsif file_type == "GoogleDocs"
+        elsif file_type.value == "GoogleDocs"
           check = file_link.start_with?('<iframe src="https://docs.google.com/document/d/e/') && \
                   file_link.end_with?('</iframe>')
-        elsif file_type == "GoogleSheets"
+        elsif file_type.value == "GoogleSheets"
           check = file_link.start_with?('<iframe src="https://docs.google.com/spreadsheets/d/e/') && \
                   file_link.end_with?('</iframe>')
-        elsif file_type == "GoogleForms"
+        elsif file_type.value == "GoogleForms"
           check = file_link.start_with?('<iframe src="https://docs.google.com/forms/d/e/') && \
                   file_link.end_with?('</iframe>')
-        elsif file_type == "PowerPoint"
+        elsif file_type.value == "PowerPoint"
           check = file_link.start_with?('<iframe src="https://onedrive.live.com/embed?') && \
                   file_link.end_with?('</iframe>')
-        elsif file_type == "PDF_link"
+        elsif file_type.value == "PDF_link"
           check = file_link.html_safe.start_with?('https://') && \
                   file_link.html_safe.end_with?('.pdf')
-        elsif file_type == "GooglePDF"
+        elsif file_type.value == "GooglePDF"
           check = file_link.start_with?('https://drive.google.com/file/d/') && \
                   file_link.end_with?('/view?usp=sharing')
         end
-        errors.add(:file_link, "Invalid file link") unless check
+        errors.add(:file_link, "Invalid") unless check
       end
     end
 end

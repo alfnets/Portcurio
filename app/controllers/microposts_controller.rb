@@ -4,7 +4,7 @@ class MicropostsController < ApplicationController
  
   # POST /microposts
   def create
-    @micropost = current_user.microposts.build(micropost_params)
+    @micropost = params[:micropost][:file_type].present? ? current_user.microposts.build(micropost_params.merge!(file_type_id: FileType.find_by(value: params[:micropost][:file_type]).id)) : current_user.microposts.build(micropost_params)
     @micropost.image.attach(params[:micropost][:image])
     begin
       if Nokogiri::HTML(Rinku.auto_link(@micropost.content)).at_css('a').present?
@@ -64,7 +64,7 @@ class MicropostsController < ApplicationController
   # PATCH /microposts/:id
   def update
     @micropost = Micropost.find(params[:id])
-    @micropost.attributes = micropost_params
+    @micropost.attributes = params[:micropost][:file_type].present? ? micropost_params.merge(file_type_id: FileType.find_by(value: params[:micropost][:file_type]).id) : micropost_params
     begin
       if Nokogiri::HTML(Rinku.auto_link(@micropost.content)).at_css('a').present?
         @micropost.links = Nokogiri::HTML(Rinku.auto_link(@micropost.content)).at_css('a')[:href]
@@ -189,7 +189,7 @@ class MicropostsController < ApplicationController
     
     # Strong parameter
     def micropost_params
-      params.require(:micropost).permit(:content, :image, :file_type, :file_link, :publishing, :educational_material)
+      params.require(:micropost).permit(:content, :image, :file_link, :publishing, :educational_material)
     end
 
     def tag_params

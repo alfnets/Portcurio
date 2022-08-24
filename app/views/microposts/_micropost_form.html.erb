@@ -30,8 +30,8 @@
       </div>
     </div>
 
-    <% @micropost.file_type ? file_type = @micropost.file_type : file_type = "" %>
-    <% @micropost.file_link ? file_link = @micropost.file_link : file_link = "" %>
+    <% @micropost.file_type.present? ? file_type = @micropost.file_type.value : file_type = "" %>
+    <% @micropost.file_link.present? ? file_link = @micropost.file_link : file_link = "" %>
     <div class="file_type_tag"><%= f.hidden_field :file_type, value: file_type %></div>
     <div class="file_link_tag"><%= f.hidden_field :file_link, value: file_link %></div>
     <%= button_tag type: "submit", class: 'btn btn-primary btn-post inline-block' do %>
