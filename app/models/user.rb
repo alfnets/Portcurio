@@ -12,7 +12,7 @@ class User < ApplicationRecord
                                  source: :micropost
   has_many :porcs,            dependent: :destroy
   has_many :links,            dependent: :destroy
-  has_many :tags,             dependent: :destroy
+  has_many :micropost_tags,   dependent: :destroy
                                  
   # Default: class_name: "Micropost"
   # Default: foreign_key: "user_id"
