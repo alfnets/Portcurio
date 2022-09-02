@@ -1424,6 +1424,9 @@ padding-bottom: 24px;
 
 
 /* links (wiki) ページ */
+.toastui-editor-contents {
+  font-family: inherit !important;
+}
 .links_edit_buttons_container {
   a {
     display: block;
