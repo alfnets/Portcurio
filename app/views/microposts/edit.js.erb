@@ -2,6 +2,29 @@ $(".micropost_form_container").hide().html("")
 
 $(".micropost-edit-modal-<%= @micropost.id %>").html("<%= escape_javascript(render partial: 'microposts/edit_modal', locals: { micropost: @micropost }) %>").hide().fadeIn(300)
 
+if ($('#micropost_educational_material').prop('checked')) {
+  $('.attach_form').css('margin-top', '0px');
+  $('#micropost_title').fadeIn(200);
+} else {
+  $('#micropost_title').fadeOut(200, function() {
+    $('#micropost_title').val("");
+    $('.attach_form').css('margin-top', '40px');
+  });
+}
+
+
 $('.close-modal').on("click", function(){
   location.reload();
+});
+
+$('#micropost_educational_material').on("change", function(ev) {
+  if (ev.target.checked) {
+    $('.attach_form').css('margin-top', '0px');
+    $('#micropost_title').fadeIn(200);
+  } else {
+    $('#micropost_title').fadeOut(200, function() {
+      $('#micropost_title').val("");
+      $('.attach_form').css('margin-top', '40px');
+    });
+  }
 });
