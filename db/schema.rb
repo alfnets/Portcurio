@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_23_095702) do
+ActiveRecord::Schema.define(version: 2023_03_12_091000) do
 
-  create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
+  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2022_08_23_095702) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", charset: "utf8mb4", force: :cascade do |t|
+  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -34,13 +34,13 @@ ActiveRecord::Schema.define(version: 2022_08_23_095702) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8mb4", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "comments", charset: "utf8mb4", force: :cascade do |t|
+  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.text "content"
     t.bigint "micropost_id", null: false
     t.bigint "user_id", null: false
@@ -53,13 +53,13 @@ ActiveRecord::Schema.define(version: 2022_08_23_095702) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "file_categories", charset: "utf8mb4", force: :cascade do |t|
+  create_table "file_categories", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "file_types", charset: "utf8mb4", force: :cascade do |t|
+  create_table "file_types", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name"
     t.string "value"
     t.bigint "file_category_id", null: false
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 2022_08_23_095702) do
     t.index ["file_category_id"], name: "index_file_types_on_file_category_id"
   end
 
-  create_table "likes", charset: "utf8mb4", force: :cascade do |t|
+  create_table "likes", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 2022_08_23_095702) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
-  create_table "links", charset: "utf8mb4", force: :cascade do |t|
+  create_table "links", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.text "markdown"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 2022_08_23_095702) do
     t.index ["user_id"], name: "index_links_on_user_id"
   end
 
-  create_table "micropost_tags", charset: "utf8mb4", force: :cascade do |t|
+  create_table "micropost_tags", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "micropost_id", null: false
     t.bigint "tag_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -98,7 +98,8 @@ ActiveRecord::Schema.define(version: 2022_08_23_095702) do
     t.index ["user_id"], name: "index_micropost_tags_on_user_id"
   end
 
-  create_table "microposts", charset: "utf8mb4", force: :cascade do |t|
+  create_table "microposts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "title"
     t.text "content"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -113,7 +114,7 @@ ActiveRecord::Schema.define(version: 2022_08_23_095702) do
     t.index ["user_id"], name: "index_microposts_on_user_id"
   end
 
-  create_table "notifications", charset: "utf8mb4", force: :cascade do |t|
+  create_table "notifications", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "notifier_id"
     t.integer "notified_id"
     t.string "notificable_type", null: false
@@ -124,7 +125,7 @@ ActiveRecord::Schema.define(version: 2022_08_23_095702) do
     t.index ["notificable_type", "notificable_id"], name: "index_notifications_on_notificable"
   end
 
-  create_table "porcs", charset: "utf8mb4", force: :cascade do |t|
+  create_table "porcs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "micropost_id"
     t.datetime "created_at", precision: 6, null: false
@@ -133,7 +134,7 @@ ActiveRecord::Schema.define(version: 2022_08_23_095702) do
     t.index ["user_id"], name: "index_porcs_on_user_id"
   end
 
-  create_table "relationships", charset: "utf8mb4", force: :cascade do |t|
+  create_table "relationships", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
     t.datetime "created_at", precision: 6, null: false
@@ -144,7 +145,7 @@ ActiveRecord::Schema.define(version: 2022_08_23_095702) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
-  create_table "tags", charset: "utf8mb4", force: :cascade do |t|
+  create_table "tags", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name"
     t.string "category"
     t.datetime "created_at", precision: 6, null: false
@@ -153,7 +154,7 @@ ActiveRecord::Schema.define(version: 2022_08_23_095702) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
