@@ -1,6 +1,6 @@
 $(document).on("turbolinks:load", function () {
-  const micropostTitle = $("#micropost_title");
   const micropostEducationalMaterial = $("#micropost_educational_material");
+  const micropostTitle = $("#micropost_title");
 
   micropostEducationalMaterial.on("change", (ev) => {
     if (ev.target.checked) {
