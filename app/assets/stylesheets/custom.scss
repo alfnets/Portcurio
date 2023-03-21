@@ -48,6 +48,11 @@ $gray-medium-light: #eaeaea;
   padding: 0 15px;
 }
 
+@media (max-width: 500px) {
+  .container-large {
+      padding: 0;
+  }
+}
 @media (min-width: 768px) {
   .container-large {
       width: 970px;
@@ -187,6 +192,14 @@ $gray-medium-light: #eaeaea;
         -webkit-line-clamp: 2;
       }
     } 
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .material-card {
+    .response-form {
+      font-size: 1rem !important;
+    }
   }
 }
 
@@ -1071,7 +1084,7 @@ input {
   }
 
   .material-card .content-info {
-    margin-left: 16px;
+    margin-left: 8px;
   }
   
   .content-text-info {
@@ -1346,7 +1359,8 @@ span.image {
 
 .comments-wrap.wrap {
   margin-top: 8px;
-  width: 100%;
+  margin-left: -50px;
+  width: calc(100% + 50px);
   .comments {
     padding: 20px 20px 0px;
     margin-bottom: 16px;
@@ -1368,11 +1382,15 @@ span.image {
 }
 
 .replies-container {
-  padding: 16px 20px 0px;
-  margin: 4px 0 16px;
+  padding-left: 20px;
+  margin: 0 0 16px;
   li {
     border-top: none;
     border-bottom: 1px solid #e8e8e8;
+    padding: 16px 0px 12px 0px;
+    &:first-child {
+      padding: 16px 0px 12px 0px !important;
+    }
   }
   .mention {
     padding-top: 10px;
@@ -1411,11 +1429,11 @@ span.image {
 .material-card {
   overflow-wrap: break-word;
   .response-form {
-    font-size: 16px;
+    font-size: 1.3rem;
     gap: 10px;
   }
   .tags-wrap {
-    margin-left: 0;
+    margin-left: 16px;
   }
 }
 
