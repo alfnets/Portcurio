@@ -45,6 +45,9 @@ $gray-medium-light: #eaeaea;
   .phone {
     display: block;
   }
+  footer {
+    margin-top: 180px !important;
+  }
 }
 @media screen and (min-width: 706px) {
   .pc {
