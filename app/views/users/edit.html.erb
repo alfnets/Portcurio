@@ -2,93 +2,95 @@
 
 <% provide(:title, "Edit user") %>
 
-<h1>Update your profile</h1>
-<%= link_to "view my profile", @user, class: "block-right" %>
+<div class="container-small">
+  <h1>Update your profile</h1>
+  <%= link_to "view my profile", @user, class: "block-right" %>
 
-<%= form_with(model: @user, local: true) do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
+  <%= form_with(model: @user, local: true) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
 
-  <%= f.label :name %>
-  <%= f.text_field :name, class: 'form-control' %>
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control' %>
 
-  <%= f.label :email %>
-  <%= f.email_field :email, class: 'form-control' %>
+    <%= f.label :email %>
+    <%= f.email_field :email, class: 'form-control' %>
 
-  <% @selected_school_type ||= @user.school_type %>
-  <% if @selected_school_type.present? %>
-    <%= f.label :School_type %>
-    <%= f.select :school_type, school_types, { include_blank: "校種タグ", selected: @selected_school_type }, class: "form-control" %>
-    <% case @selected_school_type %>
-    <% when "小学校"     then category = "primary_subject" %>
-    <% when "中学校"     then category = "secondary_subject" %>
-    <% when "高校(共通)" then category = "senior_common_subject" %>
-    <% when "高校(専門)" then category = "senior_specialized_subject" %>
-    <% else                   category = "" %>
-    <% end %>
-    <% selected_subject = @user.subject %>
-    <%= f.label :Subject %>
-    <%= f.select :subject, Tag.where("category LIKE ?", "%#{category}%").pluck(:name), { include_blank: "教科タグ", selected: selected_subject }, class: "form-control" %>
-  <% else %>
-    <%= f.label :School_type %>
-    <%= f.select :school_type, school_types, { include_blank: "メイン校種" }, class: "form-control" %>
-    <%= f.label :Subject %>
-    <%= f.select :subject, "", { include_blank: "---" }, class: "form-control" %>
-  <% end %>
-
-  <%= f.label :profile %>
-  <%= f.text_area :profile, placeholder: "プロフィールを入力しましょう（600文字以内）", class: 'form-control' %>
-
-  <%= f.label :website %>
-  <%= f.text_field :website, placeholder: "255文字以内", class: 'form-control' %>
-
-  <div class="line-checkbox-wrap">
-    <%= f.label :line_connection_delete do %>
-      <% if current_user.lineuid %>
-        <span>LINE通知連携の解除</span>
-        <%= f.check_box :line_connection_delete, {style: 'transform: scale(1.2);'} %>
-      <% else %>
-        <span>LINE通知連携</span>
-        <a class="line-add-button" href="<%= ENV["LINE_ADD_URL"] %>"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="24px" border="0"></a>
+    <% @selected_school_type ||= @user.school_type %>
+    <% if @selected_school_type.present? %>
+      <%= f.label :School_type %>
+      <%= f.select :school_type, school_types, { include_blank: "校種タグ", selected: @selected_school_type }, class: "form-control" %>
+      <% case @selected_school_type %>
+      <% when "小学校"     then category = "primary_subject" %>
+      <% when "中学校"     then category = "secondary_subject" %>
+      <% when "高校(共通)" then category = "senior_common_subject" %>
+      <% when "高校(専門)" then category = "senior_specialized_subject" %>
+      <% else                   category = "" %>
       <% end %>
+      <% selected_subject = @user.subject %>
+      <%= f.label :Subject %>
+      <%= f.select :subject, Tag.where("category LIKE ?", "%#{category}%").pluck(:name), { include_blank: "教科タグ", selected: selected_subject }, class: "form-control" %>
+    <% else %>
+      <%= f.label :School_type %>
+      <%= f.select :school_type, school_types, { include_blank: "メイン校種" }, class: "form-control" %>
+      <%= f.label :Subject %>
+      <%= f.select :subject, "", { include_blank: "---" }, class: "form-control" %>
     <% end %>
-  </div>
 
-  <%= f.label :current_password, "Current Password" %><span class="require-charm"> *</span>
-  <%= f.password_field :current_password, class: 'form-control' %>
+    <%= f.label :profile %>
+    <%= f.text_area :profile, placeholder: "プロフィールを入力しましょう（600文字以内）", class: 'form-control' %>
 
-  <%= f.label :password, "New Password" %>
-  <%= f.password_field :password, class: 'form-control' %>
+    <%= f.label :website %>
+    <%= f.text_field :website, placeholder: "255文字以内", class: 'form-control' %>
 
-  <%= f.label :password_confirmation, "New Password Confirmation" %>
-  <%= f.password_field :password_confirmation, class: 'form-control' %>
-
-  <div class="profile-icon-edit">
-    <div class='profile-icon-frame'>
-      <div id="icon_image">
-        <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
-      </div>
-      <div id="icon_preview">
-      </div>
-    </div>
-    <span class="image inline-block">
-      <%= f.label :image, "アイコンを変更する", class: "btn btn-image btn-default" %>
-      <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: 'image_form hidden' %>
-    </span>
-  </div>
-  <% if @user.image.attached? %>
-    <div class="check_box">
-      <%= f.label :delete_icon do %>
-        <%= f.check_box :delete_icon, class: 'inline-block' %>
-        <span>アイコンを削除する（デフォルトはGravator）</span>
+    <div class="line-checkbox-wrap">
+      <%= f.label :line_connection_delete do %>
+        <% if current_user.lineuid %>
+          <span>LINE通知連携の解除</span>
+          <%= f.check_box :line_connection_delete, {style: 'transform: scale(1.2);'} %>
+        <% else %>
+          <span>LINE通知連携</span>
+          <a class="line-add-button" href="<%= ENV["LINE_ADD_URL"] %>"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="24px" border="0"></a>
+        <% end %>
       <% end %>
     </div>
-  <% end %>
-  <%= f.submit "Save changes", class: "btn btn-primary" %>
-<% end %>
 
-<p id="edit_user_page">
-  <%= link_to "The page for deleting your account", delete_user_path(@user) %>
-</p>
+    <%= f.label :current_password, "Current Password" %><span class="require-charm"> *</span>
+    <%= f.password_field :current_password, class: 'form-control' %>
+
+    <%= f.label :password, "New Password" %>
+    <%= f.password_field :password, class: 'form-control' %>
+
+    <%= f.label :password_confirmation, "New Password Confirmation" %>
+    <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+    <div class="profile-icon-edit">
+      <div class='profile-icon-frame'>
+        <div id="icon_image">
+          <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
+        </div>
+        <div id="icon_preview">
+        </div>
+      </div>
+      <span class="image inline-block">
+        <%= f.label :image, "アイコンを変更する", class: "btn btn-image btn-default" %>
+        <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: 'image_form hidden' %>
+      </span>
+    </div>
+    <% if @user.image.attached? %>
+      <div class="check_box">
+        <%= f.label :delete_icon do %>
+          <%= f.check_box :delete_icon, class: 'inline-block' %>
+          <span>アイコンを削除する（デフォルトはGravator）</span>
+        <% end %>
+      </div>
+    <% end %>
+    <%= f.submit "Save changes", class: "btn btn-primary" %>
+  <% end %>
+
+  <p id="edit_user_page">
+    <%= link_to "The page for deleting your account", delete_user_path(@user) %>
+  </p>
+<div>
 
 <%= javascript_pack_tag 'icon_preview' %>
 
