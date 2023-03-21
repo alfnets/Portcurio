@@ -129,7 +129,9 @@
       </div>
 
       <div class="content-text-info">
-        <h3><%= link_to micropost.title, micropost, class: "post-title" %></h3>
+        <% if micropost.title.present? %>
+          <h3><%= link_to micropost.title, micropost, class: "post-title" %></h3>
+        <% end %>
 
         <div class="username">
           <%= link_to micropost.user.name, micropost.user %>
