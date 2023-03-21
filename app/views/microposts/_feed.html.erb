@@ -1,19 +1,31 @@
 <% if @feed_items.any? %>
-  <ol class="materials">
-    <%= render partial: 'microposts/materials', collection: @feed_items, as: 'micropost' %>
-  </ol>
-  <div class='center'>
-    <%= paginate @feed_items,
-               params: { controller: 'static_pages', action: 'home' } %>
+  <div class="pc">
+    <ol class="materials">
+      <%= render partial: 'microposts/materials', collection: @feed_items, as: 'micropost' %>
+    </ol>
+    <div class='center'>
+      <%= paginate @feed_items,
+                params: { controller: 'static_pages', action: 'home' } %>
+    </div>
+  </div>
+
+  <div class="phone">
+    <ol class="microposts">
+      <%= render @all_feed_items %>
+    </ol>
+    <div class='center'>
+      <%= paginate @all_feed_items,
+                params: { controller: 'static_pages', action: 'home' } %>
+    </div>
   </div>
 
 <% else %>
   <%# <h3>All Users Feed</h3> %>
   <%# <ol class="microposts"> %>
-    <%# <%= render @feedall %>
+    <%# <%= render @all_microposts %>
   <%# </ol> %>
   <%# <div class='center'> %>
-    <%# <%= paginate @feedall, %>
+    <%# <%= paginate @all_microposts, %>
                 <%# params: { controller: 'static_pages', action: 'home' } %>
   <%# </div> %>
 <% end %>

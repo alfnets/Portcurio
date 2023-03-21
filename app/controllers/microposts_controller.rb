@@ -47,7 +47,7 @@ class MicropostsController < ApplicationController
     else
       @userprofile = current_user
       @feed_items = current_user.feed.page(params[:page])
-      @feedall     = Kaminari.paginate_array(Micropost.all).page(params[:page])
+      @all_microposts     = Kaminari.paginate_array(Micropost.all).page(params[:page])
       render 'static_pages/home'
     end
   end
@@ -104,7 +104,7 @@ class MicropostsController < ApplicationController
       @keywords = params[:keywords].gsub("　"," ").split
       result_microposts = search_microposts(@keywords)
       @selected_tags    = @keywords.join(",")
-      @feedall = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
+      @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
     elsif params[:micropost] && (params[:micropost][:tags].present? || params[:micropost][:educational_material].to_boolean)
       @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: params[:micropost][:educational_material].to_boolean)
       if params[:micropost][:tags].present?
@@ -115,22 +115,22 @@ class MicropostsController < ApplicationController
       end
       if result_microposts
         @title = "Search Result"
-        @feedall = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
+        @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
       else
         @title = "No Result"
-        @feedall = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])
+        @all_microposts = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])
       end
     elsif params[:click_tag]
       @micropost = Micropost.new
       @selected_tags = [params[:click_tag]]
       tag_microposts = tag_filter(@selected_tags)
       @title = "##{params[:click_tag]}"
-      @feedall = Kaminari.paginate_array(tag_microposts.includes(:tags)).page(params[:page])
+      @all_microposts = Kaminari.paginate_array(tag_microposts.includes(:tags)).page(params[:page])
     else
       @micropost = Micropost.new
       @selected_tags = ""
       @title = "All users feed"
-      @feedall = Kaminari.paginate_array(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)).includes(:tags)).page(params[:page])
+      @all_microposts = Kaminari.paginate_array(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)).includes(:tags)).page(params[:page])
     end
     @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
     @userprofile = current_user

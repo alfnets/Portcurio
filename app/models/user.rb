@@ -229,6 +229,15 @@ class User < ApplicationRecord
               .or(Micropost.where(user_id: self.id))
   end
 
+  def all_feed
+    following_ids = "SELECT followed_id FROM relationships
+        WHERE follower_id = :user_id"
+    Micropost.where("user_id IN (#{following_ids})",
+                    user_id: self.id)
+              .where(publishing: "public")
+              .or(Micropost.where(user_id: self.id))
+  end
+
   # ユーザーをフォローする
   def follow(other_user)
     self.following << other_user
