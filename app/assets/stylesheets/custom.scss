@@ -590,6 +590,10 @@ aside {
     }
     .text-content {
       position: relative;
+      display: -webkit-box;
+      -webkit-line-clamp: 10;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
       margin: 12px;
       .title {
         font-size: 1rem;
