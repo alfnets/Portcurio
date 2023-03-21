@@ -1359,8 +1359,8 @@ span.image {
 
 .comments-wrap.wrap {
   margin-top: 8px;
-  margin-left: -50px;
-  width: calc(100% + 50px);
+  margin-left: -10px;
+  width: calc(100% + 10px);
   .comments {
     padding: 20px 20px 0px;
     margin-bottom: 16px;
@@ -1434,6 +1434,10 @@ span.image {
   }
   .tags-wrap {
     margin-left: 16px;
+  }
+  .comments-wrap {
+    margin-left: -50px;
+    width: calc(100% + 50px);
   }
 }
 
