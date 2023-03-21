@@ -1084,6 +1084,9 @@ input {
 
   .username {
     margin-bottom: 4px;
+    a {
+      font-size: 1.1rem;
+    }
   }
 
   .content-stats {
@@ -1115,7 +1118,7 @@ input {
       object-position: 50% 50%;
     }
     p {
-      margin: 5px;
+      margin: 5px 0;
       word-break: break-word;
     }
   }
