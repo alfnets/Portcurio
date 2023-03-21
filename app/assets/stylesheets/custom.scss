@@ -34,7 +34,7 @@ $gray-medium-light: #eaeaea;
 }
 
 /* サイドバーの表示・非表示 */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 705px) {
   .wrapper {
     grid-template-columns: 0 1fr !important; /* 1列目の幅を0に設定 */
     gap: 0 !important; /* 1列目と2列目の間隔を0に設定 */
@@ -93,7 +93,7 @@ $gray-medium-light: #eaeaea;
     }
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 706px) {
   .ogp {
     figcaption {
       -webkit-line-clamp: 3;
@@ -123,15 +123,6 @@ $gray-medium-light: #eaeaea;
 }
 
 @media screen and (min-width: 706px) {
-  .container-fluid {
-    .ogp {
-      figcaption {
-        -webkit-line-clamp: 2;
-      }
-    } 
-  }
-}
-@media screen and (min-width: 768px) {
   .container-fluid {
     .ogp {
       figcaption {
