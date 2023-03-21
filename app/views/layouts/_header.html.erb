@@ -1,5 +1,6 @@
 <header class="navbar navbar-fixed-top navbar-default">
-  <div class="container">
+  <% container_class = request.path_info == root_path ? "container-fluid" : "container-large" %>
+  <div class=<%= container_class %>>
     <% if logged_in? %>
       <div class="icon-container">
         <%= link_to notified_notifications_path do %>
@@ -21,7 +22,7 @@
       <span class="icon-bar"></span>
     </button>
     <div class="navbar-header">
-      <%= link_to image_tag("logo_portcurio.png", alt: "portcurio logo", height: "51px"), root_path, 'data-turbolinks': false, id: "service_logo" %>
+      <%= link_to image_tag("logo_portcurio.png", alt: "portcurio logo", height: "100%"), root_path, 'data-turbolinks': false, id: "service_logo" %>
       <%= render partial: 'layouts/keyword_search_form', locals: { keywords: @keywords } %>
     </div>
     <nav role="navigation">

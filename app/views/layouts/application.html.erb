@@ -40,17 +40,18 @@
   <body>
     <%= render 'layouts/header' if logged_in? %>
 
-    <div class="container">
+    <% container_class = request.path_info == root_path ? "container-fluid" : "container-large" %>
+    <div class=<%= container_class %>>
       <% flash.each do |message_type, message| %>
         <div class="alert alert-<%= message_type %>"><%= message %></div>
       <% end %>
 
       <% if logged_in? %>
-        <div class="row">
+        <div class="wrapper">
           <%= render 'layouts/sidebar' %>
-          <div class="col-md-9 col-sm-8 main-col">
+          <main>
             <%= yield %>
-          </div>
+          </main>
         </div>
       <% else %>
         <div class="row">
@@ -59,10 +60,10 @@
           </div>
         </div>
       <% end %>
-      
-      <%= render 'layouts/footer' %>
-      <%= debug(params) if Rails.env.development? %>
     </div>
+      
+    <%= render 'layouts/footer' %>
+    <%= debug(params) if Rails.env.development? %>
     <%# <!-- pdfの遅延読み込み --> %>
     <%# <script>
       function pdf_defer() {

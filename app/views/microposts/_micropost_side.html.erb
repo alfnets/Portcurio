@@ -1,0 +1,82 @@
+<li class="micropost-<%= micropost.id %>">
+  <div class="micropost-container">
+
+    <div class="content-info">
+
+      <div class='profile-icon-frame'>
+        <%= micropost.user.image.attached? ? (link_to image_tag(micropost.user.image), micropost.user) : (link_to gravatar_for(micropost.user), micropost.user) %>
+      </div>
+
+      <div class="content-text-info">
+
+        <div class="username">
+          <%= link_to micropost.user.name, micropost.user %>
+        </div>
+
+        <div class="content-stats">
+          <div class="timestamp">
+            <%= time_ago_in_words_with_custom_unit(micropost.created_at) %>
+          </div>
+
+          <% if micropost.educational_material %>
+            <i class="fas fa-book"></i>
+          <% end %>
+
+          <% if micropost.publishing === "private" %>
+            <i class="fas fa-lock"></i>
+          <% end %>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="text-content">
+      <% if micropost.title.present? %>
+        <div class="title">
+          <%= micropost.title %>
+        </div>
+      <% end %>
+
+      <% if micropost.file_link.present? || micropost.image.attached? || micropost.links.present? %>
+        <p class='page-link'><%= link_to micropost_path(micropost) %></p>
+      <% end %>
+
+      <% if raw(Rinku.auto_link(simple_format(h(micropost.content)))).include?("https://#{domain_name}") %>
+        <%= raw Rinku.auto_link(simple_format(h(micropost.content)), :all) %>
+      <% else %>
+        <%= raw Rinku.auto_link(simple_format(h(micropost.content)), :all, 'target="_blank" rel="noopener noreferrer"') %>
+      <% end %>
+
+      <%= link_to '', micropost_path(micropost), class: 'showcontainer' %>
+    </div>
+
+    <div class="tag-container">
+      <% if micropost.tags.count > 0 %>
+        <div class="tags-wrap">
+          <%# 一覧画面ではタグは５個まで表示 %>
+          <% tags = request.path_info.start_with?('/microposts') ? micropost.tags : micropost.tags.take(5) %>
+          <% tags.each do |tag| %>
+            <%= link_to tag.name, microposts_path(click_tag: tag.name), class: "btn-tag" %>
+          <% end %>
+          <% if !request.path_info.start_with?('/microposts') && micropost.tags.size > 5 %>
+            <span>...</span>
+          <% end %>
+          <% if micropost.tags.count > 0 %>
+            <%= link_to edit_micropost_tags_path(micropost), class: "btn btn-tagsedit", remote: true do %>
+              <span style="position: relative; display: inline-block; width: 26px; height: 26px">
+                <i class="fas fa-tags" style="position: absolute; bottom: 1px; left: 3px; font-size: 18px; color: #616161; opacity: 0.6"></i>
+                <i class="fas fa-pencil-alt" style="position: absolute; top: 4px; right: 3px; color: #616161"></i>
+              </span>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="response-form">
+      <%= render partial: 'microposts/response_form_side', locals: { micropost: micropost } %>
+    </div>
+
+  </div>
+</li>

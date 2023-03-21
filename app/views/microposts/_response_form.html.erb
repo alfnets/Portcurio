@@ -1,0 +1,41 @@
+<div class="icon-group">
+  <span class="like-btn-micropost-<%= micropost.id %> likes"> 
+    <% if micropost.like_users.find_by(id: current_user.id) %>
+      <%= render partial: 'likes/unlike', locals: { likeable: micropost } %>
+    <% else %>
+      <%= render partial: 'likes/like', locals: { likeable: micropost } %>
+    <% end %>
+  </span>
+  <span class="likes-micropost-<%= micropost.id %> likes-count">
+    <%= render partial: 'likes/likes_count', locals: { likeable: micropost } %>
+  </span>
+</div>
+
+<div class="porc-btn-<%= micropost.id %> porcs"> 
+  <% if micropost.porcs.find_by(user: current_user) %>
+    <%= render partial: 'porcs/unporc', locals: { micropost: micropost } %>
+  <% else %>
+    <%= render partial: 'porcs/porc', locals: { micropost: micropost } %>
+  <% end %>
+</div>
+
+<div class="icon-group">
+  <span class="btn-comment<%= micropost.id %> btn-comment-wrap">
+    <% comment_count = micropost.comments.where(parent_id: nil).count %>
+    <%= button_to comment_path(micropost.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "btn-comment btn-link", remote: true } do %>
+      <i class="fa-regular fa-comment-dots"></i> <%= comment_count %>
+    <% end %>
+  </span>
+  <span class="comment-close-<%= micropost.id %> btn-comment-wrap comment-close-btn">
+    <!-- 親コメントでReplyボタンをクリックするとここに「閉じる」リンクがrenderされる -->
+  </span>
+</div>
+
+<% if micropost.tags.count === 0 %>
+  <%= link_to edit_micropost_tags_path(micropost), class: "btn btn-tagsedit", remote: true do %>
+    <span style="position: relative; display: inline-block; width: 26px; height: 26px">
+      <i class="fas fa-tags" style="position: absolute; bottom: 1px; left: 3px; font-size: 18px; color: #616161; opacity: 0.6"></i>
+      <i class="fas fa-pencil-alt" style="position: absolute; top: 4px; right: 3px; color: #616161"></i>
+    </span>
+  <% end %>
+<% end %>

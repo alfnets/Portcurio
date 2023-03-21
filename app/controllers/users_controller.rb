@@ -109,12 +109,14 @@ class UsersController < ApplicationController
   
   # GET /users/:id/edit
   def edit
+    @userprofile = current_user
     @user = User.find(params[:id])
     # => app/views/users/edit.html.erb
   end
   
   # PATCH /users/:id
   def update
+    @userprofile = current_user
     @user = User.find(params[:id])
     @user.attributes = user_params
     begin
@@ -163,11 +165,13 @@ class UsersController < ApplicationController
   
   # GET /users/:id/delete
   def delete
+    @userprofile = current_user
     @user = User.find(params[:id])
   end
 
   # DELETE /users/:id
   def destroy
+    @userprofile = current_user
     User.find(params[:id]).destroy
     flash[:success] = "User deleted"
     redirect_to users_url
@@ -219,6 +223,7 @@ class UsersController < ApplicationController
 
   # GET /users/get_selected_school_type
   def get_selected_school_type
+    @userprofile = current_user
     @selected_school_type = params[:selected_school_type]
     respond_to do |format|
       format.js

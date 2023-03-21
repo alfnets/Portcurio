@@ -1,1 +1,3 @@
-$(".micropost-<%= @micropost.id %> .tag-container").html("<%= escape_javascript(render(partial: 'tags/show_tags', locals: {micropost: @micropost})) %>");
+$(".micropost-<%= @micropost.id %> .tag-container").html("<%= escape_javascript(render(partial: 'tags/show_tags', locals: {micropost: @micropost})) %>").hide().fadeIn(300);
+
+$(".micropost-<%= @micropost.id %> .response-form").html("<%= escape_javascript(render(partial: 'microposts/response_form', locals: {micropost: @micropost})) %>").hide().fadeIn(300);

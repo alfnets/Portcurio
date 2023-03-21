@@ -1,20 +1,23 @@
 <% provide(:title, @title) %>
 
 <h1><%= @title %></h1>
-<section class="user_info user_follow">
-  <span class='profile_icon_frame'>
+
+<section class="user-info user-follow">
+  <div class='profile-icon-frame'>
     <%= @userprofile.image.attached? ? (image_tag @userprofile.image) : (gravatar_for @userprofile) %>
-  </span>
-  <h1><%= @userprofile.name %></h1>
-  <span><%= link_to "view my profile", @userprofile %></span>
-  <span><b>Microposts:</b> <%= @userprofile.microposts.count %></span>
+  </div>
+
+  <div class='user-text-info'>
+    <h2><%= link_to @userprofile.name, @userprofile %></h2>
+    <div><b>Microposts:</b> <%= @userprofile.microposts.count %></div>
+  </div>
 </section>
-<section class="stats user_follow">
+<section class="stats user-follow">
   <%= render 'shared/stats' %>
   <% if @users.any? %>
     <div class="user_avatars">
       <% @users.each do |user| %>
-        <span class='profile_icon_frame'>
+        <span class='profile-icon-frame'>
           <%= user.image.attached? ? (link_to image_tag(user.image), user) : (link_to gravatar_for(user), user) %>
         </span>
       <% end %>

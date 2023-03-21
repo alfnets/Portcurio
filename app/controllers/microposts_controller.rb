@@ -139,10 +139,10 @@ class MicropostsController < ApplicationController
 
   # GET /microposts/:id
   def show
-    @feedmicropost = Micropost.find(params[:id])
-    redirect_to root_url if @feedmicropost.publishing == 'private' && @feedmicropost.user != current_user
-    @userprofile = @feedmicropost.user
-    @comments = @feedmicropost.comments.where(parent_id: nil).unscope(:order).order(updated_at: :desc)
+    @micropost = Micropost.find(params[:id])
+    redirect_to root_url if @micropost.publishing == 'private' && @micropost.user != current_user
+    @userprofile = @micropost.user
+    @comments = @micropost.comments.where(parent_id: nil).unscope(:order).order(updated_at: :desc)
   end
  
   

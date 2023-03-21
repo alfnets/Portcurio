@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
-  
+  before_action :get_time_line
+    
   private
 
     # ログイン済みユーザーかどうか確認
@@ -42,5 +43,10 @@ class ApplicationController < ActionController::Base
 
       a = ActiveRecord::Base.connection.select_all(sql).to_a
       Micropost.where(id: a.map{|val| val["id"]})
+    end
+
+    # ログインユーザーのタイムラインを取得
+    def get_time_line
+      @time_line_items = current_user.time_line.page(params[:page]) if logged_in?
     end
 end

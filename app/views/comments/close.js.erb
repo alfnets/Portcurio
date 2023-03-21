@@ -1,8 +1,21 @@
 <% unless defined? @comment %>
   <% comment_count = @feedmicropost.comments.where(parent_id: nil).count %>
-  $(".comment-close-<%= @feedmicropost.id %>").html('')
-  $(".comment-<%= @feedmicropost.id %>").html("")
+
+  $(".btn-comment<%= @feedmicropost.id %>").html(
+      '<%= button_to comment_path(@feedmicropost.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "btn-comment btn-link", remote: true } do %><i class="fa-regular fa-comment-dots"></i> <%= comment_count %><% end %>'
+    )
+
+  $(".micropost<%= @feedmicropost.id %>-comment").slideUp(300)
+
 <% else %>
-  $(".reply-close-<%= @comment.id %>").html("")
-  $(".reply-<%= @comment.id %>").html("")
+
+  <% reply_count = @comment.replies.count %>
+
+  $(".reply-btn<%= @comment.id %>").html(
+      '<%= button_to micropost_comment_path(@comment.micropost_id, @comment.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "btn-reply btn-link", remote: true } do %><i class="fa-regular fa-comment-dots"></i> <%= reply_count %><% end %>'
+    )
+
+  $(".reply-close-<%= @comment.id %>").slideUp(300)
+  
+  $(".reply-<%= @comment.id %>").slideUp(300)
 <% end %>

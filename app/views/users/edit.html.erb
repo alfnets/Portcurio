@@ -48,7 +48,7 @@
         <%= f.check_box :line_connection_delete, {style: 'transform: scale(1.2);'} %>
       <% else %>
         <span>LINE通知連携</span>
-        <a class="line-add-button" href="<%= ENV["LINE_ADD_URL"] %>"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="24" border="0"></a>
+        <a class="line-add-button" href="<%= ENV["LINE_ADD_URL"] %>"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="24px" border="0"></a>
       <% end %>
     <% end %>
   </div>
@@ -62,14 +62,14 @@
   <%= f.label :password_confirmation, "New Password Confirmation" %>
   <%= f.password_field :password_confirmation, class: 'form-control' %>
 
-  <div class="profile_icon_edit">
-    <span class='profile_icon_frame'>
+  <div class="profile-icon-edit">
+    <div class='profile-icon-frame'>
       <div id="icon_image">
         <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
       </div>
       <div id="icon_preview">
       </div>
-    </span>
+    </div>
     <span class="image inline-block">
       <%= f.label :image, "アイコンを変更する", class: "btn btn-image btn-default" %>
       <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: 'image_form hidden' %>

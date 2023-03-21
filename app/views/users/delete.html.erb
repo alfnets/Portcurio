@@ -2,6 +2,12 @@
 
 <h1>Delete your account</h1>
 
+<div class="profile-icon-edit" style="margin-bottom: 24px;">
+  <div class='profile-icon-frame'>
+    <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
+  </div>
+</div>
+
 <%= form_with(model: @user, url: account_delete_path(params[:id]), local: true ) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
@@ -12,9 +18,3 @@
 
   <%= f.submit "Send email to delete the account", class: "btn btn-primary", data: { confirm: "You sure?" }, remote: true %>
 <% end %>
-
-<div class="profile_icon_edit">
-  <span class='profile_icon_frame'>
-    <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
-  </span>
-</div>

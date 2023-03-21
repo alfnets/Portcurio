@@ -1,5 +1,5 @@
 <div class='micropost_form_container'>
-  <span class='profile_icon_frame'>
+  <span class='profile-icon-frame'>
     <%= current_user.image.attached? ? (link_to image_tag(current_user.image), current_user) : (link_to gravatar_for(current_user), current_user) %>
   </span>
 

@@ -1,6 +1,6 @@
 <% if @feed_items.any? %>
-  <ol class="microposts">
-    <%= render @feed_items %>
+  <ol class="materials">
+    <%= render partial: 'microposts/materials', collection: @feed_items, as: 'micropost' %>
   </ol>
   <div class='center'>
     <%= paginate @feed_items,
@@ -8,12 +8,12 @@
   </div>
 
 <% else %>
-  <h3>All Users Feed</h3>
-  <ol class="microposts">
-    <%= render @feedall %>
-  </ol>
-  <div class='center'>
-    <%= paginate @feedall,
-                params: { controller: 'static_pages', action: 'home' } %>
-  </div>
+  <%# <h3>All Users Feed</h3> %>
+  <%# <ol class="microposts"> %>
+    <%# <%= render @feedall %>
+  <%# </ol> %>
+  <%# <div class='center'> %>
+    <%# <%= paginate @feedall, %>
+                <%# params: { controller: 'static_pages', action: 'home' } %>
+  <%# </div> %>
 <% end %>
