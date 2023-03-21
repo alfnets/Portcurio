@@ -50,7 +50,7 @@ $gray-medium-light: #eaeaea;
 
 @media (max-width: 500px) {
   .container-large {
-      padding: 0;
+      padding: 0 15px;
   }
 }
 @media (min-width: 768px) {
@@ -1770,9 +1770,6 @@ span.image {
   padding: 16px 0px;
   max-width: 720px;
   margin: 0 auto;
-  .microposts {
-    margin: 0 16px;
-  }
   .content-info {
     .post-title {
       font-weight: bold;
