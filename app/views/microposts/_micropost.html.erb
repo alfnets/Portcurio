@@ -96,7 +96,7 @@
             <% if oembed %>   <!-- OEmbedの表示（YouTube, Twitter 等） -->
               <div class="links">
                 <div class="links-container">
-                  <div class="links-wrap">
+                  <div class="links-wrap" style="overflow-y: scroll">
                     <%= oembed.html_safe %>
                   </div>
                   <div class="text-right">
