@@ -50,7 +50,8 @@ $gray-medium-light: #eaeaea;
 }
 
 /* 大きめのコンテナ */
-.container-large {
+.container-large,
+.container-fluid {
   max-width: 100%;
   margin: 0 auto;
   padding: 0 15px;
