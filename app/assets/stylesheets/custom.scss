@@ -12,15 +12,6 @@ $gray-medium-light: #eaeaea;
   box-sizing: border-box;
 }
 
-@media screen and (max-width: 374px) {
-  /* 374px以下に適用されるCSS（スマホ用） */
-  .keyword_search_form {
-    input.form-control {
-      width: 80px !important;
-    }
-  }
-}
-
 @media (max-width: 1023px) {
   .navbar-toggle {
     display: block;
@@ -443,7 +434,6 @@ header {
         .input-group {
           input.form-control {
             max-width: 104px;
-            font-size: 14px !important;
           }
         }
       }
