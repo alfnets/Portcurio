@@ -51,7 +51,7 @@ $gray-medium-light: #eaeaea;
 
 /* 大きめのコンテナ */
 .container-large,
-.container-fluid {
+.container-full {
   max-width: 100%;
   margin: 0 auto;
   padding: 0 15px;
@@ -139,7 +139,7 @@ $gray-medium-light: #eaeaea;
 }
 
 @media screen and (min-width: 706px) {
-  .container-fluid {
+  .container-full {
     .ogp {
       figcaption {
         -webkit-line-clamp: 3;
@@ -148,7 +148,7 @@ $gray-medium-light: #eaeaea;
   }
 }
 @media screen and (min-width: 820px) {
-  .container-fluid {
+  .container-full {
     .ogp {
       figcaption {
         -webkit-line-clamp: 4;
@@ -157,7 +157,7 @@ $gray-medium-light: #eaeaea;
   }
 }
 @media screen and (min-width: 940px) {
-  .container-fluid {
+  .container-full {
     .ogp {
       figcaption {
         -webkit-line-clamp: 5;
@@ -166,7 +166,7 @@ $gray-medium-light: #eaeaea;
   }
 }
 @media screen and (min-width: 1010px) {
-  .container-fluid {
+  .container-full {
     .ogp {
       figcaption {
         -webkit-line-clamp: 2;
@@ -175,7 +175,7 @@ $gray-medium-light: #eaeaea;
   }
 }
 @media screen and (min-width: 1110px) {
-  .container-fluid {
+  .container-full {
     .ogp {
       figcaption {
         -webkit-line-clamp: 3;
@@ -184,7 +184,7 @@ $gray-medium-light: #eaeaea;
   }
 }
 @media screen and (min-width: 1320px) {
-  .container-fluid {
+  .container-full {
     .ogp {
       figcaption {
         -webkit-line-clamp: 4;
@@ -193,7 +193,7 @@ $gray-medium-light: #eaeaea;
   }
 }
 @media screen and (min-width: 1356px) {
-  .container-fluid {
+  .container-full {
     .ogp {
       figcaption {
         -webkit-line-clamp: 2;
@@ -741,7 +741,7 @@ aside {
   margin: 24px 0 12px;
   h2 {
     flex: 1;
-    font-size: clamp(1.5rem, 3.8vw, 3rem);
+    font-size: clamp(1.6rem, 3.8vw, 3rem);
     text-align: left;
     letter-spacing: -1px;
     margin-bottom: 3px;

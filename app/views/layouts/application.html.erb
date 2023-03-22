@@ -40,7 +40,7 @@
   <body>
     <%= render 'layouts/header' if logged_in? %>
 
-    <% container_class = request.path_info == root_path ? "container-fluid" : "container-large" %>
+    <% container_class = request.path_info == root_path ? "container-full" : "container-large" %>
     <div class=<%= container_class %>>
       <% flash.each do |message_type, message| %>
         <div class="alert alert-<%= message_type %>"><%= message %></div>
