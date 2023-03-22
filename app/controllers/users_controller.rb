@@ -23,23 +23,25 @@ class UsersController < ApplicationController
 
     redirect_to root_url and return unless @userprofile.activated?
 
-    # Microposts
-    @microposts = @userprofile.microposts.page(params[:page]).per(10)
-    
-    # Comments & likes
-    @comments_and_likes = Notification.where(
-      notifier_id: @userprofile.id
-    ).where.not(
-      notified_id: @userprofile.id
-    ).where.not(
-      notificable_type: 'Relationship'
-    ).where.not(
-      notificable_type: 'Micropost'
-    ).page(params[:page]).per(10)
-    
-    @path = request.fullpath
-    # debugger
-  
+    @tab = params[:tab] || "materials"
+
+    if @tab === "materials"
+      @materials = @userprofile.microposts.where(educational_material: true).page(params[:material_page]).per(18)
+
+    elsif @tab === "microposts"
+      @microposts = @userprofile.microposts.where(educational_material: false).page(params[:micropost_page]).per(20)
+
+    else @tab === "responses"
+      @comments_and_likes = Notification.where(
+        notifier_id: @userprofile.id
+      ).where.not(
+        notified_id: @userprofile.id
+      ).where.not(
+        notificable_type: 'Relationship'
+      ).where.not(
+        notificable_type: 'Micropost'
+      ).page(params[:page]).per(10)
+    end
   end
   
   # GET /users/new

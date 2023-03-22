@@ -1865,6 +1865,9 @@ section.profile {
         margin-left: 8px;
         padding: 4px;
         font-size: 1rem;
+        a {
+          font-size: 1.1rem;
+        }
       }
       .inline-block {
         padding: 0;
@@ -1874,6 +1877,24 @@ section.profile {
     .profile_description {
       padding-top: 8px;
     }
+  }
+}
+.tab {
+  display: flex;
+  align-items: center;
+  margin: 8px;
+  border-bottom: 1.5px solid #c5c5c5;
+  a {
+    padding: 8px 12px;
+    font-size: 18px;
+  }
+  a.active {
+    margin-bottom: -2px;
+    background-color: white;
+    border: 1.5px solid #c5c5c5;
+    border-bottom: white;
+    border-radius: 6px 6px 0 0;
+    color: #555555;
   }
 }
 
