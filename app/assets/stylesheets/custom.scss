@@ -641,15 +641,15 @@ aside {
   position: relative;
   display: block;
   float: left;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
   img {
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
     float: left;
     position: absolute;
@@ -662,25 +662,25 @@ aside {
 .profile-icon-edit {
   display: flex;
   gap: 16px;
-  height: 80px;
+  height: 60px;
   margin: 15px 0;
   .profile-icon-frame {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     img {
       border-radius: 50%;
-      width: 80px;
-      height: 80px;
+      width: 60px;
+      height: 60px;
       object-fit: cover;
     }
   }
   .image {
-    line-height: 80px;
+    line-height: 60px;
     margin: 0;
     padding: 0;
   }
   a {
-    line-height: 80px;
+    line-height: 60px;
   }
 }
 
@@ -713,19 +713,24 @@ aside {
 }
 
 .user-info.user-show {
-  margin: 24px 0 8px 8px;
+  margin: 24px 0 16px 8px;
+
   .profile-icon-frame {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
+    aspect-ratio: 1 / 1;
     img {
       border-radius: 50%;
-      width: 80px;
-      height: 80px;
+      width: 60px;
+      height: 60px;
+      aspect-ratio: 1 / 1;
       object-fit: cover;
     }
   }
   h1 {
-    font-size: 2rem;
+    flex: 1;
+    font-size: clamp(1.6rem, 3.8vw, 2rem);
+    text-align: left;
     letter-spacing: -1px;
     margin-bottom: 3px;
     margin-top: 8px;
@@ -733,9 +738,10 @@ aside {
 }
 
 .user-info.user-follow {
-  margin: 24px 0 8px;
-  h1 {
-    font-size: 2rem;
+  margin: 24px 0 12px;
+  h2 {
+    flex: 1;
+    font-size: clamp(1.5rem, 3.8vw, 3rem);
     text-align: left;
     letter-spacing: -1px;
     margin-bottom: 3px;
@@ -752,12 +758,13 @@ aside {
   overflow: auto;
   margin-top: 0;
   margin-bottom: 8px;
-  padding-left: 48px;
+  padding-left: 40px;
   a {
     float: left;
     padding: 0 10px;
     border-left: 1px solid $gray-lighter;
     color: gray;
+    font-size: 0.9rem;
     &:first-child {
       padding-left: 0;
       border: 0;
@@ -808,6 +815,10 @@ aside {
 
 .users.follow {
   padding: 0;
+}
+
+#activityTab a {
+  padding: 10px !important;
 }
 
 /* forms */
