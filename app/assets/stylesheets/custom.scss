@@ -614,8 +614,7 @@ aside {
     }
     .response-form {
       margin: 0 16px;
-      justify-content: center;
-      gap: 20px;
+      justify-content: space-evenly;
     }
     .text-content {
       position: relative;
@@ -1172,6 +1171,7 @@ input {
         display: flex;
         justify-content: center;
         background-size: contain;
+        background-repeat: no-repeat;
         width: 100%;
         aspect-ratio: 4 / 3;
         margin-bottom: 0.5rem;
@@ -1237,8 +1237,22 @@ input {
   }
   .img-container {
     background-color: #eeeeee80;
-    padding: 27px 20px;
+    padding: 20px 20px 8px;
     border-radius: 16px;
+    .img-wrap {
+      display: flex;
+      justify-content: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      aspect-ratio: 4 / 3;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      img {
+        width: 100%;
+        object-fit: contain;
+        object-position: 50% 50%;
+      }
+    }
   }
   .btn-tagsedit {
     display: -webkit-box;
@@ -1316,7 +1330,7 @@ input {
   column-gap: 8px;
   row-gap: 4px;
   flex-wrap: wrap;
-  margin: 8px -8px 12px 0px;
+  margin: 8px 0 12px;
   a {
     padding-right: 8px;
   }
@@ -1827,7 +1841,13 @@ span.image {
   .check_box {
     margin: 8px 8px 0 0;
   }
-  .tag_search_wrap {
+  .tag-search-wrap {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+    row-gap: 4px;
+    flex-wrap: wrap;
+    margin: 8px 0 12px;
     .input-group {
       width: 100%;
       .bootstrap-tagsinput {
@@ -1927,6 +1947,9 @@ p#delete_user_page {
   }
   li {
     padding-top: 40px;
+  }
+  img {
+    width: 100%;
   }
 }
 

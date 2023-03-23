@@ -1,14 +1,14 @@
-<% provide(:title, @userprofile.name) %>
+<% provide(:title, @user.name) %>
 
 <section class="user-info user-show">
   <div class='profile-icon-frame'>
-    <%= @userprofile.image.attached? ? (image_tag @userprofile.image) : (gravatar_for @userprofile) %>
+    <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
   </div>
 
   <div class='user-text-info'>
-    <h1><%= @userprofile.name %></h1>
+    <h1><%= @user.name %></h1>
 
-    <%= render partial: 'relationships/follow_form', locals: {user: @userprofile} if logged_in? %>
+    <%= render partial: 'relationships/follow_form', locals: {user: @user} if logged_in? %>
   </div>
 </section>
 
@@ -16,29 +16,29 @@
   <%= render 'shared/stats' %>
 </section>
 
-<% if @userprofile.school_type.present? || @userprofile.subject.present? || @userprofile.profile.present? || @userprofile.website.present? %>
+<% if @user.school_type.present? || @user.subject.present? || @user.profile.present? || @user.website.present? %>
 
   <section class="profile">
 
     <ul>
-      <% if @userprofile.school_type.present? %>
-        <li>メイン校種: <%= @userprofile.school_type %></li>
+      <% if @user.school_type.present? %>
+        <li>メイン校種: <%= @user.school_type %></li>
       <% end %>
 
-      <% if @userprofile.subject.present? %>
-        <li>メイン教科: <%= @userprofile.subject %></li>
+      <% if @user.subject.present? %>
+        <li>メイン教科: <%= @user.subject %></li>
       <% end %>
 
-      <% if @userprofile.profile.present? %>
-        <li class="profile_description">プロフィール:<p><%= @userprofile.profile %></p></li>
+      <% if @user.profile.present? %>
+        <li class="profile_description">プロフィール:<p><%= @user.profile %></p></li>
       <% end %>
 
-      <% if @userprofile.website.present? %>
+      <% if @user.website.present? %>
         <li>Webサイト:
-          <% if raw(Rinku.auto_link(simple_format(h(@userprofile.website)))).include?("https://#{domain_name}") %>
-              <%= raw Rinku.auto_link(simple_format(h(@userprofile.website), class: "inline-block"), :all) %>
+          <% if raw(Rinku.auto_link(simple_format(h(@user.website)))).include?("https://#{domain_name}") %>
+              <%= raw Rinku.auto_link(simple_format(h(@user.website), class: "inline-block"), :all) %>
           <% else %>
-            <%= raw Rinku.auto_link(simple_format(h(@userprofile.website), class: "inline-block"), :all, 'target="_blank" rel="noopener noreferrer"') %>
+            <%= raw Rinku.auto_link(simple_format(h(@user.website), class: "inline-block"), :all, 'target="_blank" rel="noopener noreferrer"') %>
           <% end %>
         </li>
       <% end %>
@@ -49,9 +49,9 @@
 <% end %>
 
 <div class="tab">
-  <%= link_to "Materials", user_path(@userprofile, tab: "materials"), id: "materials_tab" %>
-  <%= link_to "Microposts", user_path(@userprofile, tab: "microposts"), id: "microposts_tab" %>
-  <%= link_to "Responses", user_path(@userprofile, tab: "responses"), id: "responses_tab" %>
+  <%= link_to "Materials", user_path(@user, tab: "materials"), id: "materials_tab" %>
+  <%= link_to "Microposts", user_path(@user, tab: "microposts"), id: "microposts_tab" %>
+  <%= link_to "Responses", user_path(@user, tab: "responses"), id: "responses_tab" %>
 </div>
 
 <% if @tab === "materials" %>

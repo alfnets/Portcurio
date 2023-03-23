@@ -1,9 +1,9 @@
 <div class="tags-wrap">
   <div class="tagging-form tags_edit">
     <%= form_with model: micropost, url: micropost_tags_path(micropost) , local: false do |f| %>
-      <div class="tag_search_wrap">
+      <div class="tag-search-wrap">
         <% lock_tags.each do |tag| %>
-          <%= link_to tag, microposts_path(click_tag: tag) %>
+          <%= link_to tag, microposts_path(click_tag: tag), class: 'btn-tag' %>
         <% end %>
         <div class="inline-block">
           <div class="input-group">

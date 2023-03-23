@@ -2,7 +2,7 @@
   <% comment_count = @feedmicropost.comments.where(parent_id: nil).count %>
 
   $(".btn-comment<%= @feedmicropost.id %>").html(
-      '<%= button_to close_comment_path(@feedmicropost.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "btn-comment btn-link", remote: true } do %><i class="fa-regular fa-comment-dots"></i> <%= comment_count %><% end %>'
+      '<%= button_to close_comment_path(@feedmicropost.id), { method: :get, class: "btn-comment btn-link", remote: true } do %><i class="fa-regular fa-comment-dots"></i> <%= comment_count %><% end %>'
     )
 
   $(".micropost<%= @feedmicropost.id %>-comment").html(
@@ -14,7 +14,7 @@
   <% reply_count = @comment.replies.count %>
 
   $(".reply-btn<%= @comment.id %>").html(
-      '<%= button_to close_micropost_comment_path(@feedmicropost.id, @comment.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "btn-reply btn-link", remote: true } do %><i class="fa-regular fa-comment-dots"></i> <%= reply_count %><% end %>'
+      '<%= button_to close_micropost_comment_path(@feedmicropost.id, @comment.id), { method: :get, class: "btn-reply btn-link", remote: true } do %><i class="fa-regular fa-comment-dots"></i> <%= reply_count %><% end %>'
     )
 
   $(".reply-<%= @comment.id %>").html(
@@ -24,7 +24,7 @@
   <% if $mention_ids %>
     <% mention_users = User.where(id: $mention_ids) %>
     <% mention_users.each do |mention_user| %>
-      $(".reply-<%= @comment.id %> .mention").append('<%= link_to "@#{mention_user.name}", mention_user %> <%= link_to mention_delete_micropost_comment_path(@feedmicropost.id, @comment.id, user_id: mention_user.id, userprofile_id: @userprofile.id), remote: true, class: "btn-link", method: :get do %><i class="far fa-times-circle"></i><% end %>, ')
+      $(".reply-<%= @comment.id %> .mention").append('<%= link_to "@#{mention_user.name}", mention_user %> <%= link_to mention_delete_micropost_comment_path(@feedmicropost.id, @comment.id, user_id: mention_user.id), remote: true, class: "btn-link", method: :get do %><i class="far fa-times-circle"></i><% end %>, ')
     <% end %>
   <% end %>
 
@@ -43,7 +43,7 @@
     <% mention_users = User.where(id: $mention_ids) %>
 
     <% mention_users.each do |mention_user| %>
-      $(".reply-<%= @comment.parent_id %> .mention").append('<%= link_to "@#{mention_user.name}", mention_user %> <%= link_to mention_delete_micropost_comment_path(@feedmicropost.id, @comment.parent_id, user_id: mention_user.id, userprofile_id: @userprofile.id), remote: true, class: "btn-link", method: :get do %><i class="far fa-times-circle"></i><% end %>, ')
+      $(".reply-<%= @comment.parent_id %> .mention").append('<%= link_to "@#{mention_user.name}", mention_user %> <%= link_to mention_delete_micropost_comment_path(@feedmicropost.id, @comment.parent_id, user_id: mention_user.id), remote: true, class: "btn-link", method: :get do %><i class="far fa-times-circle"></i><% end %>, ')
     <% end %>
   <% end %>
 <% end %>

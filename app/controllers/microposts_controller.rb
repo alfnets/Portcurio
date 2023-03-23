@@ -1,6 +1,8 @@
 class MicropostsController < ApplicationController
   before_action :logged_in_user, only: [:create, :destroy, :show]
   before_action :correct_user,   only: :destroy
+
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
  
   # POST /microposts
   def create
@@ -45,7 +47,6 @@ class MicropostsController < ApplicationController
         end
       end
     else
-      @userprofile = current_user
       @feed_items = current_user.feed.page(params[:page])
       @all_microposts     = Kaminari.paginate_array(Micropost.all).page(params[:page])
       render 'static_pages/home'
@@ -80,7 +81,6 @@ class MicropostsController < ApplicationController
       #   format.js
       # end
     else
-      @userprofile = current_user
       respond_to do |format|
         format.js { render action: "edit" }
       end
@@ -133,15 +133,14 @@ class MicropostsController < ApplicationController
       @all_microposts = Kaminari.paginate_array(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)).includes(:tags)).page(params[:page])
     end
     @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
-    @userprofile = current_user
   end
   
 
   # GET /microposts/:id
   def show
+
     @micropost = Micropost.find(params[:id])
     redirect_to root_url if @micropost.publishing == 'private' && @micropost.user != current_user
-    @userprofile = @micropost.user
     @comments = @micropost.comments.where(parent_id: nil).unscope(:order).order(updated_at: :desc)
   end
  
@@ -149,7 +148,6 @@ class MicropostsController < ApplicationController
   # GET /microposts/get_selected_school_type
   def get_selected_school_type
     @selected_school_type = params[:selected_school_type]
-    @userprofile = current_user
     respond_to do |format|
       format.js
     end
@@ -159,7 +157,6 @@ class MicropostsController < ApplicationController
   # GET /microposts/add_search_tag
   def add_search_tag
     @tag = params[:tag]
-    @userprofile = current_user
     respond_to do |format|
       format.js
     end
@@ -168,7 +165,6 @@ class MicropostsController < ApplicationController
 
   # GET /microposts/remove_image
   def remove_image
-    @userprofile = current_user
     respond_to do |format|
       format.js
     end
@@ -177,7 +173,6 @@ class MicropostsController < ApplicationController
 
   # GET /microposts/:id/remove_exist_image
   def remove_exist_image
-    @userprofile = current_user
     @micropost = Micropost.find(params[:id])
     respond_to do |format|
       format.js { render "remove_image" }
@@ -186,7 +181,11 @@ class MicropostsController < ApplicationController
 
 
   private
-    
+  
+    def record_not_found
+      redirect_to root_path
+    end
+
     # Strong parameter
     def micropost_params
       params.require(:micropost).permit(:title, :content, :image, :file_link, :publishing, :educational_material)

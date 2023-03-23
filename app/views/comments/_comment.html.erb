@@ -45,12 +45,12 @@
             <% unless comment.parent %>
             <!-- 親コメントがない場合 -->
               <% reply_count = comment.replies.count %>
-              <%= button_to micropost_comment_path(comment.micropost_id, comment.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "btn-reply btn-link", remote: true } do %>
+              <%= button_to micropost_comment_path(comment.micropost_id, comment.id), { method: :get, class: "btn-reply btn-link", remote: true } do %>
                 <i class="fa-regular fa-comment-dots"></i> <%= reply_count %>
               <% end %>
             <% else %>
             <!-- 親コメントがある場合 -->
-              <%= button_to micropost_comment_path(comment.micropost.id, comment.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "btn-reply btn-link", remote: true } do %>
+              <%= button_to micropost_comment_path(comment.micropost.id, comment.id), { method: :get, class: "btn-reply btn-link", remote: true } do %>
                 <i class="fa-solid fa-reply"></i> 
               <% end %>
             <% end %>
@@ -62,7 +62,7 @@
       </span>
 
       <% if current_user?(comment.user) %>
-        <%= link_to micropost_comment_path(comment.micropost_id, comment.id, userprofile_id: @userprofile.id), method: :delete,
+        <%= link_to micropost_comment_path(comment.micropost_id, comment.id), method: :delete,
                                           data: { confirm: "Are you sure you want to delete this?" }, remote: true do %>
           <i class="fa-solid fa-trash-can"></i>
         <% end %>

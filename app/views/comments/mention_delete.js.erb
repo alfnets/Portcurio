@@ -2,6 +2,6 @@ $(".reply-<%= @comment.id %> .mention").html('')
 <% if $mention_ids %>
   <% mention_users = User.where(id: $mention_ids) %>
   <% mention_users.each do |mention_user| %>
-    $(".reply-<%= @comment.id %> .mention").append('<%= link_to "@#{mention_user.name}", mention_user %> <%= link_to mention_delete_micropost_comment_path(@feedmicropost.id, @comment.id, user_id: mention_user.id, userprofile_id: @userprofile.id), remote: true, class: "btn-link", method: :get do %><i class="far fa-times-circle"></i><% end %>, ').hide().fadeIn(100)
+    $(".reply-<%= @comment.id %> .mention").append('<%= link_to "@#{mention_user.name}", mention_user %> <%= link_to mention_delete_micropost_comment_path(@feedmicropost.id, @comment.id, user_id: mention_user.id), remote: true, class: "btn-link", method: :get do %><i class="far fa-times-circle"></i><% end %>, ').hide().fadeIn(100)
   <% end %>
 <% end %>

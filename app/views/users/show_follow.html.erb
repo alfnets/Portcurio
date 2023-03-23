@@ -4,12 +4,12 @@
 
 <section class="user-info user-follow">
   <div class='profile-icon-frame'>
-    <%= @userprofile.image.attached? ? (image_tag @userprofile.image) : (gravatar_for @userprofile) %>
+    <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
   </div>
 
   <div class='user-text-info'>
-    <h2><%= link_to @userprofile.name, @userprofile %></h2>
-    <div><b>Microposts:</b> <%= @userprofile.microposts.count %></div>
+    <h2><%= link_to @user.name, @user %></h2>
+    <div><b>Microposts:</b> <%= @user.microposts.count %></div>
   </div>
 </section>
 <section class="stats user-follow">

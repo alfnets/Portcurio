@@ -75,10 +75,10 @@
                   </div>
                 </div>
                 <div class="text-right">
-                  <% if request.path_info === root_path %>
-                    <%= link_to "詳細を開く", micropost %>
-                  <% else %>
+                  <% if request.path_info.start_with?('/microposts/') %>
                     <%= link_to "別タブで開く", link_url, target: :_blank, rel: "noopener noreferrer" %>
+                  <% else %>
+                    <%= link_to "詳細を開く", micropost %>
                   <% end %>
                 </div>
               </div>
@@ -86,9 +86,20 @@
           <% end %>
 
           <% if micropost.image.attached? %>
-            <!-- link_to micropost.display_image, "data-lightbox": micropost.display_image do %>-->
-            <%= image_tag micropost.display_image %>
-            <!--end %>-->
+            <div class="img-container">
+              <div class="img-wrap">
+                <!-- link_to micropost.display_image, "data-lightbox": micropost.display_image do %>-->
+                <%= image_tag micropost.display_image %>
+                <!--end %>-->
+              </div>
+              <div class="text-right">
+                <% if request.path_info.start_with?('/microposts')  %>
+                  <%= "　" %>
+                <% else %>
+                  <%= link_to "詳細を開く", micropost %>
+                <% end %>
+              </div>
+            </div>
           <% end %>
 
           <% if micropost.links.present? %>
@@ -100,10 +111,10 @@
                     <%= oembed.html_safe %>
                   </div>
                   <div class="text-right">
-                    <% if request.path_info === root_path %>
-                      <%= link_to "詳細を開く", micropost %>
-                    <% else %>
+                    <% if request.path_info.start_with?('/microposts/') %>
                       <%= link_to "別タブで開く", micropost.links, target: :_blank, rel: "noopener noreferrer" %>
+                    <% else %>
+                      <%= link_to "詳細を開く", micropost %>
                     <% end %>
                   </div>
                 </div>
@@ -118,10 +129,10 @@
                     </div>
                   </div>
                   <div class="text-right">
-                    <% if request.path_info === root_path %>
-                      <%= link_to "詳細を開く", micropost %>
-                    <% else %>
+                    <% if request.path_info.start_with?('/microposts/') %>
                       <%= link_to "別タブで開く", pdf_link, target: :_blank, rel: "noopener noreferrer" %>
+                    <% else %>
+                      <%= link_to "詳細を開く", micropost %>
                     <% end %>
                   </div>
                 </div>
@@ -132,27 +143,33 @@
                 <div class="links ogp">
                   <div class="links-container">
                     <div class="links-wrap">
-                      <figure>
-                        <% cache(og.images.first, expires_in: 600.seconds) do %>
-                          <% if og.title.present? %>
-                            <%= link_to image_tag(og.images.first, alt: og.title), og.url, target: :_blank, rel: "noopener noreferrer" %>
-                          <% elsif og.description.present? %>
-                            <%= link_to image_tag(og.images.first, alt: og.description), og.url, target: :_blank, rel: "noopener noreferrer" %>
-                          <% else %>
-                            <%= link_to image_tag(og.images.first), og.url, target: :_blank, rel: "noopener noreferrer" %>
+                      <% begin %>
+                        <figure>
+                          <% cache(og.images.first, expires_in: 600.seconds) do %>
+                            <% if og.title.present? %>
+                              <%= link_to image_tag(og.images.first, alt: og.title), og.url, target: :_blank, rel: "noopener noreferrer" %>
+                            <% elsif og.description.present? %>
+                              <%= link_to image_tag(og.images.first, alt: og.description), og.url, target: :_blank, rel: "noopener noreferrer" %>
+                            <% else %>
+                              <%= link_to image_tag(og.images.first), og.url, target: :_blank, rel: "noopener noreferrer" %>
+                            <% end %>
                           <% end %>
+                          <figcaption>
+                            <span class=ogp_title><%= "[#{og.title}]" if og.title.present? %></span>
+                            <span class=ogp_description><%= og.description if og.description.present? %>
+                          </figcaption>
+                        </figure>
+                      <% rescue ArgumentError => e %>
+                        <%= link_to micropost do %>
+                          <%= image_tag("no_content.png", alt: "no content") %>
                         <% end %>
-                        <figcaption>
-                          <span class=ogp_title><%= "[#{og.title}]" if og.title.present? %></span>
-                          <span class=ogp_description><%= og.description if og.description.present? %>
-                        </figcaption>
-                      </figure>
+                      <% end %>
                     </div>
                     <div class="text-right">
-                      <% if request.path_info === root_path %>
-                        <%= link_to "詳細を開く", micropost %>
-                      <% else %>
+                      <% if request.path_info.start_with?('/microposts/') %>
                         <%= link_to "別タブで開く", og.url, target: :_blank, rel: "noopener noreferrer" %>
+                      <% else %>
+                        <%= link_to "詳細を開く", micropost %>
                       <% end %>
                     </div>
                   </div>
@@ -167,14 +184,14 @@
     
     <div class="tag-container">
       <%# 一覧画面ではタグは５個まで表示 %>
-      <% tags = request.path_info.start_with?('/microposts') ? micropost.tags : micropost.tags.take(5) %>
+      <% tags = request.path_info.start_with?('/microposts/') ? micropost.tags : micropost.tags.take(5) %>
 
       <% if tags.count > 0 %>
         <div class="tags-wrap">
           <% tags.each do |tag| %>
             <%= link_to tag.name, microposts_path(click_tag: tag.name), class: "btn-tag" %>
           <% end %>
-          <% if !request.path_info.start_with?('/microposts') && micropost.tags.size > 5 %>
+          <% if !request.path_info.start_with?('/microposts/') && micropost.tags.size > 5 %>
             <span>...</span>
           <% end %>
           <% if micropost.tags.count > 0 %>

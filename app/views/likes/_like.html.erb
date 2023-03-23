@@ -1,15 +1,5 @@
 <% likepath = send("#{likeable.class.name.downcase}_likes_path", likeable.id) %>
-<!-- form_with url: likes_url, method: :post, local: false, class: "form-inline" do |f| -->
-<!-- form_with model: [likeable, Like.new], method: :post, local: false, class: "form-inline" do |f| %>-->
 <%= form_with url: likepath, method: :post, local: false, class: "form-inline" do |f| %>
-  <!-- hidden_field_tag :micropost_id, micropost.id, { id: SecureRandom.hex(4) } -->
-  <% if @userprofile.present? %>
-    <div><%= hidden_field_tag :userprofile_id, @userprofile.id, { id: SecureRandom.hex(4) } %></div>
-  <% elsif params[:id].present? %>
-    <div><%= hidden_field_tag :userprofile_id, params[:id],     { id: SecureRandom.hex(4) } %></div>
-  <% else %>
-    <div><%= hidden_field_tag :userprofile_id, current_user.id, { id: SecureRandom.hex(4) } %></div>
-  <% end %>
   <%= button_tag type: "submit", class: "btn-link" do %>
     <span class="fas fa-thumbs-up like-btn-unlike"></span>
   <% end %>

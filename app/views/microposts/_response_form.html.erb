@@ -22,7 +22,7 @@
 <div class="icon-group">
   <span class="btn-comment<%= micropost.id %> btn-comment-wrap">
     <% comment_count = micropost.comments.where(parent_id: nil).count %>
-    <%= button_to comment_path(micropost.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "btn-comment btn-link", remote: true } do %>
+    <%= button_to comment_path(micropost.id), { method: :get, class: "btn-comment btn-link", remote: true } do %>
       <i class="fa-regular fa-comment-dots"></i> <%= comment_count %>
     <% end %>
   </span>

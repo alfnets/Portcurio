@@ -13,29 +13,28 @@ class UsersController < ApplicationController
     else
       @title = "All users"
     end
-    @userprofile = current_user
     @users = @q.result.page(params[:page])
   end
   
   # GET /users/:id
   def show
-    @userprofile = User.find(params[:id])
+    @user = User.find(params[:id])
 
-    redirect_to root_url and return unless @userprofile.activated?
+    redirect_to root_url and return unless @user.activated?
 
     @tab = params[:tab] || "materials"
 
     if @tab === "materials"
-      @materials = @userprofile.microposts.where(educational_material: true).page(params[:material_page]).per(18)
+      @materials = @user.microposts.where(educational_material: true).page(params[:material_page]).per(18)
 
     elsif @tab === "microposts"
-      @microposts = @userprofile.microposts.where(educational_material: false).page(params[:micropost_page]).per(20)
+      @microposts = @user.microposts.where(educational_material: false).page(params[:micropost_page]).per(20)
 
     else @tab === "responses"
       @comments_and_likes = Notification.where(
-        notifier_id: @userprofile.id
+        notifier_id: @user.id
       ).where.not(
-        notified_id: @userprofile.id
+        notified_id: @user.id
       ).where.not(
         notificable_type: 'Relationship'
       ).where.not(
@@ -111,14 +110,12 @@ class UsersController < ApplicationController
   
   # GET /users/:id/edit
   def edit
-    @userprofile = current_user
     @user = User.find(params[:id])
     # => app/views/users/edit.html.erb
   end
   
   # PATCH /users/:id
   def update
-    @userprofile = current_user
     @user = User.find(params[:id])
     @user.attributes = user_params
     begin
@@ -167,13 +164,11 @@ class UsersController < ApplicationController
   
   # GET /users/:id/delete
   def delete
-    @userprofile = current_user
     @user = User.find(params[:id])
   end
 
   # DELETE /users/:id
   def destroy
-    @userprofile = current_user
     User.find(params[:id]).destroy
     flash[:success] = "User deleted"
     redirect_to users_url
@@ -182,24 +177,24 @@ class UsersController < ApplicationController
   # GET /users/:id/following
   def following
     @title = "Following"
-    @userprofile  = User.find(params[:id])
-    @users = @userprofile.following.page(params[:page]).per(10)
+    @user  = User.find(params[:id])
+    @users = @user.following.page(params[:page]).per(10)
     render 'show_follow'
   end
 
   # GET /users/:id/followers
   def followers
     @title = "Followers"
-    @userprofile  = User.find(params[:id])
-    @users = @userprofile.followers.page(params[:page]).per(10)
+    @user  = User.find(params[:id])
+    @users = @user.followers.page(params[:page]).per(10)
     render 'show_follow'
   end
   
   # GET /users/:id/subscribing
   def subscribing
     @title = "Subscribing"
-    @userprofile = User.find(params[:id])
-    @users = @userprofile.subscribing.page(params[:page]).per(10)
+    @user = User.find(params[:id])
+    @users = @user.subscribing.page(params[:page]).per(10)
     render 'show_follow'
   end
   
@@ -220,12 +215,10 @@ class UsersController < ApplicationController
       @portcurio = Micropost.joins(:porcs).where(porcs: { user: current_user }).page(params[:page])
     end
     @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
-    @userprofile = current_user
   end
 
   # GET /users/get_selected_school_type
   def get_selected_school_type
-    @userprofile = current_user
     @selected_school_type = params[:selected_school_type]
     respond_to do |format|
       format.js

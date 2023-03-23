@@ -9,7 +9,6 @@ class PorcsController < ApplicationController
     @porc = @micropost.porcs.build(user: current_user)
     @porc.save
 
-    @userprofile = User.find(params[:userprofile_id])
     respond_to do |format|
       format.html { redirect_to request.referer || root_url }
       format.js
@@ -20,7 +19,6 @@ class PorcsController < ApplicationController
   def destroy
     @micropost = Micropost.find(params[:micropost_id])
     @porc.destroy
-    @userprofile = User.find(params[:userprofile_id])
     respond_to do |format|
       format.html { redirect_to request.referer || root_url }
       format.js
