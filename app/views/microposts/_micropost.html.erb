@@ -194,12 +194,14 @@
           <% if !request.path_info.start_with?('/microposts/') && micropost.tags.size > 5 %>
             <span>...</span>
           <% end %>
-          <% if micropost.tags.count > 0 %>
-            <%= link_to edit_micropost_tags_path(micropost), class: "btn btn-tagsedit", remote: true do %>
-              <span style="position: relative; display: inline-block; width: 26px; height: 26px">
-                <i class="fas fa-tags" style="position: absolute; bottom: 1px; left: 3px; font-size: 18px; color: #616161; opacity: 0.6"></i>
-                <i class="fas fa-pencil-alt" style="position: absolute; top: 4px; right: 3px; color: #616161"></i>
-              </span>
+          <% if logged_in? %>
+            <% if micropost.tags.count > 0 %>
+              <%= link_to edit_micropost_tags_path(micropost), class: "btn btn-tagsedit", remote: true do %>
+                <span style="position: relative; display: inline-block; width: 26px; height: 26px">
+                  <i class="fas fa-tags" style="position: absolute; bottom: 1px; left: 3px; font-size: 18px; color: #616161; opacity: 0.6"></i>
+                  <i class="fas fa-pencil-alt" style="position: absolute; top: 4px; right: 3px; color: #616161"></i>
+                </span>
+              <% end %>
             <% end %>
           <% end %>
         </div>

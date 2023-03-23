@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
   def new
     # x @session = Session.new
     # o scope: :session + url: login_path
+    redirect_to root_url if logged_in?
   end
   
   # POST /login

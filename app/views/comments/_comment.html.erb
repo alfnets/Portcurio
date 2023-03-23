@@ -46,7 +46,7 @@
             <!-- 親コメントがない場合 -->
               <% reply_count = comment.replies.count %>
               <%= button_to micropost_comment_path(comment.micropost_id, comment.id), { method: :get, class: "btn-reply btn-link", remote: true } do %>
-                <i class="fa-regular fa-comment-dots"></i> <%= reply_count %>
+                <i class="fa-regular fa-comment-dots"></i><%= reply_count %>
               <% end %>
             <% else %>
             <!-- 親コメントがある場合 -->

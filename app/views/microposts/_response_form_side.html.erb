@@ -23,7 +23,7 @@
   <span class="btn-comment<%= micropost.id %> btn-comment-wrap">
     <% comment_count = micropost.comments.where(parent_id: nil).count %>
     <%= button_to micropost, { method: :get, params: {comment_open: true}, class: "btn-comment btn-link" } do %>
-      <i class="fa-regular fa-comment-dots"></i> <%= comment_count %>
+      <i class="fa-regular fa-comment-dots"></i><%= comment_count %>
     <% end %>
   </span>
 </div>

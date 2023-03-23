@@ -1,5 +1,6 @@
 <header class="navbar navbar-fixed-top navbar-default">
   <% container_class = request.path_info == root_path ? "container-full" : "container-large" %>
+  <% container_class = "container" if !logged_in? %>
   <div class=<%= container_class %>>
     <% if logged_in? %>
       <div class="icon-container">
@@ -31,11 +32,11 @@
           <li><%= link_to "Home", root_path, 'data-turbolinks': false %></li>
           <% if logged_in? %>
             <li><%= link_to "MyPortcurio", portcurio_user_path(current_user), 'data-turbolinks': false %></li>
+          <% end %>
             <li><%= link_to "Links", links_path %></li>
             <li><%= link_to "Feed", microposts_path %></li>
             <li><%= link_to "Users", users_path %></li>
             <li><%= link_to "Help", help_path %></li>
-          <% end %>
           <% if logged_in? %>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">

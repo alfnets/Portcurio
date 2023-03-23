@@ -2,7 +2,7 @@
   <% comment_count = @feedmicropost.comments.where(parent_id: nil).count %>
 
   $(".btn-comment<%= @feedmicropost.id %>").html(
-      '<%= button_to comment_path(@feedmicropost.id), { method: :get, class: "btn-comment btn-link", remote: true } do %><i class="fa-regular fa-comment-dots"></i> <%= comment_count %><% end %>'
+      '<%= button_to comment_path(@feedmicropost.id), { method: :get, class: "btn-comment btn-link", remote: true } do %><i class="fa-regular fa-comment-dots"></i><%= comment_count %><% end %>'
     )
 
   $(".micropost<%= @feedmicropost.id %>-comment").slideUp(300)
@@ -12,7 +12,7 @@
   <% reply_count = @comment.replies.count %>
 
   $(".reply-btn<%= @comment.id %>").html(
-      '<%= button_to micropost_comment_path(@comment.micropost_id, @comment.id), { method: :get, class: "btn-reply btn-link", remote: true } do %><i class="fa-regular fa-comment-dots"></i> <%= reply_count %><% end %>'
+      '<%= button_to micropost_comment_path(@comment.micropost_id, @comment.id), { method: :get, class: "btn-reply btn-link", remote: true } do %><i class="fa-regular fa-comment-dots"></i><%= reply_count %><% end %>'
     )
 
   $(".reply-close-<%= @comment.id %>").slideUp(300)

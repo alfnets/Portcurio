@@ -51,7 +51,9 @@
 <div class="tab">
   <%= link_to "Materials", user_path(@user, tab: "materials"), id: "materials_tab" %>
   <%= link_to "Microposts", user_path(@user, tab: "microposts"), id: "microposts_tab" %>
-  <%= link_to "Responses", user_path(@user, tab: "responses"), id: "responses_tab" %>
+  <% if logged_in? %>
+    <%= link_to "Responses", user_path(@user, tab: "responses"), id: "responses_tab" %>
+  <% end %>
 </div>
 
 <% if @tab === "materials" %>
@@ -75,14 +77,16 @@
   <% end %>
 
 <% else %>
-  <% if @comments_and_likes.any? %>
-    <ol class="microposts jscroll-reaction">
-      <% @comments_and_likes.each do |activity| %>
-        <%= render partial: 'notifications/comment_and_like', locals: {activity: activity} %>
-      <% end %>
-      <div class='center'><%= paginate @comments_and_likes %></div>
-    </ol>
-  <% else %>
-    <p>No comments, likes</p>
+  <% if logged_in? %>
+    <% if @comments_and_likes.any? %>
+      <ol class="microposts jscroll-reaction">
+        <% @comments_and_likes.each do |activity| %>
+          <%= render partial: 'notifications/comment_and_like', locals: {activity: activity} %>
+        <% end %>
+        <div class='center'><%= paginate @comments_and_likes %></div>
+      </ol>
+    <% else %>
+      <p>No comments, likes</p>
+    <% end %>
   <% end %>
 <% end %>

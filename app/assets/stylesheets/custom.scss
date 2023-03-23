@@ -80,6 +80,10 @@ $gray-medium-light: #eaeaea;
   padding: 0 15px;
 }
 
+.jumbotron {
+  margin-top: 30px;
+}
+
 /* figcaptureの表示数を強引にレスポンシブにした */
 @media screen and (max-width: 440px) {
   .ogp {
@@ -248,6 +252,14 @@ textarea {
   display: grid;
   grid-template-columns: 280px 1fr;
   grid-gap: 24px;
+}
+
+.unable {
+  color: #7f8c8d;
+}
+
+.fa-comment-dots {
+  margin-right: 4px;
 }
 
 /* typography */
@@ -867,6 +879,22 @@ input {
   margin-left: 0;
 }
 
+.checkbox-wrap {
+  margin-bottom: 24px;
+  label {
+    display: flex;
+    align-items: center;
+    line-height: 1.2;
+    gap: 8px;
+    #user_private {
+      margin: 0;
+      width: 30px;
+    }
+  }
+}
+
+
+
 .line-checkbox-wrap {
   padding-top: 10px;
   margin-bottom: 18px;
@@ -973,9 +1001,6 @@ input {
   padding: 0 20px;
   input {
     margin-bottom: 24px;
-    &:nth-child(2) {
-      margin-top: 30px;
-    }
   }
 }
 

@@ -167,7 +167,9 @@
 
             <div class="icon-group">
               <span class="like-btn-micropost-<%= micropost.id %> likes"> 
-                <% if micropost.like_users.find_by(id: current_user.id) %>
+                <% if !logged_in? %>
+                  <%= render partial: 'likes/like', locals: { likeable: micropost } %>
+                <% elsif micropost.like_users.find_by(id: current_user.id) %>
                   <%= render partial: 'likes/unlike', locals: { likeable: micropost } %>
                 <% else %>
                   <%= render partial: 'likes/like', locals: { likeable: micropost } %>
@@ -193,13 +195,13 @@
                 <% if request.path.start_with?('/microposts/') %>
 
                   <%= button_to comment_path(micropost.id), { method: :get, class: "btn-comment btn-link", remote: true } do %>
-                    <i class="fa-regular fa-comment-dots"></i> <%= comment_count %>
+                    <i class="fa-regular fa-comment-dots"></i><%= comment_count %>
                   <% end %>
 
                 <% else %>
 
                   <%= button_to micropost, { method: :get, params: {comment_open: true}, class: "btn-comment btn-link" } do %>
-                    <i class="fa-regular fa-comment-dots"></i> <%= comment_count %>
+                    <i class="fa-regular fa-comment-dots"></i><%= comment_count %>
                   <% end %>
 
                 <% end %>
@@ -242,11 +244,13 @@
         <% if !request.path_info.start_with?('/microposts/') && micropost.tags.size > 5 %>
           <span>...</span>
         <% end %>
-        <%= link_to edit_micropost_tags_path(micropost), class: "btn btn-tagsedit", remote: true do %>
-          <span style="position: relative; display: inline-block; width: 26px; height: 26px">
-            <i class="fas fa-tags" style="position: absolute; bottom: 1px; left: 3px; font-size: 18px; color: #616161; opacity: 0.6"></i>
-            <i class="fas fa-pencil-alt" style="position: absolute; top: 4px; right: 3px; color: #616161"></i>
-          </span>
+        <% if logged_in? %>
+          <%= link_to edit_micropost_tags_path(micropost), class: "btn btn-tagsedit", remote: true do %>
+            <span style="position: relative; display: inline-block; width: 26px; height: 26px">
+              <i class="fas fa-tags" style="position: absolute; bottom: 1px; left: 3px; font-size: 18px; color: #616161; opacity: 0.6"></i>
+              <i class="fas fa-pencil-alt" style="position: absolute; top: 4px; right: 3px; color: #616161"></i>
+            </span>
+          <% end %>
         <% end %>
       </div>
     </div>

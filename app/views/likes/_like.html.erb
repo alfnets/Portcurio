@@ -1,6 +1,10 @@
-<% likepath = send("#{likeable.class.name.downcase}_likes_path", likeable.id) %>
-<%= form_with url: likepath, method: :post, local: false, class: "form-inline" do |f| %>
-  <%= button_tag type: "submit", class: "btn-link" do %>
-    <span class="fas fa-thumbs-up like-btn-unlike"></span>
+<% if logged_in? %>
+  <% likepath = send("#{likeable.class.name.downcase}_likes_path", likeable.id) %>
+  <%= form_with url: likepath, method: :post, local: false, class: "form-inline" do |f| %>
+    <%= button_tag type: "submit", class: "btn-link" do %>
+      <span class="fas fa-thumbs-up like-btn-unlike"></span>
+    <% end %>
   <% end %>
+<% else %>
+  <span class="fas fa-thumbs-up like-btn-unlike"></span>
 <% end %>

@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :setting, :edit, :update, :destroy, :show,
-                                        :following, :followers]
-  before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user,     only: :destroy
+  before_action :logged_in_user, only: [:setting, :edit, :update, :delete, :destroy,
+                                        :following, :followers, :subscribing, :portcurio]
+  before_action :correct_user,   only: [:edit, :update, :delete]
+  before_action :admin_or_correct_user, only: :destroy
   before_action :set_q,          only: :index
   
 
@@ -11,16 +11,16 @@ class UsersController < ApplicationController
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
       @title = "Search Result for User"
     else
-      @title = "All users"
+      @title = "Users"
     end
-    @users = @q.result.page(params[:page])
+    @users = @q.result.where(private: false).page(params[:page])
   end
   
   # GET /users/:id
   def show
     @user = User.find(params[:id])
 
-    redirect_to root_url and return unless @user.activated?
+    redirect_to root_url and return if !@user.activated? || (!current_user?(@user) && @user.private)
 
     @tab = params[:tab] || "materials"
 
@@ -228,7 +228,7 @@ class UsersController < ApplicationController
   private
   
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :lineuid, :image, :school_type, :subject, :profile, :website)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :lineuid, :image, :school_type, :subject, :profile, :website, :private)
     end
 
     def search_params
@@ -246,6 +246,11 @@ class UsersController < ApplicationController
     # 管理者かどうか確認
     def admin_user
       redirect_to(root_url) unless current_user.admin?
+    end
+
+    # 管理者もしくは正しいユーザーかどうか確認
+    def admin_or_correct_user
+      redirect_to(root_url) unless (current_user.admin? || current_user?(@user))
     end
 
     # 検索結果の取得

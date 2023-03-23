@@ -14,6 +14,13 @@
 
     <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'Password Confirmation' %>
 
+    <div class="checkbox-wrap">
+      <%= f.label :private do %>
+        <%= f.check_box :private %>
+        <span>Private account</span>
+      <% end %>
+    </div>
+
     <%= f.submit "Create my account", class: "btn btn-primary" %>
   <% end %>
-  </div>
+</div>

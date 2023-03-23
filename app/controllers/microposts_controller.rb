@@ -1,5 +1,5 @@
 class MicropostsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy, :show]
+  before_action :logged_in_user, only: [:create, :destroy, :edit, :update, :new]
   before_action :correct_user,   only: :destroy
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
@@ -111,7 +111,11 @@ class MicropostsController < ApplicationController
         @selected_tags    = params[:micropost][:tags]
         result_microposts = search_microposts(@selected_tags.split(","), @micropost.educational_material)
       else
-        result_microposts = Micropost.where(educational_material: true).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
+        if logged_in?
+          result_microposts = Micropost.where(educational_material: true).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
+        else
+          result_microposts = Micropost.where(educational_material: true).merge(Micropost.where(publishing: "public"))
+        end
       end
       if result_microposts
         @title = "Search Result"
@@ -130,7 +134,11 @@ class MicropostsController < ApplicationController
       @micropost = Micropost.new
       @selected_tags = ""
       @title = "All users feed"
-      @all_microposts = Kaminari.paginate_array(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)).includes(:tags)).page(params[:page])
+      if logged_in?
+        @all_microposts = Kaminari.paginate_array(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)).includes(:tags)).page(params[:page])
+      else
+        @all_microposts = Kaminari.paginate_array(Micropost.where(publishing: "public").includes(:tags)).page(params[:page])
+      end
     end
     @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
   end
