@@ -179,7 +179,6 @@ class CommentsController < ApplicationController
   # GET /comments/:id/close 
   # GET /microposts/:micropost_id/comments/:id/close
   def close
-    logger.debug("if文の中に入りました")
     @userprofile = User.find(params[:userprofile_id])
     
     resource = request.path.split('/')[1]
