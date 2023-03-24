@@ -1111,24 +1111,6 @@ input {
         object-position: 50% 50%;
       }
     }
-    .username_timestamp {
-      display: flex;
-      flex-direction: column;
-      .username {
-        font-weight: bolder;
-        margin: 4px;
-      }
-      .timestamp {
-        display: flex;
-        align-items: center;
-        column-gap: 8px;
-        color: $gray-light;
-        margin-left: 0px;
-        .fa-pen-to-square {
-          padding: 0;
-        }
-      }
-    }
   }
 
   .content-info,
@@ -1159,10 +1141,7 @@ input {
   }
 
   .username {
-    margin-bottom: 4px;
-    a {
-      font-size: 1.1rem;
-    }
+    margin-bottom: 2px;
   }
 
   .content-stats {
@@ -1171,6 +1150,7 @@ input {
     gap: 10px;
     margin-right: -12px;
     .timestamp {
+      font-size: 0.9rem;
       color: $gray-light;
       margin-left: 0px;
     }
