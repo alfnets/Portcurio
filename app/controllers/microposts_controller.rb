@@ -219,6 +219,10 @@ class MicropostsController < ApplicationController
       tags.each do |tag|
         result = result & Micropost.ransack(tags_name_eq: tag).result
       end
-      Micropost.where(id: result.map(&:id)).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
+      if logged_in?
+        Micropost.where(id: result.map(&:id)).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
+      else
+        Micropost.where(id: result.map(&:id)).merge(Micropost.where(publishing: "public"))
+      end
     end
 end
