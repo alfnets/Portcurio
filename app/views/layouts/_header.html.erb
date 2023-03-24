@@ -1,6 +1,6 @@
 <header class="navbar navbar-fixed-top navbar-default">
   <% container_class = request.path_info == root_path ? "container-full" : "container-large" %>
-  <% container_class = "container" if !logged_in? %>
+  <% container_class = "container-normal" if !logged_in? %>
   <div class=<%= container_class %>>
     <% if logged_in? %>
       <div class="icon-container">
