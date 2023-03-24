@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     @tab = params[:tab] || "materials"
 
     if @tab === "materials"
-      @materials = @user.microposts.where(educational_material: true).page(params[:material_page]).per(18)
+      @materials = @user.microposts.where(educational_material: true).page(params[:material_page]).per(12)
 
     elsif @tab === "microposts"
       @microposts = @user.microposts.where(educational_material: false).page(params[:micropost_page]).per(20)
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
         notificable_type: 'Relationship'
       ).where.not(
         notificable_type: 'Micropost'
-      ).page(params[:page]).per(10)
+      ).page(params[:page]).per(12)
     end
   end
   

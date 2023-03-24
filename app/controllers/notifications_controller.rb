@@ -12,7 +12,7 @@ class NotificationsController < ApplicationController
         notified_id: current_user.id
       ).where.not(
         notifier_id: current_user.id
-      ).page(params[:page]).per(10)
+      ).page(params[:page]).per(12)
   end
 
 
@@ -42,6 +42,6 @@ class NotificationsController < ApplicationController
       notified_id: current_user.id
     ).where.not(
       notificable_type: 'Relationship'
-    ).page(params[:page]).per(10)
+    ).page(params[:page]).per(12)
   end
 end
