@@ -1083,6 +1083,9 @@ input {
 .materials {
   list-style: none;
   padding: 0;
+  .micropost-container {
+    max-width: 720px;
+  }
   li {
     padding: 16px 0px 12px 16px;
     border-top: 1px solid #e8e8e8;
@@ -1486,7 +1489,6 @@ span.image {
 /* 教材カード（materials） */
 .materials {
   display: grid;
-  justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
   row-gap: 40px;
   column-gap: 16px;
