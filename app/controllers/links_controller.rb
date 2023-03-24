@@ -1,4 +1,6 @@
 class LinksController < ApplicationController
+  before_action :logged_in_user, only: [:edit, :create]
+
   def show
     @last_link = Link.last
     if @last_link

@@ -1,4 +1,6 @@
 class NotificationsController < ApplicationController
+  before_action :logged_in_user
+
   def notified
     # @notifications = Notification.where(
     #   notified_id: current_user.id

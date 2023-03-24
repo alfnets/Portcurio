@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy]
+  before_action :logged_in_user, only: [:create, :destroy, :mention_delete]
   before_action :correct_user, only: :destroy
   
   # POST /microposts/:micropost_id/comments

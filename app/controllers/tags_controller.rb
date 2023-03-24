@@ -1,4 +1,5 @@
 class TagsController < ApplicationController
+  before_action :logged_in_user
   
   # GET /microposts/:micropost_id/tags/edit
   def edit
