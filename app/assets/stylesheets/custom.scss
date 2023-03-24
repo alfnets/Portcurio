@@ -1486,12 +1486,14 @@ span.image {
 /* 教材カード（materials） */
 .materials {
   display: grid;
+  justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
   row-gap: 40px;
   column-gap: 16px;
 }
 .material-card {
   overflow-wrap: break-word;
+  max-width: 600px;
   .response-form {
     font-size: 1.2rem;
     gap: 10px;
