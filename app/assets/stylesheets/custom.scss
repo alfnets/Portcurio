@@ -1166,7 +1166,7 @@ input {
   .content-container {
     position: relative;
     .image-content {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     img {
       width: 100%;
@@ -1186,7 +1186,7 @@ input {
     margin: 0px;
     .links-container {
       background-color: #eeeeee80;
-      padding: 20px 20px 8px;
+      padding: 20px 20px 4px;
       border-radius: 16px;
       .links-wrap {
         display: flex;
@@ -1195,7 +1195,7 @@ input {
         background-repeat: no-repeat;
         width: 100%;
         aspect-ratio: 4 / 3;
-        margin-bottom: 0.5rem;
+        margin-bottom: 4px;
         figure {
           display: flex;
           flex-direction: column;
