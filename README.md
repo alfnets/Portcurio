@@ -19,7 +19,7 @@ https://portcurio.net/
 - 通知連携              : LINE Messaging API
 
 ## License
-Copyright (c) 2022 あるふ (alf)<br>
+Copyright (c) 2022 あるふ (alf).<br>
 Released under the MIT license<br>
 https://opensource.org/licenses/mit-license.php
 
