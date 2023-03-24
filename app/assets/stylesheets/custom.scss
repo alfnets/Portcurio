@@ -51,7 +51,8 @@ $gray-medium-light: #eaeaea;
 
 /* 大きめのコンテナ */
 .container-large,
-.container-full {
+.container-full,
+.container-normal {
   max-width: 100%;
   margin: 0 auto;
   padding: 0 15px;
@@ -64,12 +65,27 @@ $gray-medium-light: #eaeaea;
 }
 @media (min-width: 768px) {
   .container-large {
-      width: 970px;
+    width: 970px;
+  }
+  .container-normal {
+    width: 750px;
   }
 }
 @media (min-width: 992px) {
   .container-large {
-      width: 1170px;
+    width: 1170px;
+  }
+  .container-normal {
+    width: 970px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container-normal {
+    width: 1170px;
+  }
+  .container-large {
+    width: 1500px;
   }
 }
 
