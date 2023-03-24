@@ -3,8 +3,8 @@ class StaticPagesController < ApplicationController
   def home
     if logged_in?
       @micropost  = current_user.microposts.build
-      @feed_items = current_user.feed.page(params[:page]).per(18)
-      @all_feed_items = current_user.all_feed.page(params[:page]).per(20)
+      @feed_items = current_user.feed.page(params[:page]).per(12)
+      @all_feed_items = current_user.all_feed.page(params[:page]).per(12)
       @all_microposts = Kaminari.paginate_array(Micropost.all).page(params[:page])
     else
       render 'welcome', layout: 'welcome'
