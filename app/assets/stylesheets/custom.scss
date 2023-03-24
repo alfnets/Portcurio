@@ -1083,6 +1083,9 @@ input {
 .materials {
   list-style: none;
   padding: 0;
+  .micropost-container {
+    max-width: 720px;
+  }
   li {
     padding: 16px 0px 12px 16px;
     border-top: 1px solid #e8e8e8;
