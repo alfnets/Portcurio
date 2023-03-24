@@ -19,18 +19,16 @@ https://portcurio.net/
 - 通知連携              : LINE Messaging API
 
 ## License
-Copyright (c) 2022 alf
-Released under the MIT license
+Released under the MIT license<br>
 https://opensource.org/licenses/mit-license.php
 
 ## Authors
-alf
-https://alfnet.info/profile/
+あるふ (alf)<br>
+https://alfnets.info/profile/
 
 
 ## References
-[*Ruby on Rails チュートリアル*](https://railstutorial.jp/)
-（第6版）
+[*Ruby on Rails チュートリアル*](https://railstutorial.jp/) （第6版）<br>
 [Michael Hartl](https://www.michaelhartl.com/) 著
 
 <!-- This README would normally document whatever steps are necessary to get the
