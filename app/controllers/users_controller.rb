@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :setting, :edit, :update, :destroy, :show,
-                                        :following, :followers]
-  before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user,     only: :destroy
+  before_action :logged_in_user, only: [:setting, :edit, :update, :delete, :destroy,
+                                        :following, :followers, :subscribing, :portcurio]
+  before_action :correct_user,   only: [:edit, :update, :delete]
+  before_action :admin_or_correct_user, only: :destroy
   before_action :set_q,          only: :index
   
 
@@ -11,35 +11,36 @@ class UsersController < ApplicationController
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
       @title = "Search Result for User"
     else
-      @title = "All users"
+      @title = "Users"
     end
-    @userprofile = current_user
-    @users = @q.result.page(params[:page])
+    @users = @q.result.where(private: false).page(params[:page])
   end
   
   # GET /users/:id
   def show
-    @userprofile = User.find(params[:id])
+    @user = User.find(params[:id])
 
-    redirect_to root_url and return unless @userprofile.activated?
+    redirect_to root_url and return if !@user.activated? || (!current_user?(@user) && @user.private)
 
-    # Microposts
-    @microposts = @userprofile.microposts.page(params[:page]).per(10)
-    
-    # Comments & likes
-    @comments_and_likes = Notification.where(
-      notifier_id: @userprofile.id
-    ).where.not(
-      notified_id: @userprofile.id
-    ).where.not(
-      notificable_type: 'Relationship'
-    ).where.not(
-      notificable_type: 'Micropost'
-    ).page(params[:page]).per(10)
-    
-    @path = request.fullpath
-    # debugger
-  
+    @tab = params[:tab] || "materials"
+
+    if @tab === "materials"
+      @materials = @user.microposts.where(educational_material: true).page(params[:material_page]).per(18)
+
+    elsif @tab === "microposts"
+      @microposts = @user.microposts.where(educational_material: false).page(params[:micropost_page]).per(20)
+
+    else @tab === "responses"
+      @comments_and_likes = Notification.where(
+        notifier_id: @user.id
+      ).where.not(
+        notified_id: @user.id
+      ).where.not(
+        notificable_type: 'Relationship'
+      ).where.not(
+        notificable_type: 'Micropost'
+      ).page(params[:page]).per(10)
+    end
   end
   
   # GET /users/new
@@ -176,24 +177,24 @@ class UsersController < ApplicationController
   # GET /users/:id/following
   def following
     @title = "Following"
-    @userprofile  = User.find(params[:id])
-    @users = @userprofile.following.page(params[:page]).per(10)
+    @user  = User.find(params[:id])
+    @users = @user.following.page(params[:page]).per(10)
     render 'show_follow'
   end
 
   # GET /users/:id/followers
   def followers
     @title = "Followers"
-    @userprofile  = User.find(params[:id])
-    @users = @userprofile.followers.page(params[:page]).per(10)
+    @user  = User.find(params[:id])
+    @users = @user.followers.page(params[:page]).per(10)
     render 'show_follow'
   end
   
   # GET /users/:id/subscribing
   def subscribing
     @title = "Subscribing"
-    @userprofile = User.find(params[:id])
-    @users = @userprofile.subscribing.page(params[:page]).per(10)
+    @user = User.find(params[:id])
+    @users = @user.subscribing.page(params[:page]).per(10)
     render 'show_follow'
   end
   
@@ -214,7 +215,6 @@ class UsersController < ApplicationController
       @portcurio = Micropost.joins(:porcs).where(porcs: { user: current_user }).page(params[:page])
     end
     @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
-    @userprofile = current_user
   end
 
   # GET /users/get_selected_school_type
@@ -228,7 +228,7 @@ class UsersController < ApplicationController
   private
   
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :lineuid, :image, :school_type, :subject, :profile, :website)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :lineuid, :image, :school_type, :subject, :profile, :website, :private)
     end
 
     def search_params
@@ -246,6 +246,11 @@ class UsersController < ApplicationController
     # 管理者かどうか確認
     def admin_user
       redirect_to(root_url) unless current_user.admin?
+    end
+
+    # 管理者もしくは正しいユーザーかどうか確認
+    def admin_or_correct_user
+      redirect_to(root_url) unless (current_user.admin? || current_user?(@user))
     end
 
     # 検索結果の取得

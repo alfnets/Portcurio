@@ -1,19 +1,21 @@
-<div class="tagging-form tags_edit">
-  <%= form_with model: micropost, url: micropost_tags_path(micropost) , local: false do |f| %>
-    <div class="tag_search_wrap">
-      <% lock_tags.each do |tag| %>
-        <%= link_to tag, microposts_path(click_tag: tag) %>
-      <% end %>
-      <div class="inline-block">
-        <div class="input-group">
-          <%= f.text_field :edit_tags, placeholder: "タグ or キーワード", value: edit_tags.join(","), data: {role: "tagsinput"} %>
-          <span class="input-group-btn">
-            <%= button_tag type: "submit", class: 'btn btn-search' do %>
-              <i class="fa-solid fa-arrows-rotate"></i>
-            <% end %>
-          </span>
+<div class="tags-wrap">
+  <div class="tagging-form tags_edit">
+    <%= form_with model: micropost, url: micropost_tags_path(micropost) , local: false do |f| %>
+      <div class="tag-search-wrap">
+        <% lock_tags.each do |tag| %>
+          <%= link_to tag, microposts_path(click_tag: tag), class: 'btn-tag' %>
+        <% end %>
+        <div class="inline-block">
+          <div class="input-group">
+            <%= f.text_field :edit_tags, placeholder: "タグ or キーワード", value: edit_tags.join(","), data: {role: "tagsinput"}, style: "margin: 0; border: none;" %>
+            <span class="input-group-btn">
+              <%= button_tag type: "submit", class: 'btn btn-search' do %>
+                <i class="fa-solid fa-arrows-rotate"></i>
+              <% end %>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>

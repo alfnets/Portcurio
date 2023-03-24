@@ -2,8 +2,26 @@
   <div class="microposts">
     
     <div class="micropost-container">
-      <%= render @feedmicropost %>
+
+      <% if @micropost.educational_material %>
+        
+        <%= render partial: 'microposts/materials', locals: { micropost: @micropost } %>
+
+        <div class="text-content">
+          <% if raw(Rinku.auto_link(simple_format(h(@micropost.content)))).include?("https://#{domain_name}") %>
+            <%= raw Rinku.auto_link(simple_format(h(@micropost.content)), :all) %>
+          <% else %>
+            <%= raw Rinku.auto_link(simple_format(h(@micropost.content)), :all, 'target="_blank" rel="noopener noreferrer"') %>
+          <% end %>
+        </div>
+
+      <% else %>
+
+        <%= render @micropost %>
+
+      <% end %>
 
     </div>
+
   </div>
 </div>

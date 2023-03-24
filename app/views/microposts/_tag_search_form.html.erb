@@ -6,40 +6,45 @@
   <% path = portcurio_user_path(current_user) %>
 <% end %>
 
-<%= form_with model: micropost, url: path, method: :get do |f| %>
-  <%= f.select :school_type, school_types, { include_blank: "校種タグ" }, class: "form-control" %>
-  <% if micropost.school_type %>
-    <% case micropost.school_type %>
-    <% when "小学校"     then category = "primary_subject" %>
-    <% when "中学校"     then category = "secondary_subject" %>
-    <% when "高校(共通)" then category = "senior_common_subject" %>
-    <% when "高校(専門)" then category = "senior_specialized_subject" %>
-    <% else                   category = "" %>
+<div class="tagging-form">
+  <%= form_with model: micropost, url: path, method: :get do |f| %>
+    <%= f.select :school_type, school_types, { include_blank: "校種タグ" }, class: "form-control" %>
+    <% if micropost.school_type %>
+      <% case micropost.school_type %>
+      <% when "小学校"     then category = "primary_subject" %>
+      <% when "中学校"     then category = "secondary_subject" %>
+      <% when "高校(共通)" then category = "senior_common_subject" %>
+      <% when "高校(専門)" then category = "senior_specialized_subject" %>
+      <% else                   category = "" %>
+      <% end %>
+      <%= f.select :subject, Tag.where("category LIKE ?", "%#{category}%").pluck(:name), { include_blank: "教科タグ" }, class: "form-control" %>
+    <% else %>
+      <%= f.select :subject, "", { include_blank: "---" }, class: "form-control" %>
     <% end %>
-    <%= f.select :subject, Tag.where("category LIKE ?", "%#{category}%").pluck(:name), { include_blank: "教科タグ" }, class: "form-control" %>
-  <% else %>
-    <%= f.select :subject, "", { include_blank: "---" }, class: "form-control" %>
-  <% end %>
-  <div class="check_box inline-block pull-right">
-    <%= f.label :educational_material do %>
-      <%= f.check_box :educational_material, {}, true, false %>
-      <span>教材・記事</span>
-    <% end %>
-  </div>
-
-  <div class="tag_search_wrap">
-    <div class="input-group">
-      <%= f.text_field :tags, placeholder: "タグ or キーワード", value: selected_tags, data: {role: "tagsinput"} %>
-      <span class="input-group-btn">
-        <%= button_tag type: "submit", class: 'btn btn-search' do %>
-          <i class="fas fa-search"></i>
-        <% end %>
-      </span>
+    <div class="check_box inline-block pull-right">
+      <%= f.label :educational_material do %>
+        <%= f.check_box :educational_material, {}, true, false %>
+        <span>教材・記事</span>
+      <% end %>
     </div>
-  </div>
-  <div class="tag-container">
+
+    <div class="tag-search-wrap">
+      <div class="input-group">
+        <%= f.text_field :tags, placeholder: "タグ or キーワード", value: selected_tags, data: {role: "tagsinput"}, style: "margin: 0; border: none;" %>
+        <span class="input-group-btn">
+          <%= button_tag type: "submit", class: 'btn btn-search' do %>
+            <i class="fas fa-search"></i>
+          <% end %>
+        </span>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="tag-container">
+  <div class="tags-wrap" style="margin-left: 16px">
     <% @tags.each do |tag| %>
-      <%= link_to "#{tag.name}", add_search_tag_microposts_path(tag: tag.name), remote: true %>
+      <%= link_to "#{tag.name}", add_search_tag_microposts_path(tag: tag.name), class: "btn-tag", remote: true %>
     <% end %>
   </div>
-<% end %>
+</div>

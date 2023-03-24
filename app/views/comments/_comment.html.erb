@@ -1,9 +1,11 @@
-<li class="comment-<%= comment.id %>">
-  <div class="comment-container">
-    <span class='profile_icon_frame'>
-      <%= comment.user.image.attached? ? (link_to image_tag(comment.user.image), comment.user) : (link_to gravatar_for(comment.user), comment.user) %>
-    </span>
-    <span class="user"><%= link_to comment.user.name, comment.user %></span>
+<li class="comment<%= comment.id %> comment-wrap">
+  <div class='profile-icon-frame'>
+    <%= comment.user.image.attached? ? (link_to image_tag(comment.user.image), comment.user) : (link_to gravatar_for(comment.user), comment.user) %>
+  </div>
+
+  <div class="content-text-info">
+
+    <span class="username"><%= link_to comment.user.name, comment.user %></span>
     
     <div class="content-container">
       <div class="to-mention">
@@ -15,51 +17,61 @@
           <% end %>
         <% end %>
       </div>
-      <div class="content">
+      <div class="text-content">
         <% if raw(Rinku.auto_link(simple_format(h(comment.content)))).include?("https://#{domain_name}") %>
           <%= raw Rinku.auto_link(simple_format(h(comment.content)), :all) %>
         <% else %>
           <%= raw Rinku.auto_link(simple_format(h(comment.content)), :all, 'target="_blank" rel="noopener noreferrer"') %>
         <% end %>
       </div>
-      <span class="timestamp">
-        Posted <%= time_ago_in_words(comment.created_at) %> ago.
-        <% if current_user?(comment.user) %>
-          <%= link_to "delete", micropost_comment_path(comment.micropost_id, comment.id, userprofile_id: @userprofile.id), method: :delete,
-                                           data: { confirm: "You sure?" }, remote: true %>
-        <% end %>
-      </span>
     </div>
-      
-    <div class="response-form">
-      <span class="like-btn-comment-<%= comment.id %> likes"> 
-        <% if comment.like_users.find_by(id: current_user.id) %>
-          <%= render partial: 'likes/unlike', locals: { likeable: comment } %>
-        <% else %>
-          <%= render partial: 'likes/like', locals: { likeable: comment } %>
-        <% end %>
-      </span>
-      <span class="likes-comment-<%= comment.id %> likes-count form-inline">
-        <%= render partial: 'likes/likes_count', locals: { likeable: comment } %>
-      </span>
-      
-        <span class="reply-btn-<%= comment.id %> reply-btn-wrap reply-btn">
+    
+    <div class="content-stats">
+      <div class="response-form">
+        <div class="icon-group">
+          <span class="like-btn-comment-<%= comment.id %> likes"> 
+            <% if comment.like_users.find_by(id: current_user.id) %>
+              <%= render partial: 'likes/unlike', locals: { likeable: comment } %>
+            <% else %>
+              <%= render partial: 'likes/like', locals: { likeable: comment } %>
+            <% end %>
+          </span>
+          <span class="likes-comment-<%= comment.id %> likes-count form-inline">
+            <%= render partial: 'likes/likes_count', locals: { likeable: comment } %>
+          </span>
+        </div>
+        
+        <span class="reply-btn<%= comment.id %> reply-btn-wrap reply-btn">
             <% unless comment.parent %>
             <!-- 親コメントがない場合 -->
               <% reply_count = comment.replies.count %>
-              <%= button_to "Reply #{ reply_count }", micropost_comment_path(comment.micropost.id, comment.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "comment-btn btn-link", remote: true } %>
+              <%= button_to micropost_comment_path(comment.micropost_id, comment.id), { method: :get, class: "btn-reply btn-link", remote: true } do %>
+                <i class="fa-regular fa-comment-dots"></i><%= reply_count %>
+              <% end %>
             <% else %>
             <!-- 親コメントがある場合 -->
-              <%= button_to "Reply", micropost_comment_path(comment.micropost.id, comment.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "comment-btn btn-link", remote: true } %>
+              <%= button_to micropost_comment_path(comment.micropost.id, comment.id), { method: :get, class: "btn-reply btn-link", remote: true } do %>
+                <i class="fa-solid fa-reply"></i> 
+              <% end %>
             <% end %>
         </span>
-        <span class="reply-close-<%= comment.id %> reply-btn-wrap reply-close-btn">
-          <!-- 親コメントでReplyボタンをクリックするとここに「閉じる」リンクがrenderされる -->
-        </span>
+      </div>
+
+      <span class="timestamp">
+        <%= time_ago_in_words_with_custom_unit(comment.created_at) %>
+      </span>
+
+      <% if current_user?(comment.user) %>
+        <%= link_to micropost_comment_path(comment.micropost_id, comment.id), method: :delete,
+                                          data: { confirm: "Are you sure you want to delete this?" }, remote: true do %>
+          <i class="fa-solid fa-trash-can"></i>
+        <% end %>
+      <% end %>
     </div>
-  
-    <div class="reply-<%= comment.id %> wrap replies-wrap">
-      <!-- Replyボタンをクリックするとここにrenderされる -->
-    </div>
+
   </div>
+
 </li>
+<div class="reply-<%= comment.id %> wrap replies-wrap">
+  <!-- Replyボタンをクリックするとここにrenderされる -->
+</div>

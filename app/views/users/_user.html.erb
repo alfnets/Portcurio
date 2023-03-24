@@ -1,14 +1,22 @@
 <li>
-  <span class='profile_icon_frame'>
-    <%= user.image.attached? ? (link_to image_tag(user.image), user) : (link_to gravatar_for(user), user) %>
-  </span>
-  <div class='inline-block'>
-    <span class='user'><%= link_to user.name, user %></span>
-    <% if current_user.admin? && !current_user?(user) %>
-      | <%= link_to "delete", user, method: :delete,
-                                    data: { confirm: "You sure?" } %>
-    <% end %>
-    
-    <%= (render partial: 'relationships/follow_form', locals: {user: user}) if logged_in? %>
+  <div class="user-info">
+    <div class='profile-icon-frame'>
+      <%= user.image.attached? ? (link_to image_tag(user.image), user) : (link_to gravatar_for(user), user) %>
+    </div>
+
+    <div class='user-text-info'>
+      <div class="username">
+        <h3><%= link_to user.name, user %></h3>
+        <% if logged_in? %>
+          <% if current_user.admin? && !current_user?(user) %>
+            <%= link_to user, method: :delete, data: { confirm: "Are you sure you want to delete this??" } do %>
+              <i class="fa-solid fa-trash-can"></i>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <%= render partial: 'relationships/follow_form', locals: {user: user} if logged_in? %>
+    </div>
   </div>
 </li>

@@ -1,6 +1,8 @@
 class MicropostsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy, :show]
+  before_action :logged_in_user, only: [:create, :destroy, :edit, :update, :new, :remove_exist_image, :remove_image]
   before_action :correct_user,   only: :destroy
+
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
  
   # POST /microposts
   def create
@@ -45,9 +47,8 @@ class MicropostsController < ApplicationController
         end
       end
     else
-      @userprofile = current_user
       @feed_items = current_user.feed.page(params[:page])
-      @feedall     = Kaminari.paginate_array(Micropost.all).page(params[:page])
+      @all_microposts     = Kaminari.paginate_array(Micropost.all).page(params[:page])
       render 'static_pages/home'
     end
   end
@@ -80,7 +81,6 @@ class MicropostsController < ApplicationController
       #   format.js
       # end
     else
-      @userprofile = current_user
       respond_to do |format|
         format.js { render action: "edit" }
       end
@@ -104,52 +104,58 @@ class MicropostsController < ApplicationController
       @keywords = params[:keywords].gsub("　"," ").split
       result_microposts = search_microposts(@keywords)
       @selected_tags    = @keywords.join(",")
-      @feedall = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
+      @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
     elsif params[:micropost] && (params[:micropost][:tags].present? || params[:micropost][:educational_material].to_boolean)
       @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: params[:micropost][:educational_material].to_boolean)
       if params[:micropost][:tags].present?
         @selected_tags    = params[:micropost][:tags]
         result_microposts = search_microposts(@selected_tags.split(","), @micropost.educational_material)
       else
-        result_microposts = Micropost.where(educational_material: true).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
+        if logged_in?
+          result_microposts = Micropost.where(educational_material: true).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
+        else
+          result_microposts = Micropost.where(educational_material: true).merge(Micropost.where(publishing: "public"))
+        end
       end
       if result_microposts
         @title = "Search Result"
-        @feedall = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
+        @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
       else
         @title = "No Result"
-        @feedall = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])
+        @all_microposts = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])
       end
     elsif params[:click_tag]
       @micropost = Micropost.new
       @selected_tags = [params[:click_tag]]
       tag_microposts = tag_filter(@selected_tags)
       @title = "##{params[:click_tag]}"
-      @feedall = Kaminari.paginate_array(tag_microposts.includes(:tags)).page(params[:page])
+      @all_microposts = Kaminari.paginate_array(tag_microposts.includes(:tags)).page(params[:page])
     else
       @micropost = Micropost.new
       @selected_tags = ""
       @title = "All users feed"
-      @feedall = Kaminari.paginate_array(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)).includes(:tags)).page(params[:page])
+      if logged_in?
+        @all_microposts = Kaminari.paginate_array(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)).includes(:tags)).page(params[:page])
+      else
+        @all_microposts = Kaminari.paginate_array(Micropost.where(publishing: "public").includes(:tags)).page(params[:page])
+      end
     end
     @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
-    @userprofile = current_user
   end
   
 
   # GET /microposts/:id
   def show
-    @feedmicropost = Micropost.find(params[:id])
-    redirect_to root_url if @feedmicropost.publishing == 'private' && @feedmicropost.user != current_user
-    @userprofile = @feedmicropost.user
-    @comments = @feedmicropost.comments.where(parent_id: nil).unscope(:order).order(updated_at: :desc)
+    @micropost = Micropost.find(params[:id])
+    
+    redirect_to root_url if @micropost.publishing == 'private' && @micropost.user != current_user
+    @comments = @micropost.comments.where(parent_id: nil).unscope(:order).order(updated_at: :desc)
   end
  
   
   # GET /microposts/get_selected_school_type
   def get_selected_school_type
     @selected_school_type = params[:selected_school_type]
-    @userprofile = current_user
     respond_to do |format|
       format.js
     end
@@ -159,7 +165,6 @@ class MicropostsController < ApplicationController
   # GET /microposts/add_search_tag
   def add_search_tag
     @tag = params[:tag]
-    @userprofile = current_user
     respond_to do |format|
       format.js
     end
@@ -168,7 +173,6 @@ class MicropostsController < ApplicationController
 
   # GET /microposts/remove_image
   def remove_image
-    @userprofile = current_user
     respond_to do |format|
       format.js
     end
@@ -177,7 +181,6 @@ class MicropostsController < ApplicationController
 
   # GET /microposts/:id/remove_exist_image
   def remove_exist_image
-    @userprofile = current_user
     @micropost = Micropost.find(params[:id])
     respond_to do |format|
       format.js { render "remove_image" }
@@ -186,7 +189,11 @@ class MicropostsController < ApplicationController
 
 
   private
-    
+  
+    def record_not_found
+      redirect_to root_path
+    end
+
     # Strong parameter
     def micropost_params
       params.require(:micropost).permit(:title, :content, :image, :file_link, :publishing, :educational_material)

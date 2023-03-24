@@ -1,35 +1,49 @@
 <% if defined? @comments %>
   <% comment_count = @feedmicropost.comments.where(parent_id: nil).count %>
-  $(".comment-btn-<%= @feedmicropost.id %>").html('<%= button_to "コメント #{comment_count}", comment_path(@feedmicropost.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "comment-btn btn-link", remote: true } %>').hide().fadeIn(300)
-  $(".comment-close-<%= @feedmicropost.id %>").html('<%= button_to "閉じる", close_comment_path(@feedmicropost.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "comment-close-btn btn-link", remote: true } %>').hide().fadeIn(300)
-  $(".comment-<%= @feedmicropost.id %>").html("<%= escape_javascript(render partial: 'comments/comments') %>").hide().fadeIn(300)
+
+  $(".btn-comment<%= @feedmicropost.id %>").html(
+      '<%= button_to close_comment_path(@feedmicropost.id), { method: :get, class: "btn-comment btn-link", remote: true } do %><i class="fa-regular fa-comment-dots"></i><%= comment_count %><% end %>'
+    )
+
+  $(".micropost<%= @feedmicropost.id %>-comment").html(
+      '<%= escape_javascript(render partial: 'comments/comments') %>'
+    ).hide().slideDown(300)
 
 <% elsif not @comment.parent %>
 <!-- 親コメントがない場合 -->
-  $(".replies-wrap").html('')  <!-- 他のリプライウィンドウの非表示 -->
   <% reply_count = @comment.replies.count %>
-  $(".reply-btn-<%= @comment.id %>").html('<%= button_to "Reply #{reply_count}", micropost_comment_path(@comment.micropost_id, @comment.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "reply-btn btn-link", remote: true } %>').hide().fadeIn(300)
-  $(".reply-close-btn").html('')  <!-- 他の「閉じる」リンクの非表示 -->
-  $(".reply-close-<%= @comment.id %>").html('<%= button_to "閉じる", close_micropost_comment_path(@feedmicropost.id, @comment.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "reply-close-btn btn-link", remote: true } %>').hide().fadeIn(300)
-  $(".reply-<%= @comment.id %>").html("<%= escape_javascript(render partial: 'comments/replies') %>").hide().fadeIn(100)
+
+  $(".reply-btn<%= @comment.id %>").html(
+      '<%= button_to close_micropost_comment_path(@feedmicropost.id, @comment.id), { method: :get, class: "btn-reply btn-link", remote: true } do %><i class="fa-regular fa-comment-dots"></i><%= reply_count %><% end %>'
+    )
+
+  $(".reply-<%= @comment.id %>").html(
+      '<%= escape_javascript(render partial: 'comments/replies') %>'
+    ).hide().slideDown(300)
+
   <% if $mention_ids %>
     <% mention_users = User.where(id: $mention_ids) %>
     <% mention_users.each do |mention_user| %>
-      $(".reply-<%= @comment.id %> .mention").append('<%= link_to "@#{mention_user.name}", mention_user %> <%= link_to mention_delete_micropost_comment_path(@feedmicropost.id, @comment.id, user_id: mention_user.id, userprofile_id: @userprofile.id), remote: true, class: "btn-link", method: :get do %><i class="far fa-times-circle"></i><% end %>, ')
+      $(".reply-<%= @comment.id %> .mention").append('<%= link_to "@#{mention_user.name}", mention_user %> <%= link_to mention_delete_micropost_comment_path(@feedmicropost.id, @comment.id, user_id: mention_user.id), remote: true, class: "btn-link", method: :get do %><i class="far fa-times-circle"></i><% end %>, ')
     <% end %>
   <% end %>
 
 <% else %>
   <!-- 親コメントがある場合 -->
   <% reply_count = @comment.parent.replies.count %>
-  $(".reply-btn-<%= @comment.parent.id %>").html('<%= button_to "Reply #{reply_count}", micropost_comment_path(@comment.parent.micropost_id, @comment.parent_id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "reply-btn btn-link", remote: true } %>').hide().fadeIn(300)
-  $(".reply-<%= @comment.parent_id %> .replies").html('<%= escape_javascript(render @replies) %>').hide().fadeIn(300)
+
+  $(".reply-<%= @comment.parent_id %> .replies").html(
+      '<%= escape_javascript(render @replies) %>'
+    ).hide().fadeIn(300)
+
   $(".reply-<%= @comment.parent_id %> .error_explanation").html('')
   $(".reply-<%= @comment.parent_id %> .mention").html('')
+
   <% if $mention_ids %>
     <% mention_users = User.where(id: $mention_ids) %>
+
     <% mention_users.each do |mention_user| %>
-      $(".reply-<%= @comment.parent_id %> .mention").append('<%= link_to "@#{mention_user.name}", mention_user %> <%= link_to mention_delete_micropost_comment_path(@feedmicropost.id, @comment.parent_id, user_id: mention_user.id, userprofile_id: @userprofile.id), remote: true, class: "btn-link", method: :get do %><i class="far fa-times-circle"></i><% end %>, ')
+      $(".reply-<%= @comment.parent_id %> .mention").append('<%= link_to "@#{mention_user.name}", mention_user %> <%= link_to mention_delete_micropost_comment_path(@feedmicropost.id, @comment.parent_id, user_id: mention_user.id), remote: true, class: "btn-link", method: :get do %><i class="far fa-times-circle"></i><% end %>, ')
     <% end %>
   <% end %>
 <% end %>

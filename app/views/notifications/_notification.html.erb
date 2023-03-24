@@ -5,23 +5,23 @@
   <% notifier = User.find(notification.notifier_id) %>
 
   <% if notification.notificable_type === "Micropost" %>
-    <p class='notification_info'><%= link_to notifier.name, notifier %>さんが投稿しました（<%= time_ago_in_words(notification.created_at) %> ago.）</p>
+    <p class='notification_info'><%= link_to notifier.name, notifier %>さんが投稿しました（<%= time_ago_in_words_with_custom_unit(notification.created_at) %> ago.）</p>
     <%= render partial: 'microposts/micropost', locals: {micropost: notification.notificable} %>
-    <%= link_to '', micropost_path(notification.notificable.id), class: 'showcontainer' %>
+    <%= link_to '', micropost_path(notification.notificable.id, comment_open: true), class: 'showcontainer' %>
 
 
   <% elsif notification.notificable_type === "Comment" %>
     <% unless notification.notificable.parent_id %>
-      <p class='notification_info'><%= link_to notifier.name, notifier %>さんがあなたの投稿にコメントしました（<%= time_ago_in_words(notification.created_at) %> ago.）</p>
+      <p class='notification_info'><%= link_to notifier.name, notifier %>さんがあなたの投稿にコメントしました（<%= time_ago_in_words_with_custom_unit(notification.created_at) %> ago.）</p>
     <% else %>
-      <p class='notification_info'><%= link_to notifier.name, notifier %>さんがあなたをメンションしました（<%= time_ago_in_words(notification.created_at) %> ago.）</p>
+      <p class='notification_info'><%= link_to notifier.name, notifier %>さんがあなたをメンションしました（<%= time_ago_in_words_with_custom_unit(notification.created_at) %> ago.）</p>
     <% end %>
     <%= render partial: 'comments/comment', locals: {comment: notification.notificable} %>
-    <%= link_to '', micropost_path(notification.notificable.micropost_id), class: 'showcontainer' %>
+    <%= link_to '', micropost_path(notification.notificable.micropost_id, comment_open: true), class: 'showcontainer' %>
 
 
   <% elsif notification.notificable_type === "Like" %>
-    <p class='notification_info'><%= link_to notifier.name, notifier %>さんがあなたにいいね！しました（<%= time_ago_in_words(notification.created_at) %> ago.）</p>
+    <p class='notification_info'><%= link_to notifier.name, notifier %>さんがあなたにいいね！しました（<%= time_ago_in_words_with_custom_unit(notification.created_at) %> ago.）</p>
     
     <% if notification.notificable.likeable_type === "Micropost" %>
       <% micropost = notification.notificable.likeable %>
@@ -36,7 +36,7 @@
 
   
   <% elsif notification.notificable_type === "Relationship" %>
-    <p class='notification_info'><%= link_to notifier.name, notifier %>さんがあなたをフォローしました（<%= time_ago_in_words(notification.created_at) %> ago.）</p>
+    <p class='notification_info'><%= link_to notifier.name, notifier %>さんがあなたをフォローしました（<%= time_ago_in_words_with_custom_unit(notification.created_at) %> ago.）</p>
     <%= render partial: 'users/user', locals: {user: notifier} %>
 
   

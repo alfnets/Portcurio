@@ -1,14 +1,17 @@
 <footer class="footer">
-  <small>
-    <%= link_to image_tag("logo_alfnet.png", alt: "alfnet logo", height: "28px"),
-                      "https://alfnet.info", target: :_blank, rel: "noopener noreferrer" %>
-  </small>
-  <nav>
-    <ul>
-      <li><%= link_to "About",  "https://alfnet.info/web-dev05/", target: :_blank, rel: "noopener noreferrer" %></li>
-      <li><%= link_to "Contact", "https://alfnet.info/contact", target: :_blank, rel: "noopener noreferrer" %></li>
-      <!--<li><%= link_to "News", "https://alfnet.info", target: :_blank, rel: "noopener noreferrer" %></li>-->
-      <li><a href="<%= ENV["LINE_ADD_URL"] %>"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="28" border="0"></a></li>
-    </ul>
-  </nav>
+  <% container_class = request.path_info == root_path ? "container-full" : "container-large" %>
+  <div class=<%= container_class %>>
+    <small style="margin:0 16px">
+      <%= link_to image_tag("logo_alfnet.png", alt: "alfnet logo", height: "28px"),
+                        "https://alfnet.info", target: :_blank, rel: "noopener noreferrer" %>
+    </small>
+    <nav style="margin:0 16px">
+      <ul>
+        <li><%= link_to "About",  "https://alfnet.info/web-dev05/", target: :_blank, rel: "noopener noreferrer" %></li>
+        <li><%= link_to "Contact", "https://alfnet.info/contact", target: :_blank, rel: "noopener noreferrer" %></li>
+        <!--<li><%= link_to "News", "https://alfnet.info", target: :_blank, rel: "noopener noreferrer" %></li>-->
+        <li><a href="<%= ENV["LINE_ADD_URL"] %>"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="28" border="0"></a></li>
+      </ul>
+    </nav>
+  </div>
 </footer>

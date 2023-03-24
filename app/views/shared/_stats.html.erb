@@ -1,21 +1,21 @@
-<% @userprofile ||= current_user %>
+<% @user ||= current_user %>
 <div class="stats">
-  <a href="<%= following_user_path(@userprofile) %>">
+  <a href="<%= following_user_path(@user) %>">
     <strong id="following" class="stat">
-      <%= @userprofile.following.count %>
+      <%= @user.following.count %>
     </strong>
     フォロー
   </a>
-  <a href="<%= followers_user_path(@userprofile) %>">
+  <a href="<%= followers_user_path(@user) %>">
     <strong id="followers" class="stat">
-      <%= @userprofile.followers.count %>
+      <%= @user.followers.count %>
     </strong>
     フォロワー
   </a>
-  <% if @userprofile === current_user %>
-    <a href="<%= subscribing_user_path(@userprofile) %>">
+  <% if @user === current_user %>
+    <a href="<%= subscribing_user_path(@user) %>">
       <strong id="subscribing" class="stat">
-        <%= @userprofile.subscribing.count %>
+        <%= @user.subscribing.count %>
       </strong>
       通知登録
     </a>

@@ -1,12 +1,5 @@
 <!-- form_with url: like_url(micropost.id), method: :delete, local: false ,class: "form-inline" do |f| -->
 <%= form_with model: [likeable, likeable.likes.find_by(user: current_user)], method: :delete, local: false ,class: "form-inline" do |f| %>
-  <% if @userprofile.present? %>
-    <div><%= hidden_field_tag :userprofile_id, @userprofile.id, { id: SecureRandom.hex(4) } %></div>
-  <% elsif params[:id].present? %>
-    <div><%= hidden_field_tag :userprofile_id, params[:id],     { id: SecureRandom.hex(4) } %></div>
-  <% else %>
-    <div><%= hidden_field_tag :userprofile_id, current_user.id, { id: SecureRandom.hex(4) } %></div>
-  <% end %>
   <%= button_tag type: "submit", class: "btn-link" do %>
     <span class="fas fa-thumbs-up like-btn"></span>
   <% end %>

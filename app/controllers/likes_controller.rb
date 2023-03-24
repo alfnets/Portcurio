@@ -58,7 +58,6 @@ class LikesController < ApplicationController
     end
     
     # @feedmicropost = @like.micropost
-    @userprofile = User.find(params[:userprofile_id])
     respond_to do |format|
       format.html { redirect_to request.referer || root_url }
       format.js
@@ -82,7 +81,6 @@ class LikesController < ApplicationController
     @like.destroy
     resource, id = request.path.split('/')[1, 2]
     @likeable = resource.singularize.classify.constantize.find(id)
-    @userprofile = User.find(params[:userprofile_id])
     respond_to do |format|
       format.html { redirect_to request.referer || root_url }
       format.js
@@ -91,13 +89,12 @@ class LikesController < ApplicationController
   
   
   # Likeした人を表示する
-  # GET /likes (+ params) => /[likeable]/:[likeable]_id/like (+ params[userprofile_id])
+  # GET /likes (+ params) => /[likeable]/:[likeable]_id/like
   def show
     resource, id = request.path.split('/')[1, 2]
     @likeable = resource.singularize.classify.constantize.find(id)
     # @feedmicropost = Micropost.find(params[:micropost_id])
     @users = @likeable.like_users
-    @userprofile = User.find(params[:userprofile_id])
     respond_to do |format|
       format.html { redirect_to request.referer || root_url }
       format.js
@@ -105,12 +102,10 @@ class LikesController < ApplicationController
   end
   
   # Likeした人を表示していた画面を閉じる
-  # GET /likes/:id/close => /[likeable]/:[likeable]_id/likes/close (+ params[userprofile_id])
+  # GET /likes/:id/close => /[likeable]/:[likeable]_id/likes/close
   def close
     resource, id = request.path.split('/')[1, 2]
     @likeable = resource.singularize.classify.constantize.find(id)
-    # @feedmicropost = Micropost.find(params[:id])
-    @userprofile = User.find(params[:userprofile_id])
     respond_to do |format|
       format.html { redirect_to request.referer || root_url }
       format.js

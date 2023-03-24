@@ -1,70 +1,14 @@
-<aside class="col-md-3 col-md-offset-1 col-sm-4 hidden-xs sidebar">
-  <section class="user_info">
-    <%= render 'shared/user_info' %>
-  </section>
-  <hr>
-  <section class="side_menu">
-    <ul class="nav flex-column">
-      <li>
-        <%= link_to root_path, 'data-turbolinks': false do %>
-          <span data-feather="home"></span>
-          ホーム
-        <% end %>
-      </li>
-      <li>
-        <%= link_to portcurio_user_path(current_user), 'data-turbolinks': false do %>
-          <%# <span data-feather="home"></span> %>
-          マイPortcurio
-        <% end %>
-      </li>
-      <li>
-        <%= link_to links_path do %>
-          <%# <span data-feather="link"></span> %>
-          お役立ちリンク集
-        <% end %>
-      </li>
-      <li>
-        <%= link_to microposts_path do %>
-          <span data-feather="layers"></span>
-          すべてのユーザの投稿
-        <% end %>
-      </li>
-      <li>
-        <%= link_to users_path do %>
-          <span data-feather="users"></span>
-          ユーザ一覧
-        <% end %>
-      </li>
-      <li>
-        <%= link_to help_path do %>
-          <%# <span data-feather="users"></span> %>
-          ヘルプ
-        <% end %>
-      </li>
-      <li>
-        <%= link_to activity_notifications_path do %>
-          <%# <span data-feather="users"></span> %>
-          マイアクティビティ
-        <% end %>
-      </li>
-      <li>
-        <%= link_to user_path(current_user) do %>
-          <%# <span data-feather="users"></span> %>
-          プロフィール
-        <% end %>
-      </li>
-      <li>
-        <%= link_to edit_user_path(current_user), 'data-turbolinks': false do %>
-          <%# <span data-feather="users"></span> %>
-          設定
-        <% end %>
-      </li>
-      <li>
-        <%= link_to logout_path, method: :delete do %>
-          <%# <span data-feather="users"></span> %>
-          ログアウト
-        <% end %>
-      </li>
-    </ul>
-  </section>
+<aside>
+  <div class="sidebar">
+    <div style="text-align: center; font-weight: bold;">
+      <a href="#">TIMELINE</a>
+    </div>
+    <hr>
+    <section class="side_menu">
+      <ol class="microposts jscroll">
+        <%= render partial: 'microposts/micropost_side', collection: @time_line_items, as: 'micropost' %>
+        <div class='center'><%= paginate @time_line_items %></div>
+      </ol>
+    </section>
+  <div>
 </aside>

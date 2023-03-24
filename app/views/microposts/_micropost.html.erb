@@ -1,157 +1,220 @@
 <li class="micropost-<%= micropost.id %>">
   <div class="micropost-container">
-    <span class='profile_icon_frame'>
-      <%= micropost.user.image.attached? ? (link_to image_tag(micropost.user.image), micropost.user) : (link_to gravatar_for(micropost.user), micropost.user) %>
-    </span>
-    <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
-    
-    <div class="content-container">
-      <div class="content">
-        <p>
-          <% if raw(Rinku.auto_link(simple_format(h(micropost.content)))).include?("https://#{domain_name}") %>
-            <%= raw Rinku.auto_link(simple_format(h(micropost.content)), :all) %>
-          <% else %>
-            <%= raw Rinku.auto_link(simple_format(h(micropost.content)), :all, 'target="_blank" rel="noopener noreferrer"') %>
-          <% end %>
-        </p>
-        <% if micropost.links.present? %>
-          <% oembed = oembed_get(micropost.links) %>
-          <% if oembed %>   <!-- OEmbedの表示（YouTube, Twitter 等） -->
-            <div class="links">
-              <div class="links-container">
-                <div class="links-wrap">
-                  <%= oembed.html_safe %>
-                </div>
-              </div>
-            </div>
-          <% elsif micropost.links.end_with?(".pdf") %> <!-- pdfリンクのプレビュー -->
-            <div class="links">
-              <div class="links-container">
-                <div class="links-wrap">
-                  <% pdf_link = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{micropost.links}" %>
-                  <div class="pdf-container">
-                    <iframe class="pdf" src=<%= pdf_link %>></iframe>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% else %>  <!-- OGPの表示（Webサイト） -->
-            <% og = og_get(micropost.links) %>
-            <% if og %>
-              <div class="links ogp">
-                <div class="links-container">
-                  <div class="links-wrap">
-                    <figure>
-                      <% cache(og.images.first, expires_in: 600.seconds) do %>
-                        <% if og.title.present? %>
-                          <%= link_to image_tag(og.images.first, alt: og.title), og.url, target: :_blank, rel: "noopener noreferrer" %>
-                        <% elsif og.description.present? %>
-                          <%= link_to image_tag(og.images.first, alt: og.description), og.url, target: :_blank, rel: "noopener noreferrer" %>
-                        <% else %>
-                          <%= link_to image_tag(og.images.first), og.url, target: :_blank, rel: "noopener noreferrer" %>
-                        <% end %>
-                      <% end %>
-                      <figcaption>
-                        <span class=ogp_title><%= "[#{og.title}]" if og.title.present? %></span>
-                        <span class=ogp_description><%= og.description.truncate(150) if og.description.present? %>
-                      </figcaption>
-                    </figure>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
-        <% end %>
-        <% if micropost.file_link.present? %>
-          <div class="links">
-            <div class="links-container">
-              <div class="links-wrap">
-                <div class="file-container">
-                  <% if micropost.file_type.value == 'PDF_link' %>
-                    <% link_url = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{micropost.file_link.html_safe}" %>
-                    <iframe src=<%= link_url %>></iframe>
-                  <% elsif micropost.file_type.value == 'GooglePDF' %>
-                    <% file_id = micropost.file_link.html_safe.split("/")[5] %>
-                    <% link_url = "https://drive.google.com/file/d/#{file_id}/preview" %>
-                    <iframe src="<%= link_url %>"></iframe>
-                  <% elsif micropost.file_category == "Google" %>
-                    <% link_url = micropost.file_link.html_safe[/src="(.*?)\?/, 1] %>
-                    <%= micropost.file_link.html_safe %>
-                  <% else %>
-                    <% link_url = micropost.file_link.html_safe[/src="(.*?)\"/, 1] %>
-                    <%= micropost.file_link.html_safe %>
-                  <% end %>
-                  <div class="text-right">
-                    <%= link_to "別タブで開く", link_url, target: :_blank, rel: "noopener noreferrer" %>
-                  </div>
-              </div>
-            </div>
+
+    <div class="content-info">
+
+      <div class='profile-icon-frame'>
+        <%= micropost.user.image.attached? ? (link_to image_tag(micropost.user.image), micropost.user) : (link_to gravatar_for(micropost.user), micropost.user) %>
+      </div>
+
+      <div class="content-text-info">
+
+        <div class="username">
+          <%= link_to micropost.user.name, micropost.user %>
+        </div>
+
+        <div class="content-stats">
+          <div class="timestamp">
+            <%= time_ago_in_words_with_custom_unit(micropost.created_at) %>
           </div>
-        <% end %>
-        
-        <% if micropost.image.attached? %>
-          <!-- link_to micropost.display_image, "data-lightbox": micropost.display_image do %>-->
-          <%= image_tag micropost.display_image %>
-          <!--end %>-->
-        <% end %>
+
+          <% if micropost.educational_material %>
+            <i class="fas fa-book"></i>
+          <% end %>
+
+          <% if micropost.publishing === "private" %>
+            <i class="fas fa-lock"></i>
+          <% end %>
+
+          <% if current_user?(micropost.user) %>
+            <%= link_to edit_micropost_path(micropost), remote: true do %><i class="fa-solid fa-pen-to-square"></i><% end %>
+            <%= link_to micropost, method: :delete, data: { confirm: "Are you sure you want to delete this?" } do %>
+              <i class="fa-solid fa-trash-can"></i>
+            <% end %>
+            <div class="micropost-edit-modal-<%= micropost.id %> inline-block"></div>
+          <% end %>
+        </div>
+
       </div>
     </div>
-
-    <div class="tag-container">
-      <% micropost.tags.each do |tag| %>
-        <%= link_to tag.name, microposts_path(click_tag: tag.name) %>
-      <% end %>
-    </div>
-
-    <span class="timestamp">
-      Posted <%= time_ago_in_words(micropost.created_at) %> ago.
-      <% if micropost.educational_material %>
-        <i class="fas fa-book"></i>
-      <% end %>
-      <% if micropost.publishing === "private" %>
-        <i class="fas fa-lock"></i>
-      <% end %>
-      <% if current_user?(micropost.user) %>
-        <%= link_to edit_micropost_path(micropost), remote: true do %><i class="fa-solid fa-pen-to-square"></i><% end %>
-        <span class="micropost-edit-modal-<%= micropost.id %>"></span>
-        <%= link_to micropost, method: :delete, data: { confirm: "You sure?" } do %>
-          <i class="fa-solid fa-trash-can"></i>
-        <% end %>
-      <% end %>
-    </span>
-  
-    <div class="response-form">
-      <span class="like-btn-micropost-<%= micropost.id %> likes"> 
-        <% if micropost.like_users.find_by(id: current_user.id) %>
-          <%= render partial: 'likes/unlike', locals: { likeable: micropost } %>
-        <% else %>
-          <%= render partial: 'likes/like', locals: { likeable: micropost } %>
-        <% end %>
-      </span>
-      <span class="likes-micropost-<%= micropost.id %> likes-count">
-        <%= render partial: 'likes/likes_count', locals: { likeable: micropost } %>
-      </span>
-
-      <span class="porc-btn-<%= micropost.id %> porcs"> 
-        <% if micropost.porcs.find_by(user: current_user) %>
-          <%= render partial: 'porcs/unporc', locals: { micropost: micropost } %>
-        <% else %>
-          <%= render partial: 'porcs/porc', locals: { micropost: micropost } %>
-        <% end %>
-      </span>
     
-      <span class="comment-btn-<%= micropost.id %> comment-btn-wrap">
-        <% comment_count = micropost.comments.where(parent_id: nil).count %>
-        <%= button_to "コメント #{comment_count}", comment_path(micropost.id), { method: :get, params: {userprofile_id: @userprofile.id}, class: "comment-btn btn-link", remote: true } %>
-      </span>
-      <span class="comment-close-<%= micropost.id %> comment-btn-wrap comment-close-btn">
-        <!-- 親コメントでReplyボタンをクリックするとここに「閉じる」リンクがrenderされる -->
-      </span>
-      <%= link_to "edit tags", edit_micropost_tags_path(micropost), class: "btn btn-tagsedit", remote: true %>
+    <% if micropost.content.present? %>
+      <div class="text-content">
+        <% if raw(Rinku.auto_link(simple_format(h(micropost.content)))).include?("https://#{domain_name}") %>
+          <%= raw Rinku.auto_link(simple_format(h(micropost.content)), :all) %>
+        <% else %>
+          <%= raw Rinku.auto_link(simple_format(h(micropost.content)), :all, 'target="_blank" rel="noopener noreferrer"') %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if micropost.file_link.present? || micropost.image.attached? || micropost.links.present? %>
+      <div class="content-container">
+
+        <div class="image-content">
+
+          <% if micropost.file_link.present? %>
+            <div class="links">
+              <div class="links-container">
+                <div class="links-wrap">
+                  <div class="file-container">
+                    <% if micropost.file_type.value == 'PDF_link' %>
+                      <% link_url = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{micropost.file_link.html_safe}" %>
+                      <iframe src=<%= link_url %>></iframe>
+                    <% elsif micropost.file_type.value == 'GooglePDF' %>
+                      <% file_id = micropost.file_link.html_safe.split("/")[5] %>
+                      <% link_url = "https://drive.google.com/file/d/#{file_id}/preview" %>
+                      <iframe src="<%= link_url %>"></iframe>
+                    <% elsif micropost.file_category == "Google" %>
+                      <% link_url = micropost.file_link.html_safe[/src="(.*?)\?/, 1] %>
+                      <%= micropost.file_link.html_safe %>
+                    <% else %>
+                      <% link_url = micropost.file_link.html_safe[/src="(.*?)\"/, 1] %>
+                      <%= micropost.file_link.html_safe %>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <% if request.path_info.start_with?('/microposts/') %>
+                    <%= link_to "別タブで開く", link_url, target: :_blank, rel: "noopener noreferrer" %>
+                  <% else %>
+                    <%= link_to "詳細を開く", micropost %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <% if micropost.image.attached? %>
+            <div class="img-container">
+              <div class="img-wrap">
+                <!-- link_to micropost.display_image, "data-lightbox": micropost.display_image do %>-->
+                <%= image_tag micropost.display_image %>
+                <!--end %>-->
+              </div>
+              <div class="text-right">
+                <% if request.path_info.start_with?('/microposts')  %>
+                  <%= "　" %>
+                <% else %>
+                  <%= link_to "詳細を開く", micropost %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
+          <% if micropost.links.present? %>
+            <% oembed = oembed_get(micropost.links) %>
+            <% if oembed %>   <!-- OEmbedの表示（YouTube, Twitter 等） -->
+              <div class="links">
+                <div class="links-container">
+                  <div class="links-wrap" style="overflow-y: scroll">
+                    <%= oembed.html_safe %>
+                  </div>
+                  <div class="text-right">
+                    <% if request.path_info.start_with?('/microposts/') %>
+                      <%= link_to "別タブで開く", micropost.links, target: :_blank, rel: "noopener noreferrer" %>
+                    <% else %>
+                      <%= link_to "詳細を開く", micropost %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% elsif micropost.links.end_with?(".pdf") %> <!-- pdfリンクのプレビュー -->
+              <div class="links">
+                <div class="links-container">
+                  <div class="links-wrap">
+                    <% pdf_link = "https://drive.google.com/viewerng/viewer?embedded=true&url=#{micropost.links}" %>
+                    <div class="pdf-container">
+                      <iframe class="pdf" src=<%= pdf_link %>></iframe>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <% if request.path_info.start_with?('/microposts/') %>
+                      <%= link_to "別タブで開く", pdf_link, target: :_blank, rel: "noopener noreferrer" %>
+                    <% else %>
+                      <%= link_to "詳細を開く", micropost %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% else %>  <!-- OGPの表示（Webサイト） -->
+              <% og = og_get(micropost.links) %>
+              <% if og %>
+                <div class="links ogp">
+                  <div class="links-container">
+                    <div class="links-wrap">
+                      <% begin %>
+                        <figure>
+                          <% cache(og.images.first, expires_in: 600.seconds) do %>
+                            <% if og.title.present? %>
+                              <%= link_to image_tag(og.images.first, alt: og.title), og.url, target: :_blank, rel: "noopener noreferrer" %>
+                            <% elsif og.description.present? %>
+                              <%= link_to image_tag(og.images.first, alt: og.description), og.url, target: :_blank, rel: "noopener noreferrer" %>
+                            <% else %>
+                              <%= link_to image_tag(og.images.first), og.url, target: :_blank, rel: "noopener noreferrer" %>
+                            <% end %>
+                          <% end %>
+                          <figcaption>
+                            <span class=ogp_title><%= "[#{og.title}]" if og.title.present? %></span>
+                            <span class=ogp_description><%= og.description if og.description.present? %>
+                          </figcaption>
+                        </figure>
+                      <% rescue ArgumentError => e %>
+                        <%= link_to micropost do %>
+                          <%= image_tag("no_content.png", alt: "no content") %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                    <div class="text-right">
+                      <% if request.path_info.start_with?('/microposts/') %>
+                        <%= link_to "別タブで開く", og.url, target: :_blank, rel: "noopener noreferrer" %>
+                      <% else %>
+                        <%= link_to "詳細を開く", micropost %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+          
+        </div>
+      </div>
+    <% end %>
+    
+    <div class="tag-container">
+      <%# 一覧画面ではタグは５個まで表示 %>
+      <% tags = request.path_info.start_with?('/microposts/') ? micropost.tags : micropost.tags.take(5) %>
+
+      <% if tags.count > 0 %>
+        <div class="tags-wrap">
+          <% tags.each do |tag| %>
+            <%= link_to tag.name, microposts_path(click_tag: tag.name), class: "btn-tag" %>
+          <% end %>
+          <% if !request.path_info.start_with?('/microposts/') && micropost.tags.size > 5 %>
+            <span>...</span>
+          <% end %>
+          <% if logged_in? %>
+            <% if micropost.tags.count > 0 %>
+              <%= link_to edit_micropost_tags_path(micropost), class: "btn btn-tagsedit", remote: true do %>
+                <span style="position: relative; display: inline-block; width: 26px; height: 26px">
+                  <i class="fas fa-tags" style="position: absolute; bottom: 1px; left: 3px; font-size: 18px; color: #616161; opacity: 0.6"></i>
+                  <i class="fas fa-pencil-alt" style="position: absolute; top: 4px; right: 3px; color: #616161"></i>
+                </span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
-  
-    <div class="comment-<%= micropost.id %> wrap comments-wrap">
+
+    <div class="response-form" style="margin-left: 16px">
+      <%= render partial: 'microposts/response_form', locals: { micropost: micropost } %>
+    </div>
+
+    <div class="micropost<%= micropost.id %>-comment comments-container">
       <!-- コメントボタンをクリックするとここにrenderされる -->
     </div>
+
   </div>
 </li>

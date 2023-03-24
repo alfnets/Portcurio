@@ -1,63 +1,85 @@
-<% provide(:title, @userprofile.name) %>
+<% provide(:title, @user.name) %>
 
-<section class="user_info user_show">
-  <span class='profile_icon_frame'>
-    <%= @userprofile.image.attached? ? (image_tag @userprofile.image) : (gravatar_for @userprofile) %>
-  </span>
-  <h1><%= @userprofile.name %></h1>
-  <%= render partial: 'relationships/follow_form', locals: {user: @userprofile} if logged_in? %>
+<section class="user-info user-show">
+  <div class='profile-icon-frame'>
+    <%= @user.image.attached? ? (image_tag @user.image) : (gravatar_for @user) %>
+  </div>
+
+  <div class='user-text-info'>
+    <h1><%= @user.name %></h1>
+
+    <%= render partial: 'relationships/follow_form', locals: {user: @user} if logged_in? %>
+  </div>
 </section>
+
 <section class="stats">
   <%= render 'shared/stats' %>
 </section>
-<% if @userprofile.school_type.present? || @userprofile.subject.present? || @userprofile.profile.present? || @userprofile.website.present? %>
+
+<% if @user.school_type.present? || @user.subject.present? || @user.profile.present? || @user.website.present? %>
+
   <section class="profile">
+
     <ul>
-      <% if @userprofile.school_type.present? %>
-        <li>メイン校種: <%= @userprofile.school_type %></li>
+      <% if @user.school_type.present? %>
+        <li>メイン校種: <%= @user.school_type %></li>
       <% end %>
-      <% if @userprofile.subject.present? %>
-        <li>メイン教科: <%= @userprofile.subject %></li>
+
+      <% if @user.subject.present? %>
+        <li>メイン教科: <%= @user.subject %></li>
       <% end %>
-      <% if @userprofile.profile.present? %>
-        <li class="profile_description">プロフィール:<p><%= @userprofile.profile %></p></li>
+
+      <% if @user.profile.present? %>
+        <li class="profile_description">プロフィール:<p><%= @user.profile %></p></li>
       <% end %>
-      <% if @userprofile.website.present? %>
+
+      <% if @user.website.present? %>
         <li>Webサイト:
-          <% if raw(Rinku.auto_link(simple_format(h(@userprofile.website)))).include?("https://#{domain_name}") %>
-              <%= raw Rinku.auto_link(simple_format(h(@userprofile.website), class: "inline-block"), :all) %>
+          <% if raw(Rinku.auto_link(simple_format(h(@user.website)))).include?("https://#{domain_name}") %>
+              <%= raw Rinku.auto_link(simple_format(h(@user.website), class: "inline-block"), :all) %>
           <% else %>
-            <%= raw Rinku.auto_link(simple_format(h(@userprofile.website), class: "inline-block"), :all, 'target="_blank" rel="noopener noreferrer"') %>
+            <%= raw Rinku.auto_link(simple_format(h(@user.website), class: "inline-block"), :all, 'target="_blank" rel="noopener noreferrer"') %>
           <% end %>
         </li>
       <% end %>
     </ul>
-  </section>
-<% end %>
-<ul id="activityTab" class="nav nav-tabs nav-fill">
-  <li class="nav-item active">
-    <a href="#contents1" data-toggle="tab">Microposts (<%= @userprofile.microposts.count %>)</a>
-  </li>
-  <li class="nav-item">
-    <a href="#contents2" data-toggle="tab" id="comments-and-likes-tab">Comments & Likes</a>
-  </li>
-</ul>
 
-<div class="tab-content">
-  <div id="contents1" class="tab-pane active fade in">
-    <% if @userprofile.microposts.any? %>
-      <ol class="microposts">
-        <%= render @microposts %>
-      </ol>
-      <div class='center'><%= paginate @microposts %></div>
-    <% else %>
-      <p>No microposts</p>
-    <% end %>
-  </div>
+  </section>
   
-  <div id="contents2" class="tab-pane fade">
+<% end %>
+
+<div class="tab">
+  <%= link_to "Materials", user_path(@user, tab: "materials"), id: "materials_tab" %>
+  <%= link_to "Microposts", user_path(@user, tab: "microposts"), id: "microposts_tab" %>
+  <% if logged_in? %>
+    <%= link_to "Responses", user_path(@user, tab: "responses"), id: "responses_tab" %>
+  <% end %>
+</div>
+
+<% if @tab === "materials" %>
+  <% if @materials.any? %>
+    <ol class="materials">
+      <%= render partial: 'microposts/materials', collection: @materials, as: 'micropost' %>
+    </ol>
+    <div class='center'><%= paginate @materials, param_name: 'material_page' %></div>
+  <% else %>
+    <p>No materials</p>
+  <% end %>
+
+<% elsif @tab === "microposts" %>
+  <% if @microposts.any? %>
+    <ol class="microposts">
+      <%= render @microposts %>
+    </ol>
+    <div class='center'><%= paginate @microposts, param_name: 'micropost_page' %></div>
+  <% else %>
+    <p>No microposts</p>
+  <% end %>
+
+<% else %>
+  <% if logged_in? %>
     <% if @comments_and_likes.any? %>
-      <ol class="microposts jscroll">
+      <ol class="microposts jscroll-reaction">
         <% @comments_and_likes.each do |activity| %>
           <%= render partial: 'notifications/comment_and_like', locals: {activity: activity} %>
         <% end %>
@@ -66,5 +88,5 @@
     <% else %>
       <p>No comments, likes</p>
     <% end %>
-  </div>
-</div>
+  <% end %>
+<% end %>

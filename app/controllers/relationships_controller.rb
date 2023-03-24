@@ -56,8 +56,6 @@ class RelationshipsController < ApplicationController
   # PATCH /relationships/:id(user_id)/subscribe
   def subscribe
     @user = User.find(params[:id])
-    # relationship = current_user.active_relationships.find_by(followed_id: @user.id)
-    # relationship.update_attribute(:subscribed, true)
     current_user.subscribe(@user)
     @userprofile = User.find(params[:userprofile_id])
     respond_to do |format|
@@ -69,8 +67,6 @@ class RelationshipsController < ApplicationController
   # PATCH /relationships/:id(user_id)/unsubscribe
   def unsubscribe
     @user = User.find(params[:id])
-    # relationship = current_user.active_relationships.find_by(followed_id: @user.id)
-    # relationship.update_attribute(:subscribed, false)
     current_user.unsubscribe(@user)
     @userprofile = User.find(params[:userprofile_id])
     respond_to do |format|

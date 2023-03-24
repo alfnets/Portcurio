@@ -1,6 +1,7 @@
 class NotificationsController < ApplicationController
+  before_action :logged_in_user
+
   def notified
-    @userprofile = current_user
     # @notifications = Notification.where(
     #   notified_id: current_user.id
     # ).where.not(
@@ -16,7 +17,6 @@ class NotificationsController < ApplicationController
 
 
   def activity
-    @userprofile = current_user
     # MySQL
     # marge_activity_ids = "with marge_microposts as(
     #                           SELECT id, notificable_id, notificable_type, MAX(updated_at) FROM notifications WHERE notificable_type = 'Micropost' GROUP BY notificable_id, notificable_type
@@ -37,9 +37,9 @@ class NotificationsController < ApplicationController
     @activities = Notification.where(
       "id IN (#{marge_activity_ids})"
     ).where(
-      notifier_id: @userprofile.id
+      notifier_id: current_user.id
     ).where.not(
-      notified_id: @userprofile.id
+      notified_id: current_user.id
     ).where.not(
       notificable_type: 'Relationship'
     ).page(params[:page]).per(10)

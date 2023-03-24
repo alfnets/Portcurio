@@ -1,18 +1,9 @@
 <% count = likeable.likes.count %>
-<% likepath = send("#{likeable.class.name.downcase}_likes_path", likeable.id, userprofile_id: @userprofile.id) %>
+<% likepath = send("#{likeable.class.name.downcase}_likes_path", likeable.id) %>
 <% if count === 0 %>
   <%= count %>
-<% elsif @userprofile.present? %>
-  <%= link_to count, likepath, remote: true %>
-  <!--link_to count, controller: "likes", action: "show", micropost_id: likeable.id, userprofile_id: @userprofile.id, remote: true %>-->
-<% elsif params[:id].present? %>
-  <%= link_to count, likepath, remote: true %>
-  <!--link_to count, controller: "likes", action: "show", micropost_id: likeable.id, userprofile_id: params[:id], remote: true %>-->
-  <!--link_to count, like_path(micropost.id, userprofile_id: params[:id]), remote: true-->
 <% else %>
   <%= link_to count, likepath, remote: true %>
-  <!--link_to count, like_path(micropost.id, userprofile_id: current_user.id), remote: true-->
-  <!--link_to count, controller: "likes", action: "show", micropost_id: likeable.id, userprofile_id: current_user.id, remote: true %>-->
 <% end %>
 
 <span class="like-modal-<%= likeable.class.name.downcase %>-<%= likeable.id %>"></span>

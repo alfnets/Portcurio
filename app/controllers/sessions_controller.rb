@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
   def new
     # x @session = Session.new
     # o scope: :session + url: login_path
+    redirect_to root_url if logged_in?
   end
   
   # POST /login
@@ -31,11 +32,11 @@ class SessionsController < ApplicationController
   end
   
   # POST /easylogin/:id
-  def easylogin
-    user = User.find(params[:id])
-    log_in user
-    redirect_back_or root_url
-  end
+  # def easylogin
+  #   user = User.find(params[:id])
+  #   log_in user
+  #   redirect_back_or root_url
+  # end
   
   # GET /line
   def line

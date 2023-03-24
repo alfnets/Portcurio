@@ -1,4 +1,4 @@
-$(".micropost-<%= @micropost.id %> .tag-container").html("<%= escape_javascript(render(partial: 'tags/tags_edit_form', locals: {micropost: @micropost, lock_tags: @lock_tags, edit_tags: @edit_tags})) %>");
+$(".micropost-<%= @micropost.id %> .tag-container").html("<%= escape_javascript(render(partial: 'tags/tags_edit_form', locals: {micropost: @micropost, lock_tags: @lock_tags, edit_tags: @edit_tags})) %>").hide().fadeIn(300);
 
 $(function() {
   $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();

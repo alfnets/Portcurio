@@ -2,12 +2,12 @@
 
 <h1><%= @title %></h1>
 
-<div class="tagging-form">
+<div class="tag-search-container">
   <%= render partial: 'microposts/tag_search_form', locals: { micropost: @micropost, selected_tags: @selected_tags, tags: @tags } %>
 </div>
 
 <ol class="microposts">
-  <%= render @feedall %>
+  <%= render @all_microposts %>
 </ol>
 
-<div class='center'><%= paginate @feedall %></div>
+<div class='center'><%= paginate @all_microposts %></div>

@@ -1,20 +1,11 @@
 class CommentsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy]
+  before_action :logged_in_user, only: [:create, :destroy, :mention_delete]
   before_action :correct_user, only: :destroy
   
   # POST /microposts/:micropost_id/comments
-  def create
-    @userprofile = User.find(params[:userprofile_id])
-    
+  def create    
     $mention_ids = nil unless params[:parent_id]
 
-    # if $mentions
-    #   mention_ids = []
-    #   $mentions.each do |mention|
-    #     mention_ids.push(mention.id)
-    #   end
-    # end
-    
     @comment = current_user.comments.build(comment_params.merge(
       micropost_id: params[:micropost_id]).merge(
       parent_id: params[:parent_id]).merge(
@@ -105,9 +96,7 @@ class CommentsController < ApplicationController
   
   
   # DELETE /microposts/:micropost_id/comments/:id
-  def destroy
-    @userprofile = User.find(params[:userprofile_id])
-    
+  def destroy    
     @feedmicropost = Micropost.find(params[:micropost_id])
     
     @comment.destroy
@@ -143,8 +132,6 @@ class CommentsController < ApplicationController
   # GET /comments/:id
   # GET /microposts/:micropost_id/comments/:id
   def show
-    @userprofile = User.find(params[:userprofile_id])
-
     resource = request.path.split('/')[1]
     if resource === "comments"
       @feedmicropost = Micropost.find(params[:id])
@@ -178,9 +165,7 @@ class CommentsController < ApplicationController
   
   # GET /comments/:id/close 
   # GET /microposts/:micropost_id/comments/:id/close
-  def close
-    @userprofile = User.find(params[:userprofile_id])
-    
+  def close    
     resource = request.path.split('/')[1]
     if resource === "comments"
       @feedmicropost = Micropost.find(params[:id])
@@ -199,7 +184,6 @@ class CommentsController < ApplicationController
 
   # GET /microposts/:micropost_id/comments/:id/mention_delete
   def mention_delete
-    @userprofile = User.find(params[:userprofile_id])
     @feedmicropost = Micropost.find(params[:micropost_id])
     @comment = Comment.find(params[:id])
     @replies = @comment.replies.unscope(:order).order(created_at: :asc)
