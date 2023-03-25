@@ -40,6 +40,9 @@
     
     <% if micropost.content.present? %>
       <div class="text-content">
+        <% if micropost.title.present? %>
+          <h3 style="margin-bottom: 8px;"><%= link_to micropost.title, micropost, class: "post-title" %></h3>
+        <% end %>
         <% if raw(Rinku.auto_link(simple_format(h(micropost.content)))).include?("https://#{domain_name}") %>
           <%= raw Rinku.auto_link(simple_format(h(micropost.content)), :all) %>
         <% else %>
