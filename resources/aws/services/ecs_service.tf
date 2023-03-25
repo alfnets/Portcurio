@@ -12,10 +12,10 @@ resource "aws_ecs_service" "main_ecs_service" {
 
   deployment_maximum_percent         = "200"
   deployment_minimum_healthy_percent = "100"
-  desired_count                      = "1"
+  desired_count                      = "2"
   enable_ecs_managed_tags            = "true"
   enable_execute_command             = "true"
-  health_check_grace_period_seconds  = "300"
+  health_check_grace_period_seconds  = "420"
   launch_type                        = "FARGATE"
 
   load_balancer {

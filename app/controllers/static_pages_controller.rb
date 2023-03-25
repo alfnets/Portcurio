@@ -12,10 +12,10 @@ class StaticPagesController < ApplicationController
   end
   
   def about
-    redirect_to 'https://alfnet.info/web-dev05/'
+    redirect_to 'https://alfnets.info/web-dev05/'
   end
   
   def contact
-    redirect_to 'https://alfnet.info/contact/'
+    redirect_to 'https://alfnets.info/contact/'
   end
 end

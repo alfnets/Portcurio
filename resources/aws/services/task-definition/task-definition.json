@@ -201,7 +201,7 @@
             "name": "nginx"
         }
     ],
-    "memory": "1024",
+    "memory": "4096",
     "taskRoleArn": "arn:aws:iam::SED_TARGET_AWS_ACCOUNT_ID:role/ecsTaskExecutionRole",
     "family": "SED_TARGET_R_PREFIX-task",
     "pidMode": null,
@@ -213,7 +213,7 @@
         "operatingSystemFamily": "LINUX",
         "cpuArchitecture": null
     },
-    "cpu": "512",
+    "cpu": "1024",
     "inferenceAccelerators": [],
     "proxyConfiguration": null,
     "volumes": [],
