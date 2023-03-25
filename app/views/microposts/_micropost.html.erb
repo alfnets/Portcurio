@@ -102,7 +102,7 @@
             </div>
           <% end %>
 
-          <% if micropost.links.present? %>
+          <% if micropost.links.present? && !micropost.file_link.present? %>
             <% oembed = oembed_get(micropost.links) %>
             <% if oembed %>   <!-- OEmbedの表示（YouTube, Twitter 等） -->
               <div class="links">
