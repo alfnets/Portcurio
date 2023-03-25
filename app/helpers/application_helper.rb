@@ -82,7 +82,7 @@ module ApplicationHelper
       },
       twitter: {
         card: 'summary_large_image',
-        site: '@alfnet_info',
+        site: '@alfnets_info',
       },
       # fb: {
       #   app_id: '自身のfacebookのapplication ID'
