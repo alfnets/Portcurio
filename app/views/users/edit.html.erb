@@ -49,11 +49,11 @@
       <% end %>
     </div>
 
-    <div class="line-checkbox-wrap">
+    <div class="checkbox-wrap" style="padding: 12px 0 18px; margin: 0;">
       <%= f.label :line_connection_delete do %>
         <% if current_user.lineuid %>
           <span>LINE通知連携の解除</span>
-          <%= f.check_box :line_connection_delete, {style: 'transform: scale(1.2);'} %>
+          <%= f.check_box :line_connection_delete %>
         <% else %>
           <span>LINE通知連携</span>
           <a class="line-add-button" href="<%= ENV["LINE_ADD_URL"] %>"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="24px" border="0"></a>
