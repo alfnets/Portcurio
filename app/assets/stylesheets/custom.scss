@@ -902,24 +902,11 @@ input {
     align-items: center;
     line-height: 1.2;
     gap: 8px;
-    #user_private {
+    input {
       margin: 0;
       width: 30px;
     }
   }
-}
-
-
-
-.line-checkbox-wrap {
-  padding-top: 10px;
-  margin-bottom: 18px;
-}
-
-#user_line_connection_delete {
-  // display: inline;
-  width: auto;
-  margin: 0 10px;
 }
 
 .line-add-button {
