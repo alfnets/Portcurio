@@ -201,7 +201,7 @@
             "name": "nginx"
         }
     ],
-    "memory": "4096",
+    "memory": "2048",
     "taskRoleArn": "arn:aws:iam::SED_TARGET_AWS_ACCOUNT_ID:role/ecsTaskExecutionRole",
     "family": "SED_TARGET_R_PREFIX-task",
     "pidMode": null,
