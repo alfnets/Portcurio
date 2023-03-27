@@ -1474,7 +1474,6 @@ span.image {
 /* 教材カード（materials） */
 .materials {
   display: grid;
-  justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
   row-gap: 40px;
   column-gap: 16px;
