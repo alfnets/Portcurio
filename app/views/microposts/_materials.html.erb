@@ -90,9 +90,9 @@
 
         <% else %>  <!-- OGPの表示（Webサイト） -->
           <% og = og_get(micropost.links) %>
-          <% if og %>
-            <div class="links ogp">
-              <div class="links-container">
+          <div class="links ogp">
+            <div class="links-container">
+              <% if og %>
                 <div class="links-wrap">
                   <% begin %>
                     <figure>
@@ -123,9 +123,22 @@
                     <%= link_to "詳細を開く", micropost %>
                   <% end %>
                 </div>
-              </div>
+              <% else %>
+                <div class="links-wrap">
+                  <%= link_to micropost do %>
+                    <%= image_tag("no_content.png", alt: "no content") %>
+                  <% end %>
+                </div>
+                <div class="text-right">
+                  <% if request.path_info.start_with?('/microposts')  %>
+                    　
+                  <% else %>
+                    <%= link_to "詳細を開く", micropost %>
+                  <% end %>
+                </div>
+              <% end %>
             </div>
-          <% end %>
+          </div>
         <% end %>
 
       <% else %>
