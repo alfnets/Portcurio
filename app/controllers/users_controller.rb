@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       @title = "Users"
     end
 
-    if current_user.admin?
+    if logged_in? && current_user.admin?
       @users = @q.result.page(params[:page])
     else
       @users = @q.result.where(private: false).page(params[:page])
