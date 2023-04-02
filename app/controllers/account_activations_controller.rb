@@ -5,6 +5,7 @@ class AccountActivationsController < ApplicationController
     user = User.find_by(email: params[:email])
     if user && !user.activated? && user.authenticated?(:activation, params[:id])
       user.activate
+      log_in user
       admin = User.find_by(admin: true);
       if current_user.follow(admin)
         relationship = current_user.active_relationships.find_by(followed_id: admin.id)
@@ -23,7 +24,6 @@ class AccountActivationsController < ApplicationController
           client.push_message(notification.notified.lineuid, message)
         end
       end
-      log_in user
       flash[:success] = "Account activated!"
       redirect_to root_url
     else
