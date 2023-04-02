@@ -63,7 +63,7 @@
     </ol>
     <div class='center'><%= paginate @materials, param_name: 'material_page' %></div>
   <% else %>
-    <p>No materials</p>
+    <p style="padding: 16px;">No materials</p>
   <% end %>
 
 <% elsif @tab === "microposts" %>
@@ -73,7 +73,7 @@
     </ol>
     <div class='center'><%= paginate @microposts, param_name: 'micropost_page' %></div>
   <% else %>
-    <p>No microposts</p>
+    <p style="padding: 16px;">No microposts</p>
   <% end %>
 
 <% else %>
@@ -86,7 +86,7 @@
         <div class='center'><%= paginate @comments_and_likes %></div>
       </ol>
     <% else %>
-      <p>No comments, likes</p>
+      <p style="padding: 16px;">No comments, likes</p>
     <% end %>
   <% end %>
 <% end %>
