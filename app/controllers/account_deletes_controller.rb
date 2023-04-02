@@ -1,6 +1,6 @@
 class AccountDeletesController < ApplicationController
-  before_action :correct_user
-  before_action :logged_in_user
+  before_action :correct_user, only: [:update]
+  before_action :logged_in_user, only: [:update]
 
   # PATCH /account_deletes/:id (+ params)
   def update
