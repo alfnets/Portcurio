@@ -13,7 +13,12 @@ class UsersController < ApplicationController
     else
       @title = "Users"
     end
-    @users = @q.result.where(private: false).page(params[:page])
+
+    if logged_in? && current_user.admin?
+      @users = @q.result.page(params[:page])
+    else
+      @users = @q.result.where(private: false).page(params[:page])
+    end
   end
   
   # GET /users/:id
