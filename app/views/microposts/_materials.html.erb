@@ -252,7 +252,7 @@
         <%# 一覧画面ではタグは５個まで表示 %>
         <% tags = request.path_info.start_with?('/microposts/') ? micropost.tags : micropost.tags.take(5) %>
         <% tags.each do |tag| %>
-          <%= link_to tag.name, microposts_path(click_tag: tag.name), class: "btn-tag" %>
+          <%= link_to tag.name, microposts_path(micropost: { tags: tag.name, educational_material: true }), class: "btn-tag" %>
         <% end %>
         <% if !request.path_info.start_with?('/microposts/') && micropost.tags.size > 5 %>
           <span>...</span>

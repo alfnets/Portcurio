@@ -3,7 +3,7 @@
     <%= form_with model: micropost, url: micropost_tags_path(micropost) , local: false do |f| %>
       <div class="tag-search-wrap">
         <% lock_tags.each do |tag| %>
-          <%= link_to tag, microposts_path(click_tag: tag), class: 'btn-tag' %>
+          <%= link_to tag, microposts_path(micropost: { tags: tag.name, educational_material: true }), class: 'btn-tag' %>
         <% end %>
         <div class="inline-block">
           <div class="input-group">

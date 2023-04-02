@@ -99,45 +99,36 @@ class MicropostsController < ApplicationController
   # GET /microposts
   def index
     if params[:keywords]
-      @micropost = Micropost.new
+      @micropost = Micropost.new(educational_material: true)
       @title = "Search Result"
       @keywords = params[:keywords].gsub("　"," ").split
       result_microposts = search_microposts(@keywords)
       @selected_tags    = @keywords.join(",")
       @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
-    elsif params[:micropost] && (params[:micropost][:tags].present? || params[:micropost][:educational_material].to_boolean)
+    else
       @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: params[:micropost][:educational_material].to_boolean)
       if params[:micropost][:tags].present?
         @selected_tags    = params[:micropost][:tags]
         result_microposts = search_microposts(@selected_tags.split(","), @micropost.educational_material)
-      else
-        if logged_in?
-          result_microposts = Micropost.where(educational_material: true).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
-        else
-          result_microposts = Micropost.where(educational_material: true).merge(Micropost.where(publishing: "public"))
-        end
-      end
-      if result_microposts
-        @title = "Search Result"
+        @title = @selected_tags.split(",").count === 1 ? "##{@selected_tags}" : "Search Result"
         @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
       else
-        @title = "No Result"
-        @all_microposts = Kaminari.paginate_array(Micropost.all.includes(:tags)).page(params[:page])
-      end
-    elsif params[:click_tag]
-      @micropost = Micropost.new
-      @selected_tags = [params[:click_tag]]
-      tag_microposts = tag_filter(@selected_tags)
-      @title = "##{params[:click_tag]}"
-      @all_microposts = Kaminari.paginate_array(tag_microposts.includes(:tags)).page(params[:page])
-    else
-      @micropost = Micropost.new
-      @selected_tags = ""
-      @title = "All users feed"
-      if logged_in?
-        @all_microposts = Kaminari.paginate_array(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)).includes(:tags)).page(params[:page])
-      else
-        @all_microposts = Kaminari.paginate_array(Micropost.where(publishing: "public").includes(:tags)).page(params[:page])
+        @selected_tags    = ""
+        if logged_in?
+          if params[:micropost][:educational_material]
+            result_microposts = Micropost.where(educational_material: true).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
+          else
+            result_microposts = Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id))
+          end
+        else
+          if params[:micropost][:educational_material]
+            result_microposts = Micropost.where(educational_material: true).merge(Micropost.where(publishing: "public"))
+          else
+            result_microposts = Micropost.where(publishing: "public")
+          end
+        end
+        @title = "All users feed"
+        @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
       end
     end
     @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
@@ -214,10 +205,10 @@ class MicropostsController < ApplicationController
     
     def tag_filter(tags)
       tags.reject!(&:blank?)
-      result = Micropost.ransack(tags_name_eq: tags[0]).result
+      result = Micropost.where(educational_material: true).ransack(tags_name_eq: tags[0]).result
       return nil unless result
       tags.each do |tag|
-        result = result & Micropost.ransack(tags_name_eq: tag).result
+        result = result & Micropost.where(educational_material: true).ransack(tags_name_eq: tag).result
       end
       if logged_in?
         Micropost.where(id: result.map(&:id)).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))

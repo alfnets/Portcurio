@@ -192,7 +192,7 @@
       <% if tags.count > 0 %>
         <div class="tags-wrap">
           <% tags.each do |tag| %>
-            <%= link_to tag.name, microposts_path(click_tag: tag.name), class: "btn-tag" %>
+            <%= link_to tag.name, microposts_path(micropost: { tags: tag.name, educational_material: true }), class: "btn-tag" %>
           <% end %>
           <% if !request.path_info.start_with?('/microposts/') && micropost.tags.size > 5 %>
             <span>...</span>
