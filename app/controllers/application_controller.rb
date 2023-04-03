@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
     end
 
     # マイクロポストの検索
-    def search_microposts(keywords, educational_material=false)
+    def search_microposts(keywords, educational_material=true)
       where_command = ""
       keywords.each do |keyword|
         where_command += where_command.empty? ? "(T.content LIKE \'%#{keyword}%\' OR T.tag_names LIKE \'%#{keyword}%\')" : " AND (T.content LIKE \'%#{keyword}%\' OR T.tag_names LIKE \'%#{keyword}%\')"
