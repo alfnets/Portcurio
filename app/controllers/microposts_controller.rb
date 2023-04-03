@@ -99,29 +99,31 @@ class MicropostsController < ApplicationController
   # GET /microposts
   def index
     if params[:keywords]
-      @micropost = Micropost.new(educational_material: true)
+      @material_filter = true
+      @micropost = Micropost.new(educational_material: @material_filter)
       @title = "Search Result"
       @keywords = params[:keywords].gsub("　"," ").split
       result_microposts = search_microposts(@keywords)
       @selected_tags    = @keywords.join(",")
       @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
     else
-      @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: params[:micropost][:educational_material].to_boolean)
+      @material_filter = params[:micropost][:educational_material].to_boolean
+      @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: @material_filter)
       if params[:micropost][:tags].present?
         @selected_tags    = params[:micropost][:tags]
         result_microposts = search_microposts(@selected_tags.split(","), @micropost.educational_material)
         @title = @selected_tags.split(",").count === 1 ? "##{@selected_tags}" : "Search Result"
         @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
       else
-        @selected_tags    = ""
+        @selected_tags = ""
         if logged_in?
-          if params[:micropost][:educational_material]
+          if @material_filter
             result_microposts = Micropost.where(educational_material: true).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
           else
             result_microposts = Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id))
           end
         else
-          if params[:micropost][:educational_material]
+          if @material_filter
             result_microposts = Micropost.where(educational_material: true).merge(Micropost.where(publishing: "public"))
           else
             result_microposts = Micropost.where(publishing: "public")
