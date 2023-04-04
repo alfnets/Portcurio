@@ -6,8 +6,14 @@
   <%= render partial: 'microposts/tag_search_form', locals: { micropost: @micropost, selected_tags: @selected_tags, tags: @tags } %>
 </div>
 
-<ol class="microposts">
-  <%= render @portcurio %>
-</ol>
+<% if @material_filter %>
+  <ol class="materials">
+    <%= render partial: 'microposts/materials', collection: @portcurio, as: 'micropost' %>
+  </ol>
+<% else %>
+  <ol class="microposts">
+    <%= render @portcurio %>
+  </ol>
+<% end %>
 
 <div class='center'><%= paginate @portcurio %></div>
