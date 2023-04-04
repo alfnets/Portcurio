@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:setting, :edit, :update, :delete, :destroy,
-                                        :following, :followers, :subscribing, :portcurio]
+                                        :following, :followers, :subscribing]
   before_action :correct_user,   only: [:edit, :update, :delete]
   before_action :admin_or_correct_user, only: :destroy
   before_action :set_q,          only: :index
@@ -201,25 +201,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @users = @user.subscribing.page(params[:page]).per(10)
     render 'show_follow'
-  end
-  
-  # GET /users/:id/portcurio
-  def portcurio
-    if params[:micropost] && (params[:micropost][:tags].present? || params[:micropost][:educational_material].to_boolean)
-      @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: params[:micropost][:educational_material].to_boolean)
-      if params[:micropost][:tags].present?
-        @selected_tags    = params[:micropost][:tags]
-        result_microposts = search_microposts(@selected_tags.split(","), @micropost.educational_material)
-      else
-        result_microposts = Micropost.where(educational_material: true).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
-      end
-      @portcurio = Kaminari.paginate_array(result_microposts.joins(:porcs).where(porcs: { user: current_user }).includes(:tags)).page(params[:page])
-    else
-      @micropost = Micropost.new
-      @selected_tags = ""
-      @portcurio = Micropost.joins(:porcs).where(porcs: { user: current_user }).page(params[:page])
-    end
-    @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
   end
 
   # GET /users/get_selected_school_type
