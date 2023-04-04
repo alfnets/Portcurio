@@ -16,7 +16,7 @@ class PortcurioController < ApplicationController
       end
     end
 
-    @portcurio = Kaminari.paginate_array(result_microposts.joins(:porcs).where(porcs: { user: current_user }).includes(:tags)).page(params[:page])
+    @portcurio = Kaminari.paginate_array(result_microposts.joins(:porcs).where(porcs: { user: current_user }).includes(:tags)).page(params[:page]).per(12)
 
     @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
   end

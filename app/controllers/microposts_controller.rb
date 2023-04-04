@@ -47,8 +47,8 @@ class MicropostsController < ApplicationController
         end
       end
     else
-      @feed_items = current_user.feed.page(params[:page])
-      @all_microposts     = Kaminari.paginate_array(Micropost.all).page(params[:page])
+      @feed_items = current_user.feed.page(params[:page]).per(12)
+      @all_microposts     = Kaminari.paginate_array(Micropost.all).page(params[:page]).per(12)
       render 'static_pages/home'
     end
   end
@@ -105,7 +105,7 @@ class MicropostsController < ApplicationController
       @keywords = params[:keywords].gsub("　"," ").split
       result_microposts = search_microposts(@keywords)
       @selected_tags    = @keywords.join(",")
-      @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
+      @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page]).per(12)
     else
       @material_filter = params[:micropost][:educational_material].to_boolean
       @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: @material_filter)
@@ -113,7 +113,7 @@ class MicropostsController < ApplicationController
         @selected_tags    = params[:micropost][:tags]
         result_microposts = search_microposts(@selected_tags.split(","), @micropost.educational_material)
         @title = @selected_tags.split(",").count === 1 ? "##{@selected_tags}" : "Search Result"
-        @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
+        @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page]).per(12)
       else
         @selected_tags = ""
         if logged_in?
@@ -130,7 +130,7 @@ class MicropostsController < ApplicationController
           end
         end
         @title = "All users feed"
-        @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page])
+        @all_microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page]).per(12)
       end
     end
     @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
