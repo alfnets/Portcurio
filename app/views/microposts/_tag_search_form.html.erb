@@ -2,8 +2,8 @@
 
 <% if request.path_info == microposts_path %>
   <% path = microposts_path %>
-<% elsif request.path_info == portcurio_user_path(current_user) %>
-  <% path = portcurio_user_path(current_user) %>
+<% elsif request.path_info == portcurio_index_path %>
+  <% path = portcurio_index_path %>
 <% end %>
 
 <div class="tagging-form">

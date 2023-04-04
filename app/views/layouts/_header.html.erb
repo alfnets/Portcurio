@@ -31,7 +31,7 @@
         <ul class="nav navbar-nav navbar-right" id="navbar">
           <li><%= link_to "Home", root_path, 'data-turbolinks': false %></li>
           <% if logged_in? %>
-            <li><%= link_to "MyPortcurio", portcurio_user_path(current_user), 'data-turbolinks': false %></li>
+            <li><%= link_to "MyPortcurio", portcurio_index_path, 'data-turbolinks': false %></li>
           <% end %>
             <li><%= link_to "Links", links_path %></li>
             <li><%= link_to "Feed", microposts_path(micropost: { educational_material: true }) %></li>

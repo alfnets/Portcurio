@@ -25,12 +25,11 @@ Rails.application.routes.draw do
   end
   resources :users do
     member do
-      get :following, :followers, :subscribing, :delete, :portcurio
+      get :following, :followers, :subscribing, :delete
       # GET /users/1/following
       # GET /users/1/followers
       # GET /users/1/subscribing
       # GET /users/1/delete
-      # GET /users/1/portcurio
     end
   end
 
@@ -83,6 +82,8 @@ Rails.application.routes.draw do
     get :notified, on: :member
     get :activity, on: :member
   end
+
+  resources :portcurio, only: [:index]
   
   resource :links, only: [:show, :edit, :create]
 end
