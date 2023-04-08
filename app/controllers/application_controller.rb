@@ -33,13 +33,17 @@ class ApplicationController < ActionController::Base
     end
 
     # マイクロポストの検索
-    def search_microposts(keywords, educational_material=true)
+    def search_microposts(keywords, educational_material=true, user=nil)
       where_command = ""
       keywords.each do |keyword|
         where_command += where_command.empty? ? "(T.content LIKE \'%#{keyword}%\' OR T.tag_names LIKE \'%#{keyword}%\')" : " AND (T.content LIKE \'%#{keyword}%\' OR T.tag_names LIKE \'%#{keyword}%\')"
       end
       
-      filter_educational_material_command = educational_material ? "AND (T.`educational_material` = true)" : ""
+      if educational_material.nil?
+        filter_educational_material_command = ""
+      else
+        filter_educational_material_command = educational_material ? "AND (T.`educational_material` = true)" : "AND (T.`educational_material` = false)"
+      end
 
       if logged_in?
         sql = "SELECT T.*
@@ -64,7 +68,11 @@ class ApplicationController < ActionController::Base
       end
 
       a = ActiveRecord::Base.connection.select_all(sql).to_a
-      Micropost.where(id: a.map{|val| val["id"]})
+      if user
+        user.microposts.where(id: a.map{|val| val["id"]})
+      else
+        Micropost.where(id: a.map{|val| val["id"]})
+      end
     end
 
     # ログインユーザーのタイムラインを取得

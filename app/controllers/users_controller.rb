@@ -29,13 +29,63 @@ class UsersController < ApplicationController
 
     @tab = params[:tab] || "materials"
 
+    # 教材検索をしたときのactiveタブを切り替えするための処理
+    if params[:micropost].present?
+      original_query_params = request.query_parameters
+      if params[:micropost][:educational_material] && @tab != "materials"
+        additional_query_params = { tab: "materials" }
+        merged_query_params = original_query_params.merge(additional_query_params)
+        redirect_to "#{request.protocol}#{request.host_with_port}#{request.path}?#{merged_query_params.to_query}"
+      elsif !params[:micropost][:educational_material] && @tab != "microposts"
+        additional_query_params = { tab: "microposts" }
+        merged_query_params = original_query_params.merge(additional_query_params)
+        redirect_to "#{request.protocol}#{request.host_with_port}#{request.path}?#{merged_query_params.to_query}"
+      end
+    end
+      
     if @tab === "materials"
-      @materials = @user.microposts.where(educational_material: true).page(params[:material_page]).per(12)
+      if params[:micropost].present?
+        @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: true)
+
+        if params[:micropost][:tags].present?
+          @selected_tags = params[:micropost][:tags]
+          result_microposts = search_microposts(@selected_tags.split(","), true, @user)
+        else
+          @selected_tags = ""
+          result_microposts = @user.microposts.where(educational_material: true).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
+        end
+
+        @materials = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page]).per(12)
+      else
+        @micropost = Micropost.new(educational_material: true)
+
+        @materials = @user.microposts.where(educational_material: true).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id))).page(params[:page]).per(12)
+      end
+
+      @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
 
     elsif @tab === "microposts"
-      @microposts = @user.microposts.where(educational_material: false).page(params[:micropost_page]).per(20)
+      if params[:micropost].present?
+        @micropost = Micropost.new(school_type: params[:micropost][:school_type], subject: params[:micropost][:subject], educational_material: false)
 
-    else @tab === "responses"
+        if params[:micropost][:tags].present?
+          @selected_tags = params[:micropost][:tags]
+          result_microposts = search_microposts(@selected_tags.split(","), false, @user)
+        else
+          @selected_tags = ""
+          result_microposts = @user.microposts.where(educational_material: false).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id)))
+        end
+
+        @microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page]).per(12)
+      else
+        @micropost = Micropost.new(educational_material: false)
+
+        @microposts = @user.microposts.where(educational_material: false).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id))).page(params[:page]).per(12)
+      end
+
+      @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
+
+    else
       @comments_and_likes = Notification.where(
         notifier_id: @user.id
       ).where.not(

@@ -48,6 +48,12 @@
   
 <% end %>
 
+<% if @tab != "responses" %>
+  <div class="tag-search-container user">
+    <%= render partial: 'microposts/tag_search_form', locals: { micropost: @micropost, selected_tags: @selected_tags, tags: @tags, user: @user } %>
+  </div>
+<% end %>
+
 <div class="tab">
   <%= link_to "Materials", user_path(@user, tab: "materials"), id: "materials_tab" %>
   <%= link_to "Microposts", user_path(@user, tab: "microposts"), id: "microposts_tab" %>
@@ -56,17 +62,7 @@
   <% end %>
 </div>
 
-<% if @tab === "materials" %>
-  <% if @materials.any? %>
-    <ol class="materials">
-      <%= render partial: 'microposts/materials', collection: @materials, as: 'micropost' %>
-    </ol>
-    <div class='center'><%= paginate @materials, param_name: 'material_page' %></div>
-  <% else %>
-    <p style="padding: 16px;">No materials</p>
-  <% end %>
-
-<% elsif @tab === "microposts" %>
+<% if @tab === "microposts" %>
   <% if @microposts.any? %>
     <ol class="microposts">
       <%= render @microposts %>
@@ -76,7 +72,7 @@
     <p style="padding: 16px;">No microposts</p>
   <% end %>
 
-<% else %>
+<% elsif @tab === "responses" %>
   <% if logged_in? %>
     <% if @comments_and_likes.any? %>
       <ol class="microposts jscroll-reaction">
@@ -88,5 +84,15 @@
     <% else %>
       <p style="padding: 16px;">No comments, likes</p>
     <% end %>
+  <% end %>
+
+<% else %>
+  <% if @materials.any? %>
+    <ol class="materials">
+      <%= render partial: 'microposts/materials', collection: @materials, as: 'micropost' %>
+    </ol>
+    <div class='center'><%= paginate @materials, param_name: 'material_page' %></div>
+  <% else %>
+    <p style="padding: 16px;">No materials</p>
   <% end %>
 <% end %>
