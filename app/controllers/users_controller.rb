@@ -55,11 +55,11 @@ class UsersController < ApplicationController
           result_microposts = logged_in? ? @user.microposts.where(educational_material: true).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id))) : @user.microposts.where(educational_material: true).merge(Micropost.where(publishing: "public"))
         end
 
-        @materials = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page]).per(12)
+        @materials = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:material_page]).per(12)
       else
         @micropost = Micropost.new(educational_material: true)
 
-        @materials = logged_in? ? @user.microposts.where(educational_material: true).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id))).page(params[:page]).per(12) : @user.microposts.where(educational_material: true).merge(Micropost.where(publishing: "public")).page(params[:page]).per(12)
+        @materials = logged_in? ? @user.microposts.where(educational_material: true).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id))).page(params[:material_page]).per(12) : @user.microposts.where(educational_material: true).merge(Micropost.where(publishing: "public")).page(params[:material_page]).per(12)
       end
 
       @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
@@ -76,11 +76,11 @@ class UsersController < ApplicationController
           result_microposts = logged_in? ? @user.microposts.where(educational_material: false).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id))) : @user.microposts.where(educational_material: false).merge(Micropost.where(publishing: "public"))
         end
 
-        @microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:page]).per(12)
+        @microposts = Kaminari.paginate_array(result_microposts.includes(:tags)).page(params[:micropost_page]).per(12)
       else
         @micropost = Micropost.new(educational_material: false)
 
-        @microposts = logged_in? ? @user.microposts.where(educational_material: false).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id))).page(params[:page]).per(12) : @user.microposts.where(educational_material: false).merge(Micropost.where(publishing: "public")).page(params[:page]).per(12)
+        @microposts = logged_in? ? @user.microposts.where(educational_material: false).merge(Micropost.where(publishing: "public").or(Micropost.where(user_id: current_user.id))).page(params[:micropost_page]).per(12) : @user.microposts.where(educational_material: false).merge(Micropost.where(publishing: "public")).page(params[:micropost_page]).per(12)
       end
 
       @tags = Tag.where(category: nil).order(created_at: :desc).limit(8)  # タグの一覧表示
