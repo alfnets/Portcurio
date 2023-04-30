@@ -7,7 +7,9 @@ class StaticPagesController < ApplicationController
       @all_feed_items = current_user.all_feed.page(params[:page]).per(12)
       @all_microposts = Kaminari.paginate_array(Micropost.all).page(params[:page])
     else
-      render 'welcome', layout: 'welcome'
+      # render 'welcome', layout: 'welcome'
+      @entrypoint = "welcome"
+      render layout: false, template: "react_welcome"
     end
   end
   
