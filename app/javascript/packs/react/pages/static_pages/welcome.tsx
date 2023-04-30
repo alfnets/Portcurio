@@ -1,25 +1,37 @@
-// Run this example by adding <%= javascript_pack_tag 'hello_react' %> to the head of your layout file,
-// like app/views/layouts/application.html.erb. All it does is render <div>Hello React</div> at the bottom
-// of the page.
+import { h, render, FunctionComponent } from 'preact';
+import Logo from '../../components/Logo';
 
-import * as React from 'react'
-import { createRoot } from 'react-dom/client'
-import HelloWorld from '../../components/HelloWorld'
-// import PropTypes from 'prop-types'
+document.addEventListener("DOMContentLoaded", () => {
+  const appPropsElement = document.getElementById("app-props") as HTMLElement;
+  const props: WelcomeProps = JSON.parse(
+    appPropsElement.dataset["props"]
+  );
+  render(
+    <div className="row welcome_container">
+      <div className='center jumbotron col-md-12'>
+        <div className='center col-md-5 col-md-offset-1'>
+          <WelcomeContent props={props} />
+        </div>
+      </div>
+    </div>
+    , document.getElementById('app-root') as HTMLElement
+  );
+});
 
-// const Hello = props => (
-//   <div>Hello {props.name}!</div>
-// )
+type WelcomeProps = {
+  readonly logo_url: string;
+};
 
-// Hello.defaultProps = {
-//   name: 'David'
-// }
+const WelcomeContent: FunctionComponent<{ 
+  props: WelcomeProps
+}> = ({ props }) => {
+  const logo_url = props.logo_url;
 
-// Hello.propTypes = {
-//   name: PropTypes.string
-// }
-
-const root = createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(<HelloWorld />);
+  return (
+    <h1>
+      <div className='logo_containter'>
+        <Logo logo_url={logo_url} />
+      </div>
+    </h1>
+  );
+}

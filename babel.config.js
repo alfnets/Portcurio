@@ -48,6 +48,10 @@ module.exports = function(api) {
       ['@babel/preset-typescript', { 'allExtensions': true, 'isTSX': true }]
     ].filter(Boolean),
     plugins: [
+      ["@babel/plugin-transform-react-jsx", {
+        "pragma": "h",
+        "pragmaFrag": "Fragment",
+      }],
       'babel-plugin-macros',
       '@babel/plugin-syntax-dynamic-import',
       isTestEnv && 'babel-plugin-dynamic-import-node',

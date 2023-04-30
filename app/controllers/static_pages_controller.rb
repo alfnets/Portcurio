@@ -1,4 +1,5 @@
 class StaticPagesController < ApplicationController
+  require 'json'
 
   def home
     if logged_in?
@@ -8,6 +9,12 @@ class StaticPagesController < ApplicationController
       @all_microposts = Kaminari.paginate_array(Micropost.all).page(params[:page])
     else
       # render 'welcome', layout: 'welcome'
+      @props = JSON.generate(
+        {
+          logo_url: ActionController::Base.helpers.asset_path("logo_portcurio.png")
+        }
+      )
+
       @entrypoint = "welcome"
       render layout: false, template: "react_welcome"
     end
