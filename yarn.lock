@@ -5833,6 +5833,11 @@ preact-render-to-string@^3.8.2:
   dependencies:
     pretty-format "^3.5.1"
 
+preact-router@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/preact-router/-/preact-router-4.1.0.tgz#5fb77f65746ac937c24746afef11f684ed6ed654"
+  integrity sha512-y1w2YvVpKAju9FMV+fAVR1NpH4MW5q07BZrziMZeg6F/rGJ9KvLUZtjOqsy2I8fDYiX36AM1AQTXIIK3jigBhA==
+
 preact-transition-group@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/preact-transition-group/-/preact-transition-group-1.1.1.tgz#f0a49327ea515ece34ea2be864c4a7d29e5d6e10"
