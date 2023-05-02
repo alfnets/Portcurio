@@ -2,7 +2,7 @@
   <% container_class = request.path_info == root_path ? "container-full" : "container-large" %>
   <div class=<%= container_class %>>
     <small style="margin:0 16px">
-      <%= link_to image_tag("logo_alfnets.png", alt: "alfnets logo", height: "28px"),
+      <%= link_to image_tag("logo_alfnets.png", alt: "alfnets logo", style: "height: 28px"),
                         "https://alfnets.info", target: :_blank, rel: "noopener noreferrer" %>
     </small>
     <nav style="margin:0 16px">
@@ -10,7 +10,7 @@
         <li><%= link_to "About",  "https://alfnets.info/web-dev05/", target: :_blank, rel: "noopener noreferrer" %></li>
         <li><%= link_to "Contact", "https://alfnets.info/contact", target: :_blank, rel: "noopener noreferrer" %></li>
         <!--<li><%= link_to "News", "https://alfnets.info", target: :_blank, rel: "noopener noreferrer" %></li>-->
-        <li><a href="<%= ENV["LINE_ADD_URL"] %>"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="28" border="0"></a></li>
+        <li><a href="<%= ENV["LINE_ADD_URL"] %>"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" style="height: 100%; height: 28px; border: 0;"></a></li>
       </ul>
     </nav>
   </div>

@@ -56,3 +56,5 @@ ngrok
 
 # Ignore service-worker
 public/service-worker.js*
+/app/assets/builds/*
+!/app/assets/builds/.keep
