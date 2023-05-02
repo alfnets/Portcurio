@@ -1,5 +1,5 @@
 const { config, environment } = require('@rails/webpacker');
-const webpack = require('webpack')
+const webpack = require('webpack');
 
 // Preact
 environment.config.merge({
@@ -24,4 +24,4 @@ environment.plugins.prepend('Provide',
   })
 )
 
-module.exports = environment
+module.exports = environment;

@@ -24,10 +24,10 @@ module ApplicationHelper
   def time_ago_in_words_with_custom_unit(time)
     distance_in_words = time_ago_in_words(time)
 
-    distance_in_words.gsub!('minutes', 'min')
-    distance_in_words.gsub!('minute', 'min')
-    distance_in_words.gsub!('about ', '')
-    distance_in_words.gsub!('less than a min', 'now')
+    distance_in_words = distance_in_words.gsub('minutes', 'min')
+    distance_in_words = distance_in_words.gsub('minute', 'min')
+    distance_in_words = distance_in_words.gsub('about ', '')
+    distance_in_words = distance_in_words.gsub('less than a min', 'now')
 
     distance_in_words
   end

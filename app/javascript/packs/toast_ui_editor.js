@@ -1,3 +1,4 @@
+import '@toast-ui/editor/dist/toastui-editor.css';
 import Editor from '@toast-ui/editor';
 const org_markdown = document.getElementById('org_markdown').value
 

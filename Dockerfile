@@ -24,7 +24,6 @@ ADD Gemfile.lock $APP_PATH/Gemfile.lock
 
 RUN gem install bundler:2.3.12
 RUN bundle install
-RUN yarn add @fortawesome/fontawesome-free
 
 ADD . $APP_PATH
 
